@@ -1,0 +1,77 @@
+# T29
+# MySQL code snippets
+
+####################
+# Create Statement #
+####################
+
+CREATE TABLE `User` (
+  `userID` INT,
+  `email` TEXT,
+  `password` TEXT,
+  `firstName` TEXT,
+  `lastName` TEXT,
+  `dob` DATE,
+  `gender` CHARACTER,
+  `location` TEXT
+);
+
+CREATE TABLE `Friendship` (
+  `userID1` INT,
+  `userID2` INT
+);
+
+CREATE TABLE `PhotoCollection` (
+  `collectionID` INT,
+  `userID` INT,
+  `privacyID` INT
+);
+
+CREATE TABLE `Circle` (
+  `circleID` INT,
+  `name` TEXT,
+  `description` TEXT
+);
+
+CREATE TABLE `CircleParticipants` (
+  `circleID` INT,
+  `userID` INT
+);
+
+CREATE TABLE `PrivacySettings` (
+  `privacyID` INT,
+  `option` INT
+);
+
+CREATE TABLE `PhotoComment` (
+  `commentID` INT,
+  `photoID` INT,
+  `userID` INT,
+  `comment` TEXT
+);
+
+CREATE TABLE `Photo` (
+  `photoID` INT,
+  `collectionID` INT,
+  `photoURL` TEXT
+);
+
+CREATE TABLE `Message` (
+  `messageID` INT,
+  `circleID` INT,
+  `userID` INT,
+  `message` TEXT
+);
+
+CREATE TABLE `PhotoAnnotation` (
+  `annotationID` INT,
+  `photoID` INT,
+  `userID` INT
+);
+
+CREATE TABLE `BlogEntry` (
+  `entryID` INT,
+  `userID` INT,
+  `entry` TEXT,
+  `privacyID` INT
+);
