@@ -12,7 +12,7 @@ CREATE TABLE `User` (
   `firstName` TEXT,
   `lastName` TEXT,
   `dob` DATE,
-  `gender` CHARACTER,
+  `gender` CHAR,
   `location` TEXT
 );
 
