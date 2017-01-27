@@ -6,7 +6,7 @@
 ####################
 
 CREATE TABLE `User` (
-  `userID` INT,
+  `userID` INT NOT NULL AUTO_INCREMENT,
   `email` TEXT,
   `password` TEXT,
   `firstName` TEXT,
@@ -22,13 +22,13 @@ CREATE TABLE `Friendship` (
 );
 
 CREATE TABLE `PhotoCollection` (
-  `collectionID` INT,
+  `collectionID` INT NOT NULL AUTO_INCREMENT,
   `userID` INT,
   `privacyID` INT
 );
 
 CREATE TABLE `Circle` (
-  `circleID` INT,
+  `circleID` INT NOT NULL AUTO_INCREMENT,
   `name` TEXT,
   `description` TEXT
 );
@@ -39,38 +39,38 @@ CREATE TABLE `CircleParticipants` (
 );
 
 CREATE TABLE `PrivacySettings` (
-  `privacyID` INT,
+  `privacyID` INT NOT NULL AUTO_INCREMENT,
   `option` INT
 );
 
 CREATE TABLE `PhotoComment` (
-  `commentID` INT,
+  `commentID` INT NOT NULL AUTO_INCREMENT,
   `photoID` INT,
   `userID` INT,
   `comment` TEXT
 );
 
 CREATE TABLE `Photo` (
-  `photoID` INT,
+  `photoID` INT NOT NULL AUTO_INCREMENT,
   `collectionID` INT,
   `photoURL` TEXT
 );
 
 CREATE TABLE `Message` (
-  `messageID` INT,
+  `messageID` INT NOT NULL AUTO_INCREMENT,
   `circleID` INT,
   `userID` INT,
   `message` TEXT
 );
 
 CREATE TABLE `PhotoAnnotation` (
-  `annotationID` INT,
+  `annotationID` INT NOT NULL AUTO_INCREMENT,
   `photoID` INT,
   `userID` INT
 );
 
 CREATE TABLE `BlogEntry` (
-  `entryID` INT,
+  `entryID` INT ,
   `userID` INT,
   `entry` TEXT,
   `privacyID` INT
