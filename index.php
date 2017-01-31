@@ -1,6 +1,7 @@
 <?php
+include_once 'database/database.php';
 /**
- * Created by PhpStorm.
+ * Login page
  * User: Esther Leah
  * Date: 24/01/2017
  * Time: 22:11
@@ -26,6 +27,12 @@
         <script src="js/bootstrap.min.js"></script>
 
         <!-- Content -->
-        <h1>Hello, world!</h1>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-*-*">
+                    <h1>Hello, world!</h1>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
