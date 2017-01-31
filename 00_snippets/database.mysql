@@ -20,7 +20,7 @@ CREATE TABLE `User` (
   `location` VARCHAR(255),
   `profilePhotoURL` VARCHAR(255),
   `privacyID` INT NOT NULL,
-  PRIMARY KEY (userID)
+  PRIMARY KEY (userID),
   FOREIGN KEY (privacyID) REFERENCES PrivacySettings(privacyID)
 );
 
