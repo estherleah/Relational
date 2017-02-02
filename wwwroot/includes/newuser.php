@@ -84,7 +84,6 @@ EOM;
                     $password = $user['password'];
                     $sql = "INSERT INTO user (firstName, lastName, email, password, privacyID) VALUES ('$firstName', '$lastName', '$email', '$password', 1)";
                     $conn = connectDatabase();
-                    mysqli_query($conn, $sql);
                     if (mysqli_query($conn, $sql)) {
                         echo "New user created successfully";
                         echo "<p><a href='../index.php'>Sign in</a></p>";
