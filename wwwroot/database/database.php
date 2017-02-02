@@ -19,4 +19,15 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 //echo "Connected successfully";
+
+function connectDatabase()
+{
+    $hostname = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "social_network";
+    $conn = mysqli_connect($hostname, $username, $password, $database);
+    return $conn;
+}
+
 ?>

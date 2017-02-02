@@ -15,7 +15,7 @@ include_once 'database/database.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Login</title>
+    <title>Sign up</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -31,8 +31,16 @@ include_once 'database/database.php';
     <div class="col-*-*">
         <div class="text-center">
             <div class="col-sm-4 col-sm-offset-4">
-                <h2>Login</h2>
-                <form method="post" action="includes/login.php" name="loginForm">
+                <h2>New user</h2>
+                <form method="post" action="includes/newuser.php" name="newUserForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input class="form-control" type="text" name="firstName" id="firstName" placeholder="First name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input class="form-control" type="text" name="lastName" id="lastName" placeholder="Last name">
+                    </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input class="form-control" type="email" name="email" id="email" placeholder="Email">
@@ -41,10 +49,14 @@ include_once 'database/database.php';
                         <label for="password">Password:</label>
                         <input class="form-control" type="password" name="password" id="password" placeholder="Password">
                     </div>
-                    <p><input class="btn btn-default" type="submit" value="Login"></p>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm password:</label>
+                        <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password">
+                    </div>
+                    <p><input class="btn btn-default" type="submit" value="Sign Up"></a></p>
                 </form>
-                <p>Not yet a user? Sign up now.</p>
-                <a href="signup.php"><input class="btn btn-default" type="button" value="Sign up"></a>
+                <p>Back to login page?</p>
+                <a href="index.php"><input class="btn btn-default" type="button" value="Back"></a>
             </div>
         </div>
     </div>
