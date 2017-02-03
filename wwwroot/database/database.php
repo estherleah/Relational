@@ -24,7 +24,7 @@ function connectDatabase()
 {
     $hostname = "localhost";
     $username = "root";
-    $password = "";
+    $password = "root";
     $database = "social_network";
     $conn = mysqli_connect($hostname, $username, $password, $database);
     return $conn;
