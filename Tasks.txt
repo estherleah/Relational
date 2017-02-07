@@ -3,11 +3,11 @@ TODO
 1
 - Marcus: Search
 - Esther: Login/Page template
-- Sherri: Friend requests
+- Sherri: Message system + Friend requests
 - Rob: Collaborative search
 
 2
-- 
+-
 -
 -
 -
@@ -16,7 +16,8 @@ TODO
 
 Optionals:
 - Advanced search (based on location, etc.)
-- Comments and annotations on blog entries and photo collections (generalizing comments and annotations)
+- Comments and annotations on blog entries and photo collections
+  (generalizing comments and annotations)
 - Edit account data
 - More advanced profile (description, etc.)
 - Blocking users
