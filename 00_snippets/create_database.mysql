@@ -11,7 +11,7 @@ USE social_network;
 
 CREATE TABLE `privacy_settings` (
   `privacyID` INT NOT NULL AUTO_INCREMENT,
-  `option` INT NOT NULL,
+  `option` VARCHAR(255) NOT NULL,
   PRIMARY KEY (privacyID)
 );
 
