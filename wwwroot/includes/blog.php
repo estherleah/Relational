@@ -15,8 +15,8 @@
 </head>
 
 <?php
-  include '../database/database.php';
-  include '../ChromePhp.php';
+  include $_SERVER['DOCUMENT_ROOT'].'/database/database.php';
+  //include $_SERVER['DOCUMENT_ROOT'].'/ChromePhp.php';
 
   // DB Connection
   $connection = connectDatabase();
@@ -40,13 +40,14 @@
 
   $blogSql = "SELECT entry, date, profilephotoURL, firstName, lastName
               FROM blog_entry AS b JOIN user AS u
-              ON b.userID = '$userIdEscaped' AND b.userID = u.userID;
+              ON b.userID = '$userIdEscaped' AND b.userID = u.userID
+              ORDER BY date DESC;
               ";
   $blogResult = mysqli_query($connection, $blogSql);
  ?>
 
 <body>
-    <div class="container">
+    <div class="container" id="top">
         <div class="row" id="entry">
             <div class="col-xs-12">
                 <h1>Blog Entries for <?php echo $fullName ?></h1>
@@ -55,16 +56,15 @@
                 <img src="<?php echo $profilephotoURL ?>" class="img-circle" width="100%" />
             </div>
             <div class="col-xs-10">
-                <textarea class="form-control" rows='3' id="postEntry"></textarea>
-                <button class="btn btn-primary pull-right" type="button">Post</button>
+                <textarea class="form-control" rows='3' id="postText"></textarea>
+                <button class="btn btn-primary pull-right" id="postSubmit" type="button">Post</button>
             </div>
         </div>
-
         <?php
         if (mysqli_num_rows($blogResult) > 0) {
           while($row = mysqli_fetch_assoc($blogResult)) {
             ?>
-            <div class="row">
+            <div class="row" id="previousposts">
                 <div class="col-xs-2">
                     <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle" width="100%" />
                 </div>
