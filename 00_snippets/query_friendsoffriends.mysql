@@ -1,0 +1,8 @@
+SELECT DISTINCT userID2
+FROM friendship
+WHERE userID1 IN
+  (SELECT userID2
+    FROM friendship
+    WHERE userID1 = 0
+  )
+  AND status = 1;
