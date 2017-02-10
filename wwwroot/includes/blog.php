@@ -1,4 +1,4 @@
-<!-- Adapted from http://packetcode.com/article/facebook-wall-design -->
+<!-- Layout adapted from http://packetcode.com/article/facebook-wall-design -->
 <!DOCTYPE html>
 <html lang="en">
 
