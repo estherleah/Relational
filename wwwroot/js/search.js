@@ -3,7 +3,6 @@ $(function() {
     $(".search").keyup(function() {
         var searchid = $(this).val();
         var dataString = 'search=' + searchid;
-        var url = 'http://localhost/gc06/includes/search.php';
 
         if (searchid == '') {
             jQuery("#result").fadeOut();

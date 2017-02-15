@@ -4,7 +4,11 @@ session_start();
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
-if ($_POST) {
+if (!isset($_POST['post']) or trim($_POST['post']) == '') {
+    echo "Please enter some text.";
+    header("Location: ../blog.php");
+}
+else {
     // temp until we maintain state
     $entry = $_POST["post"];
     $date = date("Y-m-d H:i:s");
@@ -23,3 +27,5 @@ if ($_POST) {
         echo "Error: " . $blogInsertSql . "<br>" . mysqli_error($conn);
     }
 }
+
+?>
