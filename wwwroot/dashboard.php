@@ -1,11 +1,12 @@
 <?php
 include_once 'database/database.php';
 session_start();
+include 'header.php';
 /**
- * Login page
+ * Created by PhpStorm.
  * User: Esther Leah
- * Date: 24/01/2017
- * Time: 22:11
+ * Date: 15/02/2017
+ * Time: 13:33
  */
 ?>
 
@@ -16,7 +17,7 @@ session_start();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Login</title>
+    <title>Dashboard</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -32,20 +33,7 @@ session_start();
     <div class="col-*-*">
         <div class="text-center">
             <div class="col-sm-4 col-sm-offset-4">
-                <h2>Login</h2>
-                <form method="post" action="includes/login.php" name="loginForm">
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input class="form-control" type="email" name="email" id="email" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input class="form-control" type="password" name="password" id="password" placeholder="Password">
-                    </div>
-                    <p><input class="btn btn-default" type="submit" value="Login"></p>
-                </form>
-                <p>Not yet a user? Sign up now.</p>
-                <a href="signup.php"><input class="btn btn-default" type="button" value="Sign up"></a>
+                <h2>Dashboard</h2>
             </div>
         </div>
     </div>

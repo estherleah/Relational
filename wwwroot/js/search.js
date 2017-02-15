@@ -3,13 +3,14 @@ $(function() {
     $(".search").keyup(function() {
         var searchid = $(this).val();
         var dataString = 'search=' + searchid;
+        var url = 'http://localhost/gc06/includes/search.php';
 
         if (searchid == '') {
             jQuery("#result").fadeOut();
         } else {
             $.ajax({
                 type: "POST",
-                url: "../search.php",
+                url: 'includes/search.php',
                 data: dataString,
                 cache: false,
                 success: function(html) {

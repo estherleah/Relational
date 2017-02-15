@@ -1,5 +1,6 @@
 <?php
 include_once '../database/database.php';
+session_start();
 /**
  * Created by PhpStorm.
  * User: Esther Leah
@@ -32,6 +33,48 @@ include_once '../database/database.php';
         <div class="text-center">
             <div class="col-sm-6 col-sm-offset-3">
                 <?php
+                function isDataValid()
+                {
+                    $errorMessage = null;
+                    if (!isset($_POST['email']) or trim($_POST['email']) == '')
+                        $errorMessage = 'You must enter your email address.';
+                    else if (!isset($_POST['password']) or trim($_POST['password']) == '')
+                        $errorMessage = 'You must enter your password';
+                    if ($errorMessage !== null)
+                    {
+                        echo <<<EOM
+          <p>Error: $errorMessage</p>
+EOM;
+                        echo "<p><a href='../index.php'>Return to login</a></p>";
+                        return False;
+                    }
+                    return True;
+                }
+
+                function isValidUser()
+                {
+                    $email = $_POST["email"];
+                    $password = $_POST["password"];
+                    $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+                    $conn = connectDatabase();
+                    $result = mysqli_query($conn, $sql);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $_SESSION['user'] = $row['userID'];
+                        $_SESSION['name'] = $row["firstName"] . " " . $row["lastName"];
+                        header("Location: ../dashboard.php");
+                        return True;
+                    }
+                    else {
+                        echo "Login details incorrect";
+                        header("Location: ../index.php");
+                        return False;
+                    }
+                }
+
+                if (isValidUser()) {
+                    header("Location: ../dashboard.php");
+                }
+
                 ?>
             </div>
         </div>
