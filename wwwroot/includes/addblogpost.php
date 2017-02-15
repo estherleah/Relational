@@ -11,7 +11,8 @@ if ($_POST) {
     $date = date("Y-m-d H:i:s");
 
     $userIdEscaped = mysqli_real_escape_string($connection, $userId);
-    $entryEscaped = mysqli_real_escape_string($connection, $entry);
+    $entryHtmlClean = htmlspecialchars($entry);
+    $entryEscaped = mysqli_real_escape_string($connection, $entryHtmlClean);
     $dateEscaped = mysqli_real_escape_string($connection, $date);
 
     $blogInsertSql = "INSERT INTO blog_entry (userID, entry, date)

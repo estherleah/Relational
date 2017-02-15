@@ -15,6 +15,7 @@ $(function() { // waits for document to be ready
           success: function(html) {
               // reload data
               $("#previousposts").load(location.href + " #previousposts");
+              $('#postText').val('');
           }
       });
     }
