@@ -43,8 +43,8 @@ $name = $_SESSION['name'];
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="dashboard.php">Home</a></li>
-                <li><a href="#">Friends</a></li>
-                <li><a href="#">Circles</a></li>
+                <li><a href="friends.php">Friends</a></li>
+                <li><a href="circles.php">Circles</a></li>
                 <li><a href="#">Photos</a></li>
                 <li><a href="blog.php">Blog</a></li>
                 <li><a href="search.php">Search</a></li>
