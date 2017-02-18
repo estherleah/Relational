@@ -2,6 +2,7 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
+include 'includes/findfriends.php';
 ?>
 
 <!DOCTYPE html>
@@ -13,30 +14,6 @@ include 'header.php';
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
-<?php
-
-$userIDEscaped = mysqli_real_escape_string($conn, $user);
-
-$userSql = "SELECT firstName, lastName, profilephotoURL
-              FROM user
-              WHERE userID = '$userIDEscaped';
-              ";
-$userResult = mysqli_query($conn, $userSql);
-
-if (mysqli_num_rows($userResult) === 1) {
-    $row = mysqli_fetch_assoc($userResult);
-    $fullName = $row["firstName"] . " " . $row["lastName"];
-    $profilephotoURL = $row["profilephotoURL"];
-}
-
-$friendSql = "SELECT profilephotoURL, firstName, lastName, status
-              FROM friendship AS f JOIN user AS u
-              ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
-              ORDER BY lastName DESC;
-              ";
-$friendResult = mysqli_query($conn, $friendSql);
-?>
 
 <body>
 <!-- Content -->
@@ -54,7 +31,7 @@ $friendResult = mysqli_query($conn, $friendSql);
           if (mysqli_num_rows($friendResult) > 0) {
               while ($row = mysqli_fetch_assoc($friendResult)) {
                   ?>
-                  <div class="row" id="existingfriend">
+                  <div class="row" id="existingFriends">
                     <div class="col-xs-3">
                         <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="100%"/>
                     </div>
@@ -65,19 +42,20 @@ $friendResult = mysqli_query($conn, $friendSql);
                             <small>
                               <?php
                               $friendStatus = null;
-                              if ($row["status"] == 0) {
-                                $friendStatus = "Awaiting confirmation";
-                              } else if ($row["status"] == 1) {
-                                $friendStatus = "Confirmed request";
-                              }
+                  if ($row["status"] == 0) {
+                      $friendStatus = "Awaiting confirmation";
+                  } elseif ($row["status"] == 1) {
+                      $friendStatus = "Confirmed request";
+                  }
 
-                             echo $friendStatus
+                  echo $friendStatus
                              ?>
                            </small>
                         </div>
                     </div>
                   </div>
                   <?php
+
               }
           }
           ?>
@@ -87,11 +65,57 @@ $friendResult = mysqli_query($conn, $friendSql);
         <div class="col-xs-5">
           <h3 class="text-center">Recommended</h3>
           <div class="row">
-              <p>some text</p>
+            <form>
+            <label class="checkbox">
+              <input type="checkbox" name="optradio">All
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="optradio">Friends of friends
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="optradio">In same circle
+            </label>
+            <button class="btn btn-primary btn-xs pull-right" type="button">Filter</button>
+          </form>
           </div>
-          <div class="row">
-              <p>some text</p>
-          </div>
+          <?php
+
+          if ($recommendedResult) {
+            $count = 0;
+              do {
+                  if ($result = mysqli_store_result($conn)) {
+                      while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                        <div class="row" id="recommendedFriends">
+                          <div class="col-xs-3">
+                              <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="100%"/>
+                          </div>
+                          <div class="col-xs-9">
+                              <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
+                              <button class="btn btn-primary btn-xs pull-right" type="button">Friend</button>
+                              <div class="text-muted">
+                                  <small>
+                                    <?php
+                                    $recommendationSource = null;
+                                    if ($count == 0) {
+                                      $recommendationSource = "Friends of friends";
+                                    } else if ($count == 1) {
+                                      $recommendationSource = "Circle participants";
+                                    }
+
+                                   echo $recommendationSource;?>
+                                 </small>
+                              </div>
+                          </div>
+                        </div>
+                      <?php
+                      }
+                      $count++;
+                      mysqli_free_result($result);
+                  }
+              } while (mysqli_more_results($conn) && (mysqli_next_result($conn)));
+          }
+          ?>
         </div>
     </div>
 </div>
