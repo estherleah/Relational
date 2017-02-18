@@ -43,7 +43,7 @@ $blogResult = mysqli_query($conn, $blogSql);
 <div class="container">
     <div class="row" id="entry">
         <div class="col-xs-12">
-            <h2>Blog for <?php echo $name ?></h2>
+            <h2 class="text-center">Blog for <?php echo $name ?></h2>
         </div>
         <div class="col-xs-2">
             <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="100%"/>
