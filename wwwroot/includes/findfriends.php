@@ -33,6 +33,10 @@ if ($limitOn) {
   $circleFriendsLimit = 999999999999999999;
 }
 
+/* find friends of friends
+* make sure they're not already a current friend
+* Randomise and limit the output (if specified)
+*/
 $sqlQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
                             FROM user
                             WHERE userID IN
@@ -55,6 +59,10 @@ $sqlQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
                             ;
                           ";
 
+/* find circle participants that user is not friends with of circles user is in
+* make sure they're not already a current friend
+* Randomise and limit the output (if specified)
+*/
 $sqlQuery .= " SELECT firstName, lastName, profilephotoURL, gender, location
                             FROM user
                             WHERE userID IN
