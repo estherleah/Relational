@@ -50,7 +50,7 @@ $name = $_SESSION['name'];
                 <li><a href="search.php">Search</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
+                <li><a href="settings.php"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
                 <li><a href="includes/logout.php"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
             </ul>
         </div>
