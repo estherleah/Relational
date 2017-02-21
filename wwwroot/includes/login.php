@@ -61,18 +61,19 @@ EOM;
                     if ($row = mysqli_fetch_assoc($result)) {
                         $_SESSION['user'] = $row['userID'];
                         $_SESSION['name'] = $row["firstName"] . " " . $row["lastName"];
-                        header("Location: ../dashboard.php");
                         return True;
                     }
                     else {
                         echo "Login details incorrect";
-                        header("Location: ../index.php");
                         return False;
                     }
                 }
 
                 if (isValidUser()) {
                     header("Location: ../dashboard.php");
+                }
+                else {
+                    header("Location: ../index.php");
                 }
 
                 ?>
