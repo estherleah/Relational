@@ -31,7 +31,7 @@
         die('Error: ' . mysqli_error($conn));
       }
       else {
-        header('Location: chatProcess.php');
+        header('Location: chat.php');
         exit();
       }
     }
