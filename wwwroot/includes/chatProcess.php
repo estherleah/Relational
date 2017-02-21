@@ -1,5 +1,8 @@
 <?php
   include_once '../database/database.php';
+  session_start();
+
+  //I think this file is broken
   //table for messages - message
   //most RECENT messages appear at the bottom
   //fields: messageID, circleID, userID, message, date
