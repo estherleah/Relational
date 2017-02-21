@@ -2,12 +2,11 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
-
 /**
  * Created by PhpStorm.
  * User: Esther Leah
- * Date: 15/02/2017
- * Time: 13:33
+ * Date: 21/02/2017
+ * Time: 15:11
  */
 ?>
 
@@ -32,8 +31,8 @@ include 'header.php';
 <!-- Content -->
 <div class="container">
     <div class="col-*-*">
-        <div class="col-md-6 col-sm-offset-3">
-            <div class="text-center">
+        <div class="text-center">
+            <div class="col-sm-8 col-sm-offset-2">
                 <h2>Settings</h2>
             </div>
         </div>
