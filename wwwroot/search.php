@@ -32,8 +32,8 @@ include 'header.php';
                 <h2>Search</h2>
                 <div class="form-group">
                 <input type="text" class="form-control search" id="searchid" placeholder="Search" />
-                </div>
                 <div id="result"></div>
+                </div>
             </div>
         </div>
     </div>
