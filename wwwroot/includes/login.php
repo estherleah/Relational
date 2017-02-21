@@ -74,6 +74,9 @@ EOM;
                 if (isValidUser()) {
                     header("Location: ../dashboard.php");
                 }
+                else {
+                    header("Location: ../index.php");
+                }
 
                 ?>
             </div>
