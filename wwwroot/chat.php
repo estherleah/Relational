@@ -35,7 +35,7 @@ if (mysqli_num_rows($userResult) === 1) {
 //ON b.userID = '$userIDEscaped' AND b.userID = u.userID
 
 
-$messageSQL = "SELECT message, date, firstName, lastName
+$messageSQL = "SELECT message, date, profilephotoURL, firstName, lastName
               FROM message JOIN user
               ON message.userID = user.userID
               ORDER BY date ASC;
@@ -65,10 +65,14 @@ $messageResult = mysqli_query($conn, $messageSQL);
             while ($row = mysqli_fetch_assoc($messageResult)) {
                 ?>
                 <div class="row" id="previousposts">
-
+                  <div class="col-xs-2">
+                      <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="50%"/>
+                  </div>
                     <div class="col-xs-10">
                         <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                        <div><?php echo $row["date"] . " --- " . $row["message"] ?></div>
+                        <div><?php echo $row["message"] ?></div>
+                        <div class="text-muted"><small><?php echo $row["date"] ?></small>
+                        </div>
                     </div>
                 </div>
                 <?php
