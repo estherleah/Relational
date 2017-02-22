@@ -37,6 +37,9 @@ if ($limitOn) {
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified)
 */
+
+//Exclude yourself (you can't be friends with yourself)??
+
 $sqlQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
                             FROM user
                             WHERE userID IN
@@ -48,12 +51,14 @@ $sqlQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
                                   WHERE userID1 = '$userIDEscaped'
                                 )
                                 AND status = 1
+                                AND userID1 != userID2
                                 AND NOT EXISTS (
                                   SELECT *
                                   FROM friendship AS fi
                                   WHERE fi.userID1 = '$userIDEscaped'
                                   AND fi.userID2 = fo.userID2
                                 )
+
                               )
                               ORDER BY RAND() LIMIT $friendsOfFriendsLimit
                             ;
@@ -63,7 +68,7 @@ $sqlQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified)
 */
-$sqlQuery .= " SELECT firstName, lastName, profilephotoURL, gender, location
+$sqlQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
                             FROM user
                             WHERE userID IN
                               (SELECT DISTINCT userID
