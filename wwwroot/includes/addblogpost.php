@@ -1,4 +1,5 @@
 <?php
+
 include_once '../database/database.php';
 session_start();
 $user = $_SESSION['user'];
@@ -9,7 +10,6 @@ if (!isset($_POST['post']) or trim($_POST['post']) == '') {
     header("Location: ../blog.php");
 }
 else {
-    // temp until we maintain state
     $entry = $_POST["post"];
     $date = date("Y-m-d H:i:s");
 
@@ -22,7 +22,6 @@ else {
 
     if (mysqli_query($conn, $blogInsertSql)) {
         echo "New blog entry created successfully";
-        header("Location: ../blog.php");
     } else {
         echo "Error: " . $blogInsertSql . "<br>" . mysqli_error($conn);
     }
