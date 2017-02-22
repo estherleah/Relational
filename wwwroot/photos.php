@@ -45,16 +45,28 @@ include 'includes/initialisePhotos.php';
               <h3>Existing collections</h3>
           </div>
     </div>
-        <?php
-
-        ?>
     <div class="row" id="existingCollections">
-        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a class="thumbnail" href="#">
-                <img class="img-responsive" src="http://placehold.it/400x300" alt="">
-            </a>
-        </div>
+    <?php
+    if (mysqli_num_rows($photoCollectionResult) > 0) {
+        while ($row = mysqli_fetch_assoc($photoCollectionResult)) {
+            ?>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                  <b><?php echo $row["name"]?></b>
+                    <a class="thumbnail" href="#">
+                        <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    </a>
+                    <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
+                    <div class="text-muted">
+                        <small><?php echo $row["date"] ?></small>
+                    </div>
+                </div>
+            <?php
+        }
+    }
+    ?>
     </div>
+
+
   </div>
   </div>
 
