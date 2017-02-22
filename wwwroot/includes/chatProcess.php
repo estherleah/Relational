@@ -1,39 +1,31 @@
 <?php
-  include_once '../database/database.php';
-  session_start();
+include_once '../database/database.php';
+session_start();
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
 
-  //I think this file is broken
-  //table for messages - message
-  //most RECENT messages appear at the bottom
-  //fields: messageID, circleID, userID, message, date
-  //user table is just user
-  if (isset($_POST['submit'])) {
-    //$user = mysqli_real_escape_string($connection, $_POST['user']);
-    $message = mysqli_real_escape_string($conn, $_POST['message']);
+if (!isset($_POST['post']) or trim($_POST['post']) == '') {
+    echo "Please enter some text.";
+    header("Location: ../chat.php");
+}
+else {
+    // temp until we maintain state
+    $entry = $_POST["post"];
+    $date = date("Y-m-d H:i:s");
 
-    //select JUST the userID of the current logged in user
-    $currentUser = mysql_query("SELECT userID from user where userID ='".$_SESSION['userID']."'");
+    $userIdEscaped = mysqli_real_escape_string($conn, $user);
+    $entryEscaped = mysqli_real_escape_string($conn, $entry);
+    $dateEscaped = mysqli_real_escape_string($conn, $date);
 
-    //get the current time and date not entirely sure about this
-    date_default_timezone_set('Europe/London');
-    $time = date('h:i:s a', time());
+    $messagensertISQL = "INSERT INTO message (userID, message, date)
+                    VALUES ('$userIdEscaped', '$entryEscaped', '$dateEscaped')";
 
-    //adapted old chat room, userID should be preset so remove user
-    if (!isset($message) || $message == '') {
-      echo "Warning: you did not enter a message."
-      header("Location: ../chat.php?");
-
+    if (mysqli_query($conn, $messagensertISQL)) {
+        echo "Message sent";
+        header("Location: ../chat.php");
+    } else {
+        echo "Error: " . $messagensertISQL . "<br>" . mysqli_error($conn);
     }
-    else {
-      $messageInsert = "INSERT INTO message (userID, message, date)
-                VALUES ('$currentUser', '$message', '$time')";
-      if (!mysqli_query($conn, $messageInsert)) {
-        die('Error: ' . mysqli_error($conn));
-      }
-      else {
-        header('Location: chat.php');
-        exit();
-      }
-    }
-  }
+}
+
 ?>

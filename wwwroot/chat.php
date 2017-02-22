@@ -1,65 +1,92 @@
-<?php include 'database.php';
+<?php
+include_once 'database/database.php';
 session_start();
 include 'header.php';
 ?>
-<?php
-//table for messages - message
-//most RECENT messages appear at the bottom
-//fields: messageID, circleID, userID, message, date
-//user table is just user
-  $getMessages = "SELECT * FROM message ORDER BY messageID DESC";
-  $messages = mysqli_query($conn, $getMessages);
-  //$currentUser = mysql_query("SELECT firstName, lastName from user where userID ='".$_SESSION['userID']."'");
-  //reusing that bit of code from blog.php to get current user
-  $userIDEscaped = mysqli_real_escape_string($conn, $user);
-  $userSql = "SELECT firstName, lastName
-                FROM user
-                WHERE userID = '$userIDEscaped';
-                ";
-  $current = mysqli_query($conn, $userSql);
 
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Exclusive Circle Chat!</title>
+    <title>CircleChat</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-  <body>
-    <div id="container">
-      <header>
-        <h1>Members-only chat</h1>
-      </header>
-      <div id="messages">
-        <ul>
-          <?php while($row = mysqli_fetch_assoc($messages)) : ?>
-            <li class="message">
-              <span><?php echo $row['date'] ?> --- </span>
-              <strong>
+<?php
 
-                <?php echo "User ".$row['userID']?></strong>
-              : <?php echo $row['message'] ?>
-            </li>
-          <?php endwhile; ?>
-        </ul>
-      </div>
-      <div id="input">
-        <?php if (isset($_GET['error'])) : ?>
-          <?php echo "ERROR"; ?>
-        <?php endif; ?>
-        <form method="post" action="includes/chatProcess.php">
-          <input type="text" id="newmessage" name="message" placeholder="Type something here"/>
-          <input id="show-btn" type="submit" name="submit" value="Send"/>
-        </form>
-      </div>
+$userIDEscaped = mysqli_real_escape_string($conn, $user);
+
+$userSql = "SELECT firstName, lastName, profilephotoURL
+              FROM user
+              WHERE userID = '$userIDEscaped';
+              ";
+$userResult = mysqli_query($conn, $userSql);
+
+if (mysqli_num_rows($userResult) === 1) {
+    $row = mysqli_fetch_assoc($userResult);
+    $fullName = $row["firstName"] . " " . $row["lastName"];
+    $profilephotoURL = $row["profilephotoURL"];
+}
+//select the message database
+
+//attempt a different query - want to get everything ever posted in circle/chat
+//ON b.userID = '$userIDEscaped' AND b.userID = u.userID
+
+
+$messageSQL = "SELECT message, date, firstName, lastName
+              FROM message JOIN user
+              ON message.userID = user.userID
+              ORDER BY date ASC;
+              ";
+/*
+
+$messageSQL = "SELECT message, date, firstName, lastName,
+              FROM message, user
+              WHERE  message.userID = user.userID
+              ORDER BY date ASC;
+              ;"
+              */
+
+$messageResult = mysqli_query($conn, $messageSQL);
+?>
+
+<body>
+<!-- Content -->
+<div class="container">
+    <div class="row" id="entry">
+        <div class="col-xs-12">
+            <h2 class="text-center">Magic Circle Chat for <?php echo $name ?></h2>
+        </div>
+
+        <?php
+        if (mysqli_num_rows($messageResult) > 0) {
+            while ($row = mysqli_fetch_assoc($messageResult)) {
+                ?>
+                <div class="row" id="previousposts">
+
+                    <div class="col-xs-10">
+                        <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
+                        <div><?php echo $row["date"] . " --- " . $row["message"] ?></div>
+                    </div>
+                </div>
+                <?php
+            }
+        }
+        ?>
+
+        <div class="col-xs-10">
+            <form method="post" action="includes/chatProcess.php">
+                <textarea name="post" class="form-control" rows='3' id="postText"></textarea>
+                <input class="btn btn-primary pull-right" type="submit" value="Send message">
+            </form>
+        </div>
     </div>
-  </body>
-</html>
+
+</div>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
