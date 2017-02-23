@@ -179,5 +179,8 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/addfriend.js"></script>
+<script src="js/acceptreq.js"></script>
+<script src="js/deletefriend.js"></script>
 </body>
 </html>
