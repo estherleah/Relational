@@ -80,7 +80,7 @@ $messageResult = mysqli_query($conn, $messageSQL);
         }
         ?>
 
-        <div class="col-xs-10">
+        <div class="col-xs-10 col-xs-offset-1">
             <form method="post" action="includes/chatProcess.php">
                 <textarea name="post" class="form-control" rows='3' id="postText"></textarea>
                 <input class="btn btn-primary pull-right" type="submit" value="Send message">
