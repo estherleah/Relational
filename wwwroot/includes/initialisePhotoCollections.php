@@ -17,15 +17,13 @@ if (mysqli_num_rows($userResult) === 1) {
     $row = mysqli_fetch_assoc($userResult);
     $fullName = $row["firstName"] . " " . $row["lastName"];
     $profilephotoURL = $row["profilephotoURL"];
-} else {
-  echo "Error: unable to find user";
 }
 
-$blogSql = "SELECT entry, date, profilephotoURL, firstName, lastName
-              FROM blog_entry AS b JOIN user AS u
-              ON b.userID = '$userIDEscaped' AND b.userID = u.userID
+$collectionSql = "SELECT collectionID, name, date, profilephotoURL, firstName, lastName
+              FROM photo_collection AS p JOIN user AS u
+              ON p.userID = '$userIDEscaped' AND p.userID = u.userID
               ORDER BY date DESC;
               ";
-$blogResult = mysqli_query($conn, $blogSql);
+$collectionResult = mysqli_query($conn, $collectionSql);
 
 ?>

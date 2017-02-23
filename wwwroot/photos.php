@@ -22,12 +22,13 @@ include 'includes/initialisePhotos.php';
   <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="page-header"><?php echo $name ?>'s Photo Collections</h1>
+            <h1 class="page-header"><?php echo $name ?></h1>
+            <b>Date created: <?php echo $date?></b>
         </div>
     </div>
     <div class="row">
           <div class="col-xs-12">
-              <h3>Create a new collection</h3>
+              <h3>Add photos</h3>
           </div>
     </div>
     <div class="row">
@@ -42,23 +43,41 @@ include 'includes/initialisePhotos.php';
 
     <div class="row">
           <div class="col-xs-12">
-              <h3>Existing collections</h3>
+              <h3>Existing photos</h3>
           </div>
     </div>
-    <div class="row" id="existingCollections">
+    <div class="row" id="existingPhotos">
     <?php
-    if (mysqli_num_rows($photoCollectionResult) > 0) {
-        while ($row = mysqli_fetch_assoc($photoCollectionResult)) {
+    if (mysqli_num_rows($photoResult) > 0) {
+        while ($row = mysqli_fetch_assoc($photoResult)) {
             ?>
                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                  <b><?php echo $row["name"]?></b>
-                    <a class="thumbnail" href="#">
-                        <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                    <a class="thumbnail" data-toggle="modal" data-target="#photoModal-<?php echo $row["photoID"]?>">
+                        <img class="img-responsive" src="<?php echo $row["photoURL"] ?>" alt="">
                     </a>
-                    <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
                     <div class="text-muted">
                         <small><?php echo $row["date"] ?></small>
                     </div>
+                </div>
+                <!-- Modal -->
+                <div id="photoModal-<?php echo $row["photoID"]?>" class="modal fade" role="dialog">
+                  <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><?php echo $row["date"] ?></h4>
+                      </div>
+                      <div class="modal-body">
+                        <img src="<?php echo $row["photoURL"] ?>" alt="">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
             <?php
         }
@@ -68,15 +87,12 @@ include 'includes/initialisePhotos.php';
 
 
   </div>
-  </div>
 
+  
 
-
-
-  </div>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/addPhotoCollection.js"></script>
+  <script src="js/addPhoto.js"></script>
 </body>
 </html>
