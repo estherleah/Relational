@@ -48,6 +48,7 @@ $name = $_SESSION['name'];
                 <li><a href="#">Photos</a></li>
                 <li><a href="blog.php">Blog</a></li>
                 <li><a href="search.php">Search</a></li>
+                <li><a href="chat.php">Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="settings.php"><span class="glyphicon glyphicon-user"></span> Settings</a></li>

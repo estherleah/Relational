@@ -2,7 +2,7 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
-include 'includes/findfriends.php';
+include 'includes/initialiseFriends.php';
 ?>
 
 <!DOCTYPE html>
