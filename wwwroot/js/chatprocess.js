@@ -14,7 +14,7 @@ $(function() { // waits for document to be ready
           cache: false,
           success: function(html) {
               // reload data
-            $("#previousmessages").load(location.href + " #previousmessages");
+            $("#message").load(location.href + " #message");
 
               // clear entry form
               $("#messageText").val('');

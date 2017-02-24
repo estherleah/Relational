@@ -35,6 +35,8 @@ include 'includes/initialiseChat.php';
                   </div>
                     <div class="col-xs-10">
                         <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
+
+
                         <div><?php echo $row["message"] ?></div>
                         <div class="text-muted"><small><?php echo $row["date"] ?></small>
                         </div>
@@ -44,7 +46,7 @@ include 'includes/initialiseChat.php';
             }
         }
         ?>
-        
+
         <div class="row" id="newmessage">
             <div class="col-xs-10">
               <textarea class="form-control" rows='3' id="messageText"></textarea>
