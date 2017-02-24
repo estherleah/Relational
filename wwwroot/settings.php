@@ -2,7 +2,12 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
-
+/**
+ * Created by PhpStorm.
+ * User: Esther Leah
+ * Date: 21/02/2017
+ * Time: 15:11
+ */
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +17,7 @@ include 'header.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Dashboard</title>
+    <title>Settings</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -22,18 +27,13 @@ include 'header.php';
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/search.js"></script>
 
 <!-- Content -->
 <div class="container">
     <div class="col-*-*">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <div class="text-center">
-                <h2>Search</h2>
-                <div class="form-group">
-                <input type="text" class="form-control search" id="searchid" placeholder="Search" />
-                <div id="result"></div>
-                </div>
+        <div class="text-center">
+            <div class="col-sm-8 col-sm-offset-2">
+                <h2>Settings</h2>
             </div>
         </div>
     </div>

@@ -38,7 +38,7 @@ $name = $_SESSION['name'];
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">Relation</a>
+            <a class="navbar-brand" href="dashboard.php">Relational</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
@@ -51,7 +51,7 @@ $name = $_SESSION['name'];
                 <li><a href="chat.php">Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
+                <li><a href="settings.php"><span class="glyphicon glyphicon-user"></span> Settings</a></li>
                 <li><a href="includes/logout.php"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
             </ul>
         </div>

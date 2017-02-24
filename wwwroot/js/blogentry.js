@@ -9,7 +9,7 @@ $(function() { // waits for document to be ready
       // call php code to write to DB
       $.ajax({
           type: "POST",
-          url: "../includes/addblogpost.php",
+          url: 'includes/addblogpost.php',
           data: dataString,
           cache: false,
           success: function(html) {
