@@ -47,11 +47,11 @@ include 'includes/findcircles.php';
                             $desc = $circle['description'];
                             ?>
                             <div class="circle" align="left";>
-                                 <a href='circle.php?id=<?php echo $circleID; ?>' class="circleTitle"><?php echo $name; ?></a>
-                                 <button class="BtnLeaveCircle" type="button">Leave</button>
+                                 <button class="btn btn-primary BtnLeaveCircle" type="button">Leave</button>
+                                 <a href="circle.php?id=<?php echo $circleID; ?>" class="btn btn-link circleTitle" type="button"><?php echo $name; ?></a>
                                  </br>
                                  <span class="circleDesc"><?php echo $desc; ?></span>
-                                 <span class="cid" style="visibility:hidden;"><?php echo $circleID; ?></span>
+                                 <!-- <span class="cid" style="visibility:hidden;"><?php echo $circleID; ?></span> -->
                             </div>
                             <?php
                         }

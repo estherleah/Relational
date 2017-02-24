@@ -109,8 +109,6 @@ img {
 
 	.BtnLeaveCircle {
 		float: right;
-		margin: 5px;
-		padding: 2px;
 	}
 
 
@@ -118,14 +116,42 @@ img {
    Circle Page
 *******************/
 
+	.BtnDeleteCircle {
+		margin: 20px;
+	}
+
+	.members {
+		padding-top: 50px;
+	}
+
 	.circleMember {
 		height: 50px;
 		margin: 20px;
-		padding: 10px;
 		align: left;
-		vertical-align: center;
+		vertical-align: middle;
+		text-align: left;
 	}
 
 	.circleMemberName {
-		line-height: 50px;
+		margin-top: 10px;
+		display: inline-block;
+	    vertical-align: middle;
+	    line-height: normal;
+	}
+
+	.circleMemberStatus {
+		color: #4c66a4;
+		font-weight: bold;
+	}
+
+	.circleMemberPhoto {
+		width: 50px;
+		height: 50px;
+		margin-right: 20px;
+		float: left;
+	}
+
+	.btnChangeCircleMemberStatus {
+		float: right;
+		margin-left: 20px;
 	}

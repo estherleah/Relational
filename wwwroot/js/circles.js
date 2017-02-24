@@ -49,4 +49,111 @@ $(function() {
         jQuery("#result").fadeIn();
     });
 
+
+    // Circle Members --------------------------------------------
+
+    var removeMsg = "";
+
+    // Include member name in info modal
+    $('#infoModal').on('show.bs.modal', function (event) {
+        // var button = $(event.relatedTarget)
+        // var name = button.data("name")
+        var modal = $(this)
+        modal.find('.message').text(removeMsg+"")
+    })
+
+    $(".btnRemove").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
+
+        $.ajax({ url: 'includes/showcircle.php',
+            data: {
+                action: 'removeUser',
+                id
+            },
+            type: 'post',
+            success: function(output) {
+                removeMsg = output;
+                $('#infoModal').modal()
+            }
+        });
+    });
+
+    $(".btnMAdmin").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
+
+        $.ajax({ url: 'includes/showcircle.php',
+            data: {
+                action: 'makeAdmin',
+                id
+            },
+            type: 'post',
+            success: function(output) {
+                removeMsg = output;
+                $('#infoModal').modal()
+            }
+        });
+    });
+
+    $(".btnRAdmin").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
+
+        $.ajax({ url: 'includes/showcircle.php',
+            data: {
+                action: 'revokeAdmin',
+                id
+            },
+            type: 'post',
+            success: function(output) {
+                removeMsg = output;
+                $('#infoModal').modal()
+            }
+        });
+    });
+
+    $(".btnMOwner").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
+
+        getConfirm('Do you really want to pass your ownership rights? You will remain an admin in this circle.', function(result) {
+            if(result == true){
+                $.ajax({ url: 'includes/showcircle.php',
+                    data: {
+                        action: 'makeOwner',
+                        id
+                    },
+                    type: 'post',
+                    success: function(output) {
+                        removeMsg = output;
+                        $('#infoModal').modal()
+                    },
+                    error: function(output) {
+                        removeMsg = output;
+                        $('#infoModal').modal()
+                    }
+                });
+            }
+        });
+
+    });
+
+    function getConfirm(confirmMessage,callback){
+    confirmMessage = confirmMessage || '';
+
+    $('#confirmationModal').modal();
+
+    $('.message').text(confirmMessage);
+    $('.btnCancel').click(function(){
+        $('#confirmationModal').modal('hide');
+        if (callback) callback(false);
+
+    });
+    $('.btnConfirm').click(function(){
+        $('#confirmationModal').modal('hide');
+        if (callback) callback(true);
+    });
+}
+
 });

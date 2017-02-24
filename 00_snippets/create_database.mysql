@@ -61,7 +61,7 @@ CREATE TABLE `circle` (
 CREATE TABLE `circle_participants` (
   `circleID` INT NOT NULL,
   `userID` INT NOT NULL,
-  `userStatus` INT(0,1) NOT NULL DEFAULT '0',
+  `userStatus` INT(0,1,2,3) NOT NULL DEFAULT '0',
   PRIMARY KEY (circleID, userID),
   FOREIGN KEY (userID) REFERENCES user(userID),
   FOREIGN KEY (circleID) REFERENCES circle(circleID)
