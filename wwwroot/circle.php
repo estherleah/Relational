@@ -37,6 +37,10 @@ include 'includes/showcircle.php';
                         ?><button class="btn btn-danger BtnDeleteCircle" type="button">Delete Circle</button><?php
                     }
                 ?>
+                <!--THIS PART INCLUDES THE chatcircle.php SCRIPT-->
+                <div class="col-xs-10" id = "circlechat">
+                   <?php include('chatcircle.php'); ?>
+                </div>
             </div>
             <div class="col-md-4 members">
                 <a class="btn btn-link" href="circlemembers.php?id=<?php echo $circleID; ?>" role="button"><h3>Members</h3></a>
