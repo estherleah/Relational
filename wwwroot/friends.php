@@ -6,9 +6,7 @@ include 'includes/initialiseFriends.php';
 include 'includes/addFriend.php';
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
-
 $userIdEscaped = mysqli_real_escape_string($conn, $user);
-
 ?>
 
 <!DOCTYPE html>
@@ -126,7 +124,6 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
 
 
           <?php
-
           if ($recommendedResult) {
             $count = 0;
               do {
@@ -159,7 +156,6 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
                                     } else if ($count == 1) {
                                       $recommendationSource = "Circle participants";
                                     }
-
                                    echo $recommendationSource;?>
                                  </small>
                               </div>

@@ -45,7 +45,7 @@ include '../database/database.php';
                         $errorMessage = 'You must enter your password';
                     else if (!isset($_POST['confirmPassword']) or trim($_POST['confirmPassword']) == '')
                         $errorMessage = 'You must confirm your password.';
-                    else if (trim($_POST['password']) != trim($_POST['confirmPassword']))
+                    else if (!isset($_POST['confirmPassword']) or (trim($_POST['password']) != trim($_POST['confirmPassword'])))
                         $errorMessage = 'Your passwords must match';
                     if ($errorMessage !== null)
                     {
@@ -65,6 +65,24 @@ EOM;
                     $user["lastName"] = $_POST["lastName"];
                     $user["email"] = $_POST["email"];
                     $user["password"] = $_POST["password"];
+                    if (isset($_POST['gender'])) {
+                        $user["gender"] = $_POST['gender'];
+                    }
+                    else {
+                        $user["gender"] = NULL;
+                    }
+                    if (isset($_POST['location'])) {
+                        $user["location"] = $_POST['location'];
+                    }
+                    else {
+                        $user["location"] = NULL;
+                    }
+                    if (isset($_POST['dob'])) {
+                        $user["dob"] = $_POST['dob'];
+                    }
+                    else {
+                        $user["dob"] = NULL;
+                    }
                     return $user;
                 }
 
@@ -82,7 +100,11 @@ EOM;
                     $lastName = $user['lastName'];
                     $email = $user['email'];
                     $password = $user['password'];
-                    $sql = "INSERT INTO user (firstName, lastName, email, password, privacyID) VALUES ('$firstName', '$lastName', '$email', '$password', 1)";
+                    $gender = $user["gender"];
+                    $location = $user["location"];
+                    $dob = $user["dob"];
+                    $sql = "INSERT INTO user (firstName, lastName, email, password, dob, gender, location, privacyID) 
+                        VALUES ('$firstName', '$lastName', '$email', '$password', '$dob', '$gender', '$location', 1)";
                     $conn = connectDatabase();
                     if (mysqli_query($conn, $sql)) {
                         echo "New user created successfully";

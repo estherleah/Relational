@@ -57,7 +57,7 @@ include_once 'database/database.php';
                     </div>
                     <div class="form-group">
                         <label for="location">Location:</label>
-                        <select class="form-control input-medium bfh-countries" name="location" id="location" data-country="GB"></select>
+                        <select class="form-control input-medium bfh-countries" name="location" id="location" <!--data-country="GB"-->></select>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of birth:</label>

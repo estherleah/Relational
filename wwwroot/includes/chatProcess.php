@@ -11,15 +11,12 @@ if (!isset($_POST['post']) or trim($_POST['post']) == '') {
 }
 else {
     // temp until we maintain state
-
     */
     $message = $_POST["message"];
     $date = date("Y-m-d H:i:s");
-
     $userIdEscaped = mysqli_real_escape_string($conn, $user);
     $messageEscaped = mysqli_real_escape_string($conn, $message);
     $dateEscaped = mysqli_real_escape_string($conn, $date);
-
     $messageInsertSql = "INSERT INTO message (userID, message, date)
                     VALUES ('$userIdEscaped', '$messageEscaped', '$dateEscaped')";
     //this isn't the problem
@@ -28,6 +25,4 @@ else {
     } else {
         echo "Error: " . $messageInsertSql . "<br>" . mysqli_error($conn);
     }
-
-
 ?>
