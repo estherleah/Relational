@@ -20,6 +20,8 @@ include 'header.php';
     <title>Settings</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap-formhelpers.min.js"></script>
+    <script src="js/bootstrap-formhelpers-countries.js"></script>
 </head>
 
 <body>
@@ -32,10 +34,10 @@ include 'header.php';
 <div class="container">
     <div class="col-*-*">
         <div class="text-center">
-            <div class="col-sm-8 col-sm-offset-2">
+            <div class="col-sm-4 col-sm-offset-4">
                 <h2>Settings</h2>
                 <form method="post" action="includes/changesettings.php" name="settingsForm">
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="firstName">First Name:</label>
                         <input class="form-control" type="text" name="firstName" id="firstName" placeholder="First name" required>
                     </div>
@@ -54,7 +56,7 @@ include 'header.php';
                     <div class="form-group">
                         <label for="confirmPassword">Confirm password:</label>
                         <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" required>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label for="privacy">Privacy:</label>
                         <select class="form-control" name="privacy" id="privacy">
@@ -67,7 +69,7 @@ include 'header.php';
                     </div>
                     <div class="form-group">
                         <label for="location">Location:</label>
-                        <select class="form-control input-medium bfh-countries" name="location" id="location" <!--data-country="GB"-->></select>
+                        <select class="form-control input-medium bfh-countries" name="location" id="location" <!--data-country="$location"-->></select>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of birth:</label>
@@ -89,7 +91,7 @@ include 'header.php';
                             </label>
                         </div>
                     </div>
-                    <p><input class="btn btn-default" type="submit" value="Sign Up"></a></p>
+                    <p><input class="btn btn-default" type="submit" value="Change"></a></p>
                 </form>
             </div>
         </div>

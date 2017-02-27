@@ -93,8 +93,9 @@ EOM;
                     $lastName = $user['lastName'];
                     $email = $user['email'];
                     $password = $user['password'];
+                    $hash = base64_encode(sha1($password, true));
                     $sql = "INSERT INTO user (firstName, lastName, email, password, privacyID) 
-                        VALUES ('$firstName', '$lastName', '$email', '$password', 1)";
+                        VALUES ('$firstName', '$lastName', '$email', '$hash', 1)";
                     $conn = connectDatabase();
                     if (mysqli_query($conn, $sql)) {
                         addOptionalData($user);
