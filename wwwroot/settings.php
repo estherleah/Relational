@@ -62,7 +62,7 @@ include 'header.php';
                         <select class="form-control" name="privacy" id="privacy">
                             <option value="public">Public</option>
                             <option value="friends of friends">Friends of friends</option>
-                            <option value="circle">Circle</option>
+                            <option value="circles">Circles</option>
                             <option value="friends">Friends</option>
                             <option value="private">Private</option>
                         </select>
