@@ -6,6 +6,8 @@ include '../database/database.php';
  * Date: 02/02/2017
  * Time: 20:52
  */
+
+// TODO: Check if the email address is already in the database before submitting the query.
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,20 +70,11 @@ EOM;
                     if (isset($_POST['gender'])) {
                         $user["gender"] = $_POST['gender'];
                     }
-                    else {
-                        $user["gender"] = NULL;
-                    }
                     if (isset($_POST['location'])) {
                         $user["location"] = $_POST['location'];
                     }
-                    else {
-                        $user["location"] = NULL;
-                    }
                     if (isset($_POST['dob'])) {
                         $user["dob"] = $_POST['dob'];
-                    }
-                    else {
-                        $user["dob"] = NULL;
                     }
                     return $user;
                 }
@@ -100,18 +93,45 @@ EOM;
                     $lastName = $user['lastName'];
                     $email = $user['email'];
                     $password = $user['password'];
-                    $gender = $user["gender"];
-                    $location = $user["location"];
-                    $dob = $user["dob"];
-                    $sql = "INSERT INTO user (firstName, lastName, email, password, dob, gender, location, privacyID) 
-                        VALUES ('$firstName', '$lastName', '$email', '$password', '$dob', '$gender', '$location', 1)";
+                    $sql = "INSERT INTO user (firstName, lastName, email, password, privacyID) 
+                        VALUES ('$firstName', '$lastName', '$email', '$password', 1)";
                     $conn = connectDatabase();
                     if (mysqli_query($conn, $sql)) {
+                        addOptionalData($user);
                         echo "New user created successfully";
                         echo "<p><a href='../index.php'>Sign in</a></p>";
                     } else {
                         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                         echo "<p><a href='../signup.php'>Return to input form</a></p>";
+                    }
+                }
+
+                function addOptionalData($user)
+                {
+                    $email = $user['email'];
+                    if(isset($_POST['gender'])) {
+                        $gender = $user["gender"];
+                        $sql = "UPDATE `user` SET `gender`= '$gender' WHERE `email` = '$email'";
+                        $conn = connectDatabase();
+                        if (!(mysqli_query($conn, $sql))) {
+                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                        }
+                    }
+                    if(isset($_POST['location'])) {
+                        $location = $user["location"];
+                        $sql = "UPDATE `user` SET `gender`= '$location' WHERE `email` = '$email'";
+                        $conn = connectDatabase();
+                        if (!(mysqli_query($conn, $sql))) {
+                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                        }
+                    }
+                    if(isset($_POST['dob'])) {
+                        $dob = $user["dob"];
+                        $sql = "UPDATE `user` SET `gender`= '$dob' WHERE `email` = '$email'";
+                        $conn = connectDatabase();
+                        if (!(mysqli_query($conn, $sql))) {
+                            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                        }
                     }
                 }
 
