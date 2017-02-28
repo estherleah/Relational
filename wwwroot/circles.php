@@ -31,10 +31,12 @@ include 'includes/findcircles.php';
         <div class="text-center">
             <div class="col-sm-8 col-sm-offset-2">
                 <h2>Circles</h2>
+                <!-- Search Form -->
                 <div class="form-group">
                     <input type="text" class="form-control search" id="searchid" placeholder="Search" />
                     <div id="result"></div>
                 </div>
+                <a href="createcircle.php" class="btn btn-primary btnCreateCircle" type="button">Create Circle</a>
                 </br>
                 <h3>Your Circles</h3>
                 <div id="circles">
@@ -47,11 +49,10 @@ include 'includes/findcircles.php';
                             $desc = $circle['description'];
                             ?>
                             <div class="circle" align="left";>
-                                 <button class="btn btn-primary BtnLeaveCircle" type="button">Leave</button>
+                                 <button class="btn btn-primary btnLeaveCircle" type="button">Leave</button>
                                  <a href="circle.php?id=<?php echo $circleID; ?>" class="btn btn-link circleTitle" type="button"><?php echo $name; ?></a>
                                  </br>
                                  <span class="circleDesc"><?php echo $desc; ?></span>
-                                 <!-- <span class="cid" style="visibility:hidden;"><?php echo $circleID; ?></span> -->
                             </div>
                             <?php
                         }

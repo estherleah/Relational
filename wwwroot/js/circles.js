@@ -2,9 +2,39 @@ $(function() {
 
     // User's Circles -------------------------------------------
 
+    $(".btnLeaveCircle").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
 
+        $.ajax({ url: 'includes/showcircle.php',
+            data: {
+                action: 'removeUser',
+                id
+            },
+            type: 'post',
+            success: function(output) {
+                removeMsg = output;
+                $('#infoModal').modal()
+            }
+        });
+    });
 
+    $(".btnCreateCircle").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
 
+        $.ajax({ url: 'includes/showcircle.php',
+            data: {
+                action: 'removeUser',
+                id
+            },
+            type: 'post',
+            success: function(output) {
+                removeMsg = output;
+                $('#infoModal').modal()
+            }
+        });
+    });
 
 
     // Circle Search --------------------------------------------
@@ -50,6 +80,26 @@ $(function() {
     });
 
 
+    // Circle ----------------------------------------------------
+
+    $(".btnDeleteCircle").on("click", function(event) {
+        getConfirm('Do you really want to delete this circle?', function(result) {
+            if(result == true){
+                $.ajax({ url: 'includes/showcircle.php',
+                    data: {
+                        action: 'deleteCircle'
+                    },
+                    type: 'post',
+                    success: function(output) {
+                        removeMsg = output;
+                        $('#infoModal').modal()
+                    }
+                });
+            }
+        });
+    });
+
+
     // Circle Members --------------------------------------------
 
     var removeMsg = "";
@@ -66,15 +116,19 @@ $(function() {
         var button = $(event.target)
         var id = button.data("id")
 
-        $.ajax({ url: 'includes/showcircle.php',
-            data: {
-                action: 'removeUser',
-                id
-            },
-            type: 'post',
-            success: function(output) {
-                removeMsg = output;
-                $('#infoModal').modal()
+        getConfirm('Do you really want to remove this user from the circle?', function(result) {
+            if(result == true){
+                $.ajax({ url: 'includes/showcircle.php',
+                    data: {
+                        action: 'removeUser',
+                        id
+                    },
+                    type: 'post',
+                    success: function(output) {
+                        removeMsg = output;
+                        $('#infoModal').modal()
+                    }
+                });
             }
         });
     });

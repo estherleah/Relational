@@ -47,7 +47,7 @@ include 'includes/showcircle.php';
                                class="btn btn-danger btnChangeCircleMemberStatus btnRemove"
                                role="button"
                                data-id="<?php echo $thisUserID ?>"
-                               > <!-- <?php //echo $firstName;?> <?php //echo $lastName; ?> // onclick="removeUser(this);" -->
+                               >
                                Remove
                            </button>
                         <?php } ?>
@@ -91,6 +91,10 @@ include 'includes/showcircle.php';
                     <?php
                 }
                 ?>
+                <!-- Include Modals -->
+                <!-- <script> $(function(){ $("#includeModals").load("includes/modals.html"); }); </script>
+                <div id="includeModals"></div> -->
+
                 <!-- Info Dialog -->
                 <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
