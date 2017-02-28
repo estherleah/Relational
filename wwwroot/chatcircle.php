@@ -25,7 +25,7 @@ include 'includes/initialiseCircleChat.php';
       <div class="row" id="headerrow">
       <div class="col-xs-10">
         <!--this should echo circleID instead of name, fix later-->
-          <h2 class="text-centre">Chat for <?php echo $name ?></h2>
+          <h2 class="text-centre"><?php echo $circleName ?> Group Chat</h2>
       </div>
     </div>
 
