@@ -33,11 +33,12 @@ include 'includes/initialisePhotos.php';
     </div>
     <div class="row">
           <div class="col-xs-12">
-            <div class="form-group">
-              <label for="name">Name:</label>
-              <input type="text" class="form-control" id="name">
-            </div>
-            <button class="btn btn-primary pull-right" id="postSubmit" type="button">Add</button>
+          <div class="form-group">
+            <form action="includes/addPhoto.php?collectionID=<?php echo $collectionID?>" method="post" enctype="multipart/form-data">
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input class="btn btn-primary pull-left" type="submit" value="Upload Image" name="submit">
+            </form>
+          </div>
           </div>
     </div>
 
@@ -70,7 +71,7 @@ include 'includes/initialisePhotos.php';
                         <h4 class="modal-title"><?php echo $row["date"] ?></h4>
                       </div>
                       <div class="modal-body">
-                        <img src="<?php echo $row["photoURL"] ?>" alt="">
+                        <img src="<?php echo $row["photoURL"] ?>" alt="" style="width:800px;">
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
