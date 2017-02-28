@@ -38,7 +38,7 @@ include 'includes/showcircle.php';
                     }
                 ?>
                 <!--THIS PART INCLUDES THE chatcircle.php SCRIPT-->
-                <div class="col-xs-10" id="circlechat">
+                <div class="col-xs-20" id="circlechat">
                    <?php include('chatcircle.php'); ?>
                 </div>
             </div>
@@ -52,6 +52,7 @@ include 'includes/showcircle.php';
                     $profilePhotoURL = $row["profilephotoURL"];
                     ?>
                     <div class="circleMember">
+
                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
                         <span class="circleMemberName">
                             <?php echo $firstName;?> <?php echo $lastName; ?>
