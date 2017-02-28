@@ -11,8 +11,8 @@ $connection = connectDatabase();
 
 // Search for circle data
 if(isset($_GET['id'])){
-    $_SESSION['circleid'] = $_GET['id'];
-    $circleID = $_SESSION['circleid'];
+    $_SESSION['circleID'] = $_GET['id'];
+    $circleID = $_SESSION['circleID'];
 }
 
 // Retrieve user status
@@ -76,7 +76,7 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
 
 function removeUser(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
 
     $thisUserID = $_POST['id'];
 
@@ -93,7 +93,7 @@ function removeUser(){
 
 function makeAdmin(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
 
     $thisUserID = $_POST['id'];
 
@@ -110,7 +110,7 @@ function makeAdmin(){
 
 function revokeAdmin(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
 
     $thisUserID = $_POST['id'];
 
@@ -130,7 +130,7 @@ function revokeAdmin(){
 // and either no one or two people will be circle owner thereafter.
 function makeOwner(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
     $user = $_SESSION['user'];
 
     $thisUserID = $_POST['id'];
@@ -164,7 +164,7 @@ function getName($id){
 
 function deleteCircle(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
 
     $deleteCircle = " DELETE
                       FROM       circle

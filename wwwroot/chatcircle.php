@@ -3,7 +3,7 @@
 <?php
 include_once 'database/database.php';
 session_start();
-include 'includes/initialiseChat.php';
+include 'includes/initialiseCircleChat.php';
 ?>
 
 <!DOCTYPE html>
