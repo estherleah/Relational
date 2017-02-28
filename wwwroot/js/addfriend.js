@@ -9,7 +9,7 @@ $(function() { // waits for document to be ready
       // call php code to write to DB
       $.ajax({
           type: "POST",
-          url: 'includes/addblogpost.php',
+          url: "../includes/addFriend.php",
           data: dataString,
           cache: false,
           success: function(html) {
@@ -17,7 +17,7 @@ $(function() { // waits for document to be ready
               $("#previousposts").load(location.href + " #previousposts");
 
               // clear entry form
-              $("#postText").val('');
+              //$("#postText").val('');
           }
       });
     }

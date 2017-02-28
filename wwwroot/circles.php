@@ -2,6 +2,7 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
+include 'includes/findcircles.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +15,7 @@ include 'header.php';
     <title>Dashboard</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -21,6 +23,7 @@ include 'header.php';
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
+<script src="js/circles.js"></script>
 
 <!-- Content -->
 <div class="container">
@@ -28,6 +31,33 @@ include 'header.php';
         <div class="text-center">
             <div class="col-sm-8 col-sm-offset-2">
                 <h2>Circles</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control search" id="searchid" placeholder="Search" />
+                    <div id="result"></div>
+                </div>
+                </br>
+                <h3>Your Circles</h3>
+                <div id="circles">
+                    <?php
+                    if (mysqli_num_rows($circleResult) > 0) {
+                        // Display circles
+                        while($circle = mysqli_fetch_array($circleResult)) {
+                            $circleID = $circle['circleID'];
+                            $name = $circle['name'];
+                            $desc = $circle['description'];
+                            ?>
+                            <div class="circle" align="left";>
+                                 <a href='circle.php?id=<?php echo $circleID; ?>' class="circleTitle"><?php echo $name; ?></a>
+                                 <button class="BtnLeaveCircle" type="button">Leave</button>
+                                 </br>
+                                 <span class="circleDesc"><?php echo $desc; ?></span>
+                                 <span class="cid" style="visibility:hidden;"><?php echo $circleID; ?></span>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
