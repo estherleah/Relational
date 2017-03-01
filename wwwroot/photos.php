@@ -36,7 +36,14 @@ include 'includes/initialisePhotos.php';
           <div class="form-group">
             <form id="uploadForm" enctype="multipart/form-data">
                 <input id="fileToUpload" type="file" name="fileToUpload">
-                <input id="uploadButton" type="button" value="Upload" class="btn btn-primary pull-left">
+                <button type="button"
+                   class="btn btn-primary pull-left btnUpload"
+                   role="button"
+                   data-id="<?php echo $collectionID?>"
+                   >
+                   Upload
+                </button>
+                <input id="uploadButton" type="button" value="Upload" class="btn pull-left">
             </form>
           </div>
           </div>
@@ -94,6 +101,6 @@ include 'includes/initialisePhotos.php';
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/addPhoto.php"></script>
+  <script src="js/addPhoto.js"></script>
 </body>
 </html>

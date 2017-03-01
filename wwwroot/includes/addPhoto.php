@@ -1,13 +1,16 @@
 <?php
 
 // Adapted from https://www.w3schools.com/php/php_file_upload.asp
-
 include_once '../database/database.php';
 session_start();
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
-$collectionId = $_GET['collectionID'];
+//echo var_dump($_POST);
+//echo var_dump($_FILES);
+$collectionId = $_POST["id"];
+
+//echo "collectionId: " . $collectionId;
 
 $target_dir = "../uploads/$user/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
