@@ -34,9 +34,9 @@ include 'includes/initialisePhotos.php';
     <div class="row">
           <div class="col-xs-12">
           <div class="form-group">
-            <form action="includes/addPhoto.php?collectionID=<?php echo $collectionID?>" method="post" enctype="multipart/form-data">
-                <input type="file" name="fileToUpload" id="fileToUpload">
-                <input class="btn btn-primary pull-left" type="submit" value="Upload Image" name="submit">
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input id="fileToUpload" type="file" name="fileToUpload">
+                <input id="uploadButton" type="button" value="Upload" class="btn btn-primary pull-left">
             </form>
           </div>
           </div>
@@ -94,6 +94,6 @@ include 'includes/initialisePhotos.php';
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/addPhoto.js"></script>
+  <script src="js/addPhoto.php"></script>
 </body>
 </html>
