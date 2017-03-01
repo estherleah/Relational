@@ -1,4 +1,6 @@
 <?php
+
+
 //I don't think the problem is here either
 $userIDEscaped = mysqli_real_escape_string($conn, $user);
 $circleIDEscaped = mysqli_real_escape_string($conn, $circleID);
