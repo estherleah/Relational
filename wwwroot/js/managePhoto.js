@@ -18,7 +18,7 @@ $(function() { // waits for document to be ready
         alert('Select a file');
       }
       else {
-        // call php code to write to DB
+        // call php code to upload photo
       $.ajax({
         type: "POST",
         url: "../includes/addPhoto.php",
@@ -37,4 +37,28 @@ $(function() { // waits for document to be ready
       });
     }
   });
+
+
+
+  $(".btnRemove").on("click", function(event) {
+      var button = $(event.target);
+      var id = button.data("id");
+      var url = button.data("url");
+
+      $("#existingPhotos").load(location.href + " #existingPhotos");
+      // call php code to remove photo
+      $.ajax({
+        type: "POST",
+        url: "../includes/removePhoto.php",
+        data: {id, url},
+        cache: false,
+
+        success: function(html) {
+            // reload data
+            $("#existingPhotos").load(location.href + " #existingPhotos");
+            alert(html);
+        }
+      });
+    });
+
 });

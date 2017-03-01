@@ -12,10 +12,16 @@ $collectionId = $_POST["id"];
 
 //echo "collectionId: " . $collectionId;
 
-$target_dir = "../uploads/$user/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+$docRoot = $_SERVER['DOCUMENT_ROOT'] . "/";
+
+$sub_path = "uploads/userId-$user/collectionId-$collectionId/";
+$system_path = $docRoot . $sub_path;
+
+$web_path_full = $sub_path . basename($_FILES["fileToUpload"]["name"]);
+$system_path_full = $system_path . basename($_FILES["fileToUpload"]["name"]);
+
 $uploadOk = 1;
-$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -29,7 +35,7 @@ if(isset($_POST["submit"])) {
 }
 
 // Check if file already exists
-if (file_exists($target_file)) {
+if (file_exists($system_path_full)) {
     echo "Sorry, file already exists.";
     $uploadOk = 0;
 }
@@ -39,16 +45,16 @@ if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
 // if everything is ok, try to upload file
 } else {
-    $userDirExists = file_exists($target_dir);
+    $dirExists = file_exists($system_path);
 
-    if (!$userDirExists) {
-      $userDirExists = mkdir($target_dir);
+    if (!$dirExists) {
+      $dirExists = mkdir($system_path,0777,true);
     }
-    if ($userDirExists && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+    if ($dirExists && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $system_path_full)) {
         // Add entry to DB
         $date = date("Y-m-d H:i:s");
         $collectionIdEscaped = mysqli_real_escape_string($conn, $collectionId);
-        $photoUrlEscaped = mysqli_real_escape_string($conn, $target_file);
+        $photoUrlEscaped = mysqli_real_escape_string($conn, $web_path_full);
         $dateEscaped = mysqli_real_escape_string($conn, $date);
         $photoInsertSql = "INSERT INTO photo (collectionID, photoURL, date)
                         VALUES ('$collectionIdEscaped', '$photoUrlEscaped', '$dateEscaped')";

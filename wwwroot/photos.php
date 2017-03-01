@@ -43,7 +43,6 @@ include 'includes/initialisePhotos.php';
                    >
                    Upload
                 </button>
-                <input id="uploadButton" type="button" value="Upload" class="btn pull-left">
             </form>
           </div>
           </div>
@@ -59,16 +58,18 @@ include 'includes/initialisePhotos.php';
     if (mysqli_num_rows($photoResult) > 0) {
         while ($row = mysqli_fetch_assoc($photoResult)) {
             ?>
-                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                    <a class="thumbnail" data-toggle="modal" data-target="#photoModal-<?php echo $row["photoID"]?>">
-                        <img class="img-responsive" src="<?php echo $row["photoURL"] ?>" alt="">
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                  <div class="thumbnail">
+                    <a data-toggle="modal" data-target="#photoModal-<?php echo $row["photoID"]?>">
+                        <img class="img-responsive" src="<?php echo $row["photoURL"]?>">
                     </a>
                     <div class="text-muted">
                         <small><?php echo $row["date"] ?></small>
                     </div>
+                  </div>
                 </div>
                 <!-- Modal -->
-                <div id="photoModal-<?php echo $row["photoID"]?>" class="modal fade" role="dialog">
+                <div id="photoModal-<?php echo $row["photoID"]?>" class="modal" role="dialog">
                   <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
@@ -78,9 +79,18 @@ include 'includes/initialisePhotos.php';
                         <h4 class="modal-title"><?php echo $row["date"] ?></h4>
                       </div>
                       <div class="modal-body">
-                        <img src="<?php echo $row["photoURL"] ?>" alt="" style="width:800px;">
+                        <img class="img-responsive" src="<?php echo $row["photoURL"] ?>">
                       </div>
                       <div class="modal-footer">
+                        <button type="button"
+                           class="btn btn-danger pull-left btnRemove"
+                           role="button"
+                           data-id="<?php echo $row["photoID"]?>"
+                           data-url="<?php echo $row["photoURL"]?>"
+                           data-dismiss="modal"
+                           >
+                           Remove
+                        </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                       </div>
                     </div>
@@ -101,6 +111,6 @@ include 'includes/initialisePhotos.php';
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/addPhoto.js"></script>
+  <script src="js/managePhoto.js"></script>
 </body>
 </html>
