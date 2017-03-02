@@ -20,9 +20,10 @@ if (mysqli_num_rows($userResult) === 1) {
 }
 
 // SQL gets list of photo collections, the user who created them and the count of photos in each
+// need left join on photos to include collections without any photos
 $collectionSql = "SELECT pcol.collectionID, pcol.name, pcol.date, u.profilephotoURL, u.firstName, u.lastName, COUNT(p.photoID) AS count
               FROM photo_collection AS pcol
-              JOIN photo AS p ON pcol.collectionID = p.collectionID
+              LEFT JOIN photo AS p ON pcol.collectionID = p.collectionID
               JOIN user AS u ON pcol.userID = u.userID
               WHERE pcol.userID = 1
               GROUP BY pcol.collectionID
