@@ -1,6 +1,6 @@
 <?php
 
-include_once '../database/database.php';
+include_once 'database/database.php';
 session_start();
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
