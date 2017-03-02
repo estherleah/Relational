@@ -51,14 +51,19 @@ include 'includes/initialisePhotoCollections.php';
         while ($row = mysqli_fetch_assoc($collectionResult)) {
             ?>
                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                  <b><?php echo $row["name"]?></b>
-                    <a class="thumbnail" href="/photos.php?collectionID=<?php echo $row["collectionID"]?>">
-                        <img class="img-responsive" src="http://placehold.it/400x300" alt="">
+                  <div class="thumbnail">
+                    <b><?php echo $row["name"]?></b>
+                    <a  href="/photos.php?collectionID=<?php echo $row["collectionID"]?>">
+                      <div class="jumbotron">
+                        <h1><?php echo $row["count"]?></h1>
+                        <p>photo(s)</p>
+                      </div>
                     </a>
                     <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
                     <div class="text-muted">
                         <small><?php echo $row["date"] ?></small>
                     </div>
+                  </div>
                 </div>
             <?php
         }
