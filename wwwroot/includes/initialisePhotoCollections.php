@@ -17,15 +17,18 @@ if (mysqli_num_rows($userResult) === 1) {
     $row = mysqli_fetch_assoc($userResult);
     $fullName = $row["firstName"] . " " . $row["lastName"];
     $profilephotoURL = $row["profilephotoURL"];
-} else {
-  echo "Error: unable to find user";
 }
 
-$blogSql = "SELECT entry, date, profilephotoURL, firstName, lastName
-              FROM blog_entry AS b JOIN user AS u
-              ON b.userID = '$userIDEscaped' AND b.userID = u.userID
+// SQL gets list of photo collections, the user who created them and the count of photos in each
+// need left join on photos to include collections without any photos
+$collectionSql = "SELECT pcol.collectionID, pcol.name, pcol.date, u.profilephotoURL, u.firstName, u.lastName, COUNT(p.photoID) AS count
+              FROM photo_collection AS pcol
+              LEFT JOIN photo AS p ON pcol.collectionID = p.collectionID
+              JOIN user AS u ON pcol.userID = u.userID
+              WHERE pcol.userID = 1
+              GROUP BY pcol.collectionID
               ORDER BY date DESC;
               ";
-$blogResult = mysqli_query($conn, $blogSql);
+$collectionResult = mysqli_query($conn, $collectionSql);
 
 ?>

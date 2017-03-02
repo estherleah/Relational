@@ -35,28 +35,27 @@ include 'includes/initialiseBlog.php';
         </div>
     </div>
 
-
+    <div class="row" id="previousposts">
     <?php
     if (mysqli_num_rows($blogResult) > 0) {
         while ($row = mysqli_fetch_assoc($blogResult)) {
             ?>
-            <div class="row" id="previousposts">
                 <div class="col-xs-2">
                     <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="50%"/>
                 </div>
                 <div class="col-xs-10">
                     <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                    <button class="btn btn-danger btn-xs pull-right" type="button">Delete</button>
+                    <!--button class="btn btn-danger btn-xs pull-right" type="button">Delete</button-->
                     <div class="text-muted">
                         <small><?php echo $row["date"] ?></small>
                     </div>
                     <div><?php echo $row["entry"] ?></div>
                 </div>
-            </div>
             <?php
         }
     }
     ?>
+    </div>
 
 </div>
 

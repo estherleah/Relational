@@ -36,6 +36,10 @@ img {
     margin-bottom: 30px;
 }
 
+.modal-dialog{text-align:center;}
+.modal-content{display:inline-block;}
+
+
 /******************
    ID
 *******************/
