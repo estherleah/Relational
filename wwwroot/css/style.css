@@ -155,3 +155,12 @@ img {
 		float: right;
 		margin-left: 20px;
 	}
+
+	.invited {
+		background-color: #4c66a4;
+		color: #fff;
+		display: inline-block;
+		padding: 8px;
+		padding-right: 10px;
+		margin: 5px;
+	}

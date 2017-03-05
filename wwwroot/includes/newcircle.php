@@ -1,5 +1,6 @@
 <?php
-include '../database/database.php';
+include_once '../database/database.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,9 +34,9 @@ include '../database/database.php';
                 else if (!isset($_POST['circleDesc']) or trim($_POST['circleDesc']) == '')
                     $errorMessage = 'Please enter a circle description';
                 if ($errorMessage !== null) {
-                    // echo <<<EOM;
-                    // <p>Error: $errorMessage</p>
-                    // EOM;
+                    echo <<<EOM
+      <p>Error: $errorMessage</p>
+EOM;
                     echo "<p><a href='../createcircle.php'>Return to input form</a></p>";
                     return False;
                 }
@@ -45,16 +46,21 @@ include '../database/database.php';
             function getCircle(){
                 $circle = array();
                 $circle["circleName"] = $_POST['circleName'];
-                $circle["circleDescription"] = $_POST['circleDesc'];
+                $circle["circleDesc"] = $_POST['circleDesc'];
                 return $circle;
             }
 
-            function addCircleToDatabase($user){
-                $circleName = $circle["circleName"];
-                $circleDescription = $circle["circleDescription"];
-                $sql = " INSERT INTO circle (name, description, privacyID) VALUES ('$circleName', '$circleDescription', 1)";
+            function addCircleToDatabase($circle){
+                $user = $_SESSION['user'];
+                $circleName = $circle['circleName'];
+                $circleDescription = $circle['circleDesc'];
                 $conn = connectDatabase();
-                if (mysqli_query($conn, $sql)) {
+                $sql = " INSERT INTO circle (name, description, privacyID) VALUES ('$circleName', '$circleDescription', 1) ";
+                $q1 = mysqli_query($conn, $sql);
+                $circle = mysqli_insert_id($conn);
+                $sql1 = " INSERT INTO circle_participants (circleID, userID, userStatus) VALUES ('$circle', '$user', 3) ";
+                $q2 = mysqli_query($conn, $sql1);
+                if ($q1 && $q2) {
                     echo "New circle created successfully";
                     echo "<p><a href='../circles.php'>Back to circles</a></p>";
                 } else {

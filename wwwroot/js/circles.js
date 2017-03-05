@@ -3,37 +3,64 @@ $(function() {
     // User's Circles -------------------------------------------
 
     $(".btnLeaveCircle").on("click", function(event) {
-        var button = $(event.target)
-        var id = button.data("id")
-
-        $.ajax({ url: 'includes/showcircle.php',
-            data: {
-                action: 'removeUser',
-                id
-            },
-            type: 'post',
-            success: function(output) {
-                removeMsg = output;
-                $('#infoModal').modal()
+        getConfirm('Do you really want to leave this circle?', function(result) {
+            if(result == true){
+                var button = $(event.target)
+                var circleID = button.data("circleid")
+                $.ajax({ url: 'includes/showcircle.php',
+                    data: {
+                        action: 'leaveCircle',
+                        circleID
+                    },
+                    type: 'post',
+                    success: function(output) {
+                        removeMsg = output;
+                        $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                            window.location.reload(true);
+                        })
+                        $('#infoModal').modal()
+                    }
+                });
             }
         });
     });
 
-    $(".btnCreateCircle").on("click", function(event) {
-        var button = $(event.target)
-        var id = button.data("id")
-
-        $.ajax({ url: 'includes/showcircle.php',
-            data: {
-                action: 'removeUser',
-                id
-            },
-            type: 'post',
-            success: function(output) {
-                removeMsg = output;
-                $('#infoModal').modal()
+    $(".btnDeleteCircle").on("click", function(event) {
+        getConfirm('Do you really want to delete this circle?', function(result) {
+            if(result == true){
+                $.ajax({ url: 'includes/showcircle.php',
+                    data: {
+                        action: 'deleteCircle'
+                    },
+                    type: 'post',
+                    success: function(output) {
+                        removeMsg = output;
+                        $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                            window.location.href = "circles.php";
+                        })
+                        $('#infoModal').modal()
+                    }
+                });
             }
         });
+    });
+
+    $(".btnAddMember").on("click", function(event) {
+        $('#inviteModal').modal()
+
+        // $.ajax({ url: 'includes/showcircle.php',
+        //     data: {
+        //         action: 'deleteCircle'
+        //     },
+        //     type: 'post',
+        //     success: function(output) {
+        //         removeMsg = output;
+        //         $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+        //             window.location.href = "circles.php";
+        //         })
+        //         $('#infoModal').modal()
+        //     }
+        // });
     });
 
 
@@ -80,6 +107,53 @@ $(function() {
     });
 
 
+    // Friend Search --------------------------------------------
+
+    $(".inviteSearch").keyup(function() {
+        var searchid = $(this).val();
+        var dataString = 'search=' + searchid;
+
+        if (searchid == '') {
+            jQuery("#inviteResult").fadeOut();
+        } else {
+            $.ajax({
+                type: "POST",
+                url: 'includes/search.php',
+                data: dataString,
+                cache: false,
+                success: function(html) {
+                    $("#inviteResult").html(html).show();
+                }
+            });
+        }
+        return false;
+    });
+
+    jQuery("#inviteResult").on("click", function(e) {
+        var $clicked = $(e.target);
+        var $userID = $clicked.find('.uid').html();
+        var $userName = $clicked.find('.name').html();
+        //var decoded = $("<div/>").html($userID).text();
+        //$('#searchid').val(decoded);
+        $("#inviteStaging").append("<div class=\"invited\" id=\""+$userID+"\"><button type=\"button\" class=\"close\" aria-label=\"Close\" style=\"margin-left:10px; color:#fff\"><span aria-hidden=\"true\">&times;</span></button>"+$userName+"</div>");
+
+        $(".invited").on("click", function(event) {
+            $(this).closest('.invited').remove();
+        });
+    });
+
+    // jQuery(document).on("click", function(e) {
+    //     var $clicked = $(e.target);
+    //     if (!$clicked.hasClass("search")) {
+    //         jQuery("#inviteResult").fadeOut();
+    //     }
+    // });
+
+    $('#inviteSearch').click(function() {
+        jQuery("#inviteResult").fadeIn();
+    });
+
+
     // Circle ----------------------------------------------------
 
     $(".btnDeleteCircle").on("click", function(event) {
@@ -92,10 +166,41 @@ $(function() {
                     type: 'post',
                     success: function(output) {
                         removeMsg = output;
+                        $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                            window.location.reload(true);
+                        })
                         $('#infoModal').modal()
                     }
                 });
             }
+        });
+    });
+
+    $(".btnInvite").on("click", function(event) {
+        //$(this).closest('#inviteStaging')
+        //var $userIDs;
+        console.log("clicked!");
+        $('.invited').each(function(){
+            //$userIDs.push(this.attr('id'));
+            console.log(this);
+            var newUserID =  $(this).attr('id');
+
+            console.log("user id ist: "+newUserID);
+
+            $.ajax({ url: 'includes/showcircle.php',
+                data: {
+                    action: 'addUser',
+                    newUserID
+                },
+                type: 'post',
+                success: function(output) {
+                    removeMsg = output;
+                    $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                        window.location.reload(true);
+                    })
+                    $('#infoModal').modal()
+                }
+            });
         });
     });
 
@@ -126,6 +231,9 @@ $(function() {
                     type: 'post',
                     success: function(output) {
                         removeMsg = output;
+                        $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                            window.location.reload(true);
+                        })
                         $('#infoModal').modal()
                     }
                 });
@@ -145,6 +253,9 @@ $(function() {
             type: 'post',
             success: function(output) {
                 removeMsg = output;
+                $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                    window.location.reload(true);
+                })
                 $('#infoModal').modal()
             }
         });
@@ -162,6 +273,9 @@ $(function() {
             type: 'post',
             success: function(output) {
                 removeMsg = output;
+                $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                    window.location.reload(true);
+                })
                 $('#infoModal').modal()
             }
         });
@@ -181,10 +295,16 @@ $(function() {
                     type: 'post',
                     success: function(output) {
                         removeMsg = output;
+                        $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                            window.location.reload(true);
+                        })
                         $('#infoModal').modal()
                     },
                     error: function(output) {
                         removeMsg = output;
+                        $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
+                            window.location.reload(true);
+                        })
                         $('#infoModal').modal()
                     }
                 });

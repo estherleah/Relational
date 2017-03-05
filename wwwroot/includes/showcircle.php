@@ -11,8 +11,8 @@ $connection = connectDatabase();
 
 // Search for circle data
 if(isset($_GET['id'])){
-    $_SESSION['circleid'] = $_GET['id'];
-    $circleID = $_SESSION['circleid'];
+    $_SESSION['circleID'] = $_GET['id'];
+    $circleID = $_SESSION['circleID'];
 }
 
 // Retrieve user status
@@ -71,12 +71,15 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
       case 'revokeAdmin' : revokeAdmin(); break;
       case 'makeOwner' : makeOwner(); break;
       case 'deleteCircle' : deleteCircle(); break;
+      case 'leaveCircle' : leaveCircle(); break;
+      case 'deleteCircle' : deleteCircle(); break;
+      case 'addUser' : addUser(); break;
   }
 }
 
 function removeUser(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
 
     $thisUserID = $_POST['id'];
 
@@ -93,7 +96,7 @@ function removeUser(){
 
 function makeAdmin(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
 
     $thisUserID = $_POST['id'];
 
@@ -110,7 +113,7 @@ function makeAdmin(){
 
 function revokeAdmin(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
 
     $thisUserID = $_POST['id'];
 
@@ -130,7 +133,7 @@ function revokeAdmin(){
 // and either no one or two people will be circle owner thereafter.
 function makeOwner(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    $circleID = $_SESSION['circleID'];
     $user = $_SESSION['user'];
 
     $thisUserID = $_POST['id'];
@@ -162,22 +165,60 @@ function getName($id){
 
 //---------------------------------------------------------------------------------------------------
 
+function leaveCircle(){
+    global $connection;
+    $circleID = $_POST['circleID'];
+    $userID = $_SESSION['user'];
+
+    $leaveCircle = "   DELETE
+                       FROM       circle_participants
+                       WHERE      circleID = '$circleID' AND userID = '$userID' ";
+
+    if (mysqli_query($connection, $leaveCircle)) {
+        echo "You left the circle";
+    } else {
+        echo "Error deleting record: " . mysqli_error($connection);
+    }
+}
+
 function deleteCircle(){
     global $connection;
-    $circleID = $_SESSION['circleid'];
+    global $circleName;
+    $circleID = $_SESSION['circleID'];
+    $deleteCircle = "   DELETE
+                        FROM    circle
+                        WHERE   circleID = '$circleID' ";
 
-    $deleteCircle = " DELETE
-                      FROM       circle
-                      WHERE      circleID = '$circleID' ";
+    $deleteMembers = "   DELETE
+                         FROM   circle_participants
+                         WHERE  circleID = '$circleID' ";
 
-    $deleteCircleMembers = " DELETE
-                             FROM       circle_participants
-                             WHERE      circleID = '$circleID' ";
+    $q1 = mysqli_query($connection, $deleteMembers);
+    $q2 = mysqli_query($connection, $deleteCircle);
 
-    if (mysqli_query($connection, $deleteCircle) && mysqli_query($connection, $deleteCircleMembers)) {
-        echo "You deleted " . $_SESSION['name'];
+    if ($q1 && $q2) {
+        echo "You deleted " . $circleName;
     } else {
-        echo "Error deleting circle: " . mysqli_error($connection);
+        echo "Error deleting record: " . mysqli_error($connection);
+    }
+}
+
+//---------------------------------------------------------------------------------------------------
+
+function addUser(){
+    global $connection;
+    $circleID = $_SESSION['circleID'];
+
+    $newUserID = $_POST['newUserID'];
+
+    $revokeAdminRights = " INSERT INTO circle_participants (circleID, userID, userStatus)
+                           VALUES      ('$circleID', '$newUserID', 1) ";
+
+
+    if (mysqli_query($connection, $revokeAdminRights)) {
+        echo "You added " . getName($thisUserID) . ". ";
+    } else {
+        echo "Error adding new user: " . mysqli_error($connection);
     }
 }
 

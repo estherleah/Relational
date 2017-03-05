@@ -49,7 +49,12 @@ include 'includes/findcircles.php';
                             $desc = $circle['description'];
                             ?>
                             <div class="circle" align="left";>
-                                 <button class="btn btn-primary btnLeaveCircle" type="button">Leave</button>
+                                 <button class="btn btn-primary btnLeaveCircle"
+                                         type="button"
+                                         data-circleid="<?php echo $circleID ?>"
+                                         >
+                                         Leave
+                                 </button>
                                  <a href="circle.php?id=<?php echo $circleID; ?>" class="btn btn-link circleTitle" type="button"><?php echo $name; ?></a>
                                  </br>
                                  <span class="circleDesc"><?php echo $desc; ?></span>
@@ -58,6 +63,30 @@ include 'includes/findcircles.php';
                         }
                     }
                     ?>
+
+                    <!-- Include Modals -->
+                    <!-- <script> $(function(){ $("#includeModals").load("includes/modals.html"); }); </script>
+                    <div id="includeModals"></div> -->
+
+                    <!-- Confirmation Dialog -->
+                    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Are you sure?</h4>
+                          </div>
+                          <div class="modal-body">
+                            <span class="message"></span>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default btnCancel" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btnConfirm" data-dismiss="modal" onclick="window.location.reload(true);">Confirm</button>
+                          </div>
+                        </div><!-- /.modal-content -->
+                      </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+
                 </div>
             </div>
         </div>
