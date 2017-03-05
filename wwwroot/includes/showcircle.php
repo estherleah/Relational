@@ -183,6 +183,7 @@ function leaveCircle(){
 
 function deleteCircle(){
     global $connection;
+<<<<<<< HEAD
     global $circleName;
     $circleID = $_SESSION['circleID'];
     $deleteCircle = "   DELETE
@@ -207,6 +208,8 @@ function deleteCircle(){
 
 function addUser(){
     global $connection;
+=======
+>>>>>>> 0ae97f890bfda211b69944907908b53afebe91bd
     $circleID = $_SESSION['circleID'];
 
     $newUserID = $_POST['newUserID'];
