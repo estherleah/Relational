@@ -13,7 +13,7 @@ $dateEscaped = mysqli_real_escape_string($conn, $date);
 $circleIDEscaped = mysqli_real_escape_string($conn, $circleID);
 
 $messageInsertSql = "INSERT INTO message (userID, circleID, message, date)
--                    VALUES ('$userIdEscaped', '$circleIDEscaped','$messageEscaped', '$dateEscaped')";
+                      VALUES ('$userIdEscaped', '$circleIDEscaped','$messageEscaped', '$dateEscaped')";
 
 if (mysqli_query($conn, $messageInsertSql)) {
 echo "Message sent";
