@@ -183,7 +183,6 @@ function leaveCircle(){
 
 function deleteCircle(){
     global $connection;
-<<<<<<< HEAD
     global $circleName;
     $circleID = $_SESSION['circleID'];
     $deleteCircle = "   DELETE
@@ -208,17 +207,15 @@ function deleteCircle(){
 
 function addUser(){
     global $connection;
-=======
->>>>>>> 0ae97f890bfda211b69944907908b53afebe91bd
     $circleID = $_SESSION['circleID'];
 
     $newUserID = $_POST['newUserID'];
 
-    $revokeAdminRights = " INSERT INTO circle_participants (circleID, userID, userStatus)
-                           VALUES      ('$circleID', '$newUserID', 1) ";
+    $addMember = " INSERT IGNORE INTO circle_participants (circleID, userID, userStatus)
+                   VALUES      ('$circleID', '$newUserID', 1) ";
 
 
-    if (mysqli_query($connection, $revokeAdminRights)) {
+    if (mysqli_query($connection, $addMember)) {
         echo "You added " . getName($thisUserID) . ". ";
     } else {
         echo "Error adding new user: " . mysqli_error($connection);

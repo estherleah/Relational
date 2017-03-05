@@ -130,12 +130,21 @@ $(function() {
     });
 
     jQuery("#inviteResult").on("click", function(e) {
-        var $clicked = $(e.target);
-        var $userID = $clicked.find('.uid').html();
-        var $userName = $clicked.find('.name').html();
-        //var decoded = $("<div/>").html($userID).text();
-        //$('#searchid').val(decoded);
-        $("#inviteStaging").append("<div class=\"invited\" id=\""+$userID+"\"><button type=\"button\" class=\"close\" aria-label=\"Close\" style=\"margin-left:10px; color:#fff\"><span aria-hidden=\"true\">&times;</span></button>"+$userName+"</div>");
+        var clicked = $(e.target);
+        var userID = clicked.find('.uid').html();
+        var userName = clicked.find('.name').html();
+        var invitedUsers = new Array();
+        $('.invited').each(function(){
+            invitedUsers.push($(this).attr('id'));
+        });
+
+        if (userID != null && userName != null && $.inArray(userID, invitedUsers) == -1){
+            $("#inviteStaging").append("<div class=\"invited\" id=\""+
+            userID+
+            "\"><button type=\"button\" class=\"close\" aria-label=\"Close\" style=\"margin-left:10px; color:#fff\"><span aria-hidden=\"true\">&times;</span></button>"+
+            userName+
+            "</div>");
+        }
 
         $(".invited").on("click", function(event) {
             $(this).closest('.invited').remove();
@@ -177,16 +186,8 @@ $(function() {
     });
 
     $(".btnInvite").on("click", function(event) {
-        //$(this).closest('#inviteStaging')
-        //var $userIDs;
-        console.log("clicked!");
         $('.invited').each(function(){
-            //$userIDs.push(this.attr('id'));
-            console.log(this);
             var newUserID =  $(this).attr('id');
-
-            console.log("user id ist: "+newUserID);
-
             $.ajax({ url: 'includes/showcircle.php',
                 data: {
                     action: 'addUser',
