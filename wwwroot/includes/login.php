@@ -55,7 +55,8 @@ EOM;
                 {
                     $email = $_POST["email"];
                     $password = $_POST["password"];
-                    $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$password'";
+                    $hash = base64_encode(sha1($password, true));
+                    $sql = "SELECT * FROM user WHERE email = '$email' AND password = '$hash'";
                     $conn = connectDatabase();
                     $result = mysqli_query($conn, $sql);
                     if ($row = mysqli_fetch_assoc($result)) {

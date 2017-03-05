@@ -106,7 +106,6 @@ $(function() {
         jQuery("#result").fadeIn();
     });
 
-
     // Friend Search --------------------------------------------
 
     $(".inviteSearch").keyup(function() {

@@ -2,6 +2,7 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
+include 'includes/initialiseBlog.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,30 +15,6 @@ include 'header.php';
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<?php
-
-$userIDEscaped = mysqli_real_escape_string($conn, $user);
-
-$userSql = "SELECT firstName, lastName, profilephotoURL
-              FROM user
-              WHERE userID = '$userIDEscaped';
-              ";
-$userResult = mysqli_query($conn, $userSql);
-
-if (mysqli_num_rows($userResult) === 1) {
-    $row = mysqli_fetch_assoc($userResult);
-    $fullName = $row["firstName"] . " " . $row["lastName"];
-    $profilephotoURL = $row["profilephotoURL"];
-}
-
-$blogSql = "SELECT entry, date, profilephotoURL, firstName, lastName
-              FROM blog_entry AS b JOIN user AS u
-              ON b.userID = '$userIDEscaped' AND b.userID = u.userID
-              ORDER BY date DESC;
-              ";
-$blogResult = mysqli_query($conn, $blogSql);
-?>
-
 <body>
 <!-- Content -->
 <div class="container">
@@ -49,39 +26,41 @@ $blogResult = mysqli_query($conn, $blogSql);
             <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="100%"/>
         </div>
         <div class="col-xs-10">
-            <form method="post" action="includes/addblogpost.php">
+          <textarea class="form-control" rows='3' id="postText"></textarea>
+          <button class="btn btn-primary pull-right" id="postSubmit" type="button">Post</button>
+            <!--form method="post" action="includes/addblogpost.php">
                 <textarea name="post" class="form-control" rows='3' id="postText"></textarea>
                 <input class="btn btn-primary pull-right" type="submit" value="Post">
-            </form>
+            </form-->
         </div>
     </div>
 
-
+    <div class="row" id="previousposts">
     <?php
     if (mysqli_num_rows($blogResult) > 0) {
         while ($row = mysqli_fetch_assoc($blogResult)) {
             ?>
-            <div class="row" id="previousposts">
                 <div class="col-xs-2">
                     <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="50%"/>
                 </div>
                 <div class="col-xs-10">
                     <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                    <button class="btn btn-danger btn-xs pull-right" type="button">Delete</button>
+                    <!--button class="btn btn-danger btn-xs pull-right" type="button">Delete</button-->
                     <div class="text-muted">
                         <small><?php echo $row["date"] ?></small>
                     </div>
                     <div><?php echo $row["entry"] ?></div>
                 </div>
-            </div>
             <?php
         }
     }
     ?>
+    </div>
 
 </div>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/blogentry.js"></script>
 </body>
 </html>

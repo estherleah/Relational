@@ -2,6 +2,7 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
+
 /**
  * Created by PhpStorm.
  * User: Esther Leah
@@ -31,9 +32,33 @@ include 'header.php';
 <!-- Content -->
 <div class="container">
     <div class="col-*-*">
-        <div class="text-center">
-            <div class="col-sm-4 col-sm-offset-4">
-                <h2>Dashboard</h2>
+        <div class="row text-center">
+            <div class="col-sm-6 col-sm-offset-3">
+                <h2><?php echo $name?></h2>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><?php echo $name?></div>
+                <div class="panel-body">Profile picture</div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Blog</div>
+                <div class="panel-body">Most recent blog posts</div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Circles</div>
+                <div class="panel-body">Circles</div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Photos</div>
+                <div class="panel-body">Most recent photo collection</div>
             </div>
         </div>
     </div>

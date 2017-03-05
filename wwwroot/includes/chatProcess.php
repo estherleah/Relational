@@ -22,5 +22,4 @@ $circleID = $_SESSION['circleID'];
         echo "Error: " . $messageInsertSql . "<br>" . mysqli_error($conn);
     }
 
-
 ?>

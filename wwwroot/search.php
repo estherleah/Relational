@@ -28,7 +28,7 @@ include 'header.php';
 <!-- Content -->
 <div class="container">
     <div class="col-*-*">
-        <div class="col-md-6 col-sm-offset-3">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
             <div class="text-center">
                 <h2>Search</h2>
                 <div class="form-group">
