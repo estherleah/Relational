@@ -66,7 +66,7 @@ include 'includes/initialisePhotos.php';
             ?>
                 <div class="col-lg-3 col-md-4 col-xs-6">
                   <div class="thumbnail">
-                    <a href="/photo.php?photoID=<?php echo $row["photoID"]?>">
+                    <a href="photo.php?photoID=<?php echo $row["photoID"]?>">
                         <img class="img-responsive" src="<?php echo $row["photoURL"]?>">
                     </a>
                     <div class="text-muted">

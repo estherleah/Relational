@@ -21,6 +21,4 @@ else {
     } else {
         echo "Error: " . $blogInsertSql . "<br>" . mysqli_error($conn);
     }
-}
-
 ?>

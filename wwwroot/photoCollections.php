@@ -53,7 +53,7 @@ include 'includes/initialisePhotoCollections.php';
                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                   <div class="thumbnail">
                     <b><?php echo $row["name"]?></b>
-                    <a  href="/photos.php?collectionID=<?php echo $row["collectionID"]?>">
+                    <a  href="photos.php?collectionID=<?php echo $row["collectionID"]?>">
                       <div class="jumbotron">
                         <h1><?php echo $row["count"]?></h1>
                         <p>photo(s)</p>
