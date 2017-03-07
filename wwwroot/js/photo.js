@@ -9,7 +9,7 @@ $(function() { // waits for document to be ready
       // call php code to remove photo
       $.ajax({
         type: "POST",
-        url: "../includes/removePhoto.php",
+        url: 'includes/removePhoto.php',
         data: {id, url},
         cache: false,
 

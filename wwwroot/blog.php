@@ -40,6 +40,7 @@ include 'includes/initialiseBlog.php';
     if (mysqli_num_rows($blogResult) > 0) {
         while ($row = mysqli_fetch_assoc($blogResult)) {
             ?>
+            <div class="row">
                 <div class="col-xs-2">
                     <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="50%"/>
                 </div>
@@ -51,6 +52,7 @@ include 'includes/initialiseBlog.php';
                     </div>
                     <div><?php echo $row["entry"] ?></div>
                 </div>
+            </div>
             <?php
         }
     }

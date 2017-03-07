@@ -26,7 +26,8 @@ $target_dir = "../uploads/userId-$user/collectionId-$collectionId/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
 $dir = "uploads/userId-$user/collectionId-$collectionId/";
-$dir_file = $dir . basename($_FILES["fileToUpload"]["name"]);;
+$dir_file = $dir . basename($_FILES["fileToUpload"]["name"]);
+
 $uploadOk = 1;
 
 // Check if image file is a actual image or fake image

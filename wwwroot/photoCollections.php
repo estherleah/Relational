@@ -1,6 +1,7 @@
 <?php
 include_once 'database/database.php';
 session_start();
+include_once 'database/database.php';
 include 'header.php';
 include 'includes/initialisePhotoCollections.php';
 ?>
