@@ -1,5 +1,6 @@
 <?php
-
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
 // Parts adapted from http://php.net/manual/en/mysqli.multi-query.php
 //CURRENT user check that they aren't in friendship.userID2
 $userIDEscaped = mysqli_real_escape_string($conn, $user);

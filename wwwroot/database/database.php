@@ -12,6 +12,7 @@ $password = "root";
 $database = "social_network";
 
 // Create connection
+global $conn;
 $conn = mysqli_connect($hostname, $username, $password, $database);
 
 // Check connection

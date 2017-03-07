@@ -1,8 +1,7 @@
 <?php
 include_once 'database/database.php';
-//session_start();
-$user = $_SESSION['user'];
-$name = $_SESSION['name'];
+// session_start();
+
 /**
  * Created by PhpStorm.
  * User: Esther Leah
@@ -48,7 +47,6 @@ $name = $_SESSION['name'];
                 <li><a href="photoCollections.php">Photo Collections</a></li>
                 <li><a href="blog.php">Blog</a></li>
                 <li><a href="search.php">Search</a></li>
-                <li><a href="chat.php">Chat</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="settings.php"><span class="glyphicon glyphicon-user"></span> Settings</a></li>

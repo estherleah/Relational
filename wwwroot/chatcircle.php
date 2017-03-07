@@ -2,7 +2,7 @@
 
 <?php
 include_once 'database/database.php';
-session_start();
+//session_start();
 include 'includes/initialiseCircleChat.php';
 ?>
 
