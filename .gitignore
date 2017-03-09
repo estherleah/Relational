@@ -5,5 +5,4 @@
 desktop.ini
 
 uploads/
-img/*
-!img/profile_default.jpg
+img/
