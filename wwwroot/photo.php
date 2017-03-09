@@ -67,7 +67,7 @@ include 'includes/initialisePhoto.php';
       if (mysqli_num_rows($commentResult) > 0) {
           while ($row = mysqli_fetch_assoc($commentResult)) {
               ?>
-
+                <div class="row">
                   <div class="col-xs-2">
                       <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="50%"/>
                   </div>
@@ -79,7 +79,7 @@ include 'includes/initialisePhoto.php';
                       </div>
                       <div><?php echo $row["comment"] ?></div>
                   </div>
-
+                </div>
               <?php
           }
       }
