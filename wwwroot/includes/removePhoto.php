@@ -8,8 +8,8 @@ $name = $_SESSION['name'];
 $photoId = $_POST["id"];
 $photoUrl = $_POST["url"];
 
-$docRoot = $_SERVER['DOCUMENT_ROOT'] . "/";
-$system_path_full = $docRoot . $photoUrl;
+//$docRoot = $_SERVER['DOCUMENT_ROOT'] . "/";
+$system_path_full = "../" . $photoUrl;
 
 // remove entry from DB
 $photoIdEscaped = mysqli_real_escape_string($conn, $photoId);
