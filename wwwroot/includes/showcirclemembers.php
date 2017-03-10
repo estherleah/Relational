@@ -6,16 +6,13 @@ session_start();
 // include '../ChromePhp.php';
 // ChromePhp::log("Hello");
 
-// DB Connection
-$connection = connectDatabase();
-
 // Search for circle data
 $circleID = $_GET['id'];
 
 // Retrieve user status
-$userStatusResult = mysqli_query($connection,"  SELECT     userStatus
-                                                FROM       circle_participants
-                                                WHERE      userID = '$user' ", 0);
+$userStatusResult = mysqli_query($conn,"  SELECT     userStatus
+                                          FROM       circle_participants
+                                          WHERE      userID = '$user' ", 0);
 
 $userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
 
@@ -26,14 +23,14 @@ function isAdmin() {
 }
 
 // Retrieve circle data
-$circleDataResult = mysqli_query($connection,"  SELECT     name, description
-                                                FROM       circle
-                                                WHERE      circleID = '$circleID' ");
+$circleDataResult = mysqli_query($conn,"  SELECT     name, description
+                                          FROM       circle
+                                          WHERE      circleID = '$circleID' ");
 
 $circleData = mysqli_fetch_array($circleDataResult);
 
 // Search for circle members
-$circleMembersResult = mysqli_query($connection," SELECT      t1.firstName, t1.lastName, t1.profilephotoURL, t2.userStatus
+$circleMembersResult = mysqli_query($conn," SELECT      t1.firstName, t1.lastName, t1.profilephotoURL, t2.userStatus
                                                   FROM
                                                   ( SELECT      userID, firstName, lastName, profilephotoURL
                                                     FROM        user

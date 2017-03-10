@@ -1,4 +1,7 @@
 $(function() { // waits for document to be ready
+
+    
+
     $(".btnUpload").on("click", function() {
         var uploadForm = document.getElementById('uploadForm');
         var uploadFormData = new FormData(uploadForm);

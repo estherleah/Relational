@@ -14,9 +14,8 @@ function updateGender($user)
     if (isset($_POST['gender'])) {
         $gender = $_POST['gender'];
         $sql = "UPDATE `user` SET `gender`= '$gender' WHERE `userID` = '$user'";
-        $conn = connectDatabase();
-        if (!(mysqli_query($conn, $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
         echo $gender;
     }
@@ -26,9 +25,8 @@ function updateLocation($user) {
     if (isset($_POST['location'])) {
         $location = $_POST['location'];
         $sql = "UPDATE `user` SET `location`= '$location' WHERE `userID` = '$user'";
-        $conn = connectDatabase();
-        if (!(mysqli_query($conn, $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
         echo $location;
     }
@@ -38,9 +36,8 @@ function updateDOB($user) {
     if (isset($_POST['dob'])) {
         $dob = $_POST['dob'];
         $sql = "UPDATE `user` SET `dob`= '$dob' WHERE `userID` = '$user'";
-        $conn = connectDatabase();
-        if (!(mysqli_query($conn, $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
         echo $dob;
     }
@@ -65,9 +62,8 @@ function updatePrivacy($user) {
             $privacyID = 5;
         }
         $sql = "UPDATE `user` SET `privacyID`= $privacyID WHERE `userID` = '$user'";
-        $conn = connectDatabase();
-        if (!(mysqli_query($conn, $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
         echo $privacyID;
     }

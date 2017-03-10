@@ -1,25 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Esther Leah
- * Date: 06/03/2017
- * Time: 13:48
- */
-
 include_once 'database/database.php';
 session_start();
-$user = $_SESSION['user'];
-$name = $_SESSION['name'];
 include 'header.php';
-
-$sql = "SELECT `profilephotoURL` FROM `user` WHERE `userID` = '$user'";
-$result = mysqli_query($conn, $sql);
-if ($row = mysqli_fetch_assoc($result)) {
-    $profile = $row['profilephotoURL'];
-}
-else {
-    echo "Unable to find profile picture";
-}
+include 'includes/showprofile.php';
 ?>
 
 <!DOCTYPE html>
@@ -38,12 +21,12 @@ else {
     <div class="col-*-*">
         <div class="row text-center">
             <div class="col-sm-6 col-sm-offset-3">
-                <h2><?php echo $name ?></h2>
+                <h2><?php echo $thisUserFullName ?></h2>
             </div>
         </div>
         <div class="row" id="currentPic">
             <div class="col-xs-12">
-                <img class="img-responsive img-rounded center-block" src="<?php echo $profile ?>">
+                <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>">
             </div>
         </div>
         <div class="row">

@@ -5,9 +5,6 @@ session_start();
 // Debugging
 //include 'ChromePhp.php';
 
-// DB Connection
-$connection = connectDatabase();
-
 if($_POST) {
     // If keyword has been entered, search for friends of person searched for
     if(substr($_POST['search'],0,13)=="Friends with "){
@@ -15,8 +12,8 @@ if($_POST) {
         $searchString = substr($_POST['search'],13);
 
         // Look up userID of entered name
-        $q1 = mysqli_real_escape_string($connection, $searchString);
-        $strSQL_Result1 = mysqli_query($connection," SELECT   userID
+        $q1 = mysqli_real_escape_string($conn, $searchString);
+        $strSQL_Result1 = mysqli_query($conn," SELECT   userID
                                                      FROM     user
                                                      WHERE    CONCAT_WS(' ', firstName, lastName) LIKE '%$q1%' OR email = '$q1' ", 0);
 
@@ -24,10 +21,10 @@ if($_POST) {
         //ChromePhp::log(mysqli_fetch_array($strSQL_Result1)['userID']);
 
         // Look up friendships of userID
-        $q2 = mysqli_real_escape_string($connection, mysqli_fetch_array($strSQL_Result1)['userID']);
-        $strSQL_Result2 = mysqli_query($connection," SELECT    userID2
-                                                    FROM      friendship
-                                                    WHERE     userID1 = '$q2' ");
+        $q2 = mysqli_real_escape_string($conn, mysqli_fetch_array($strSQL_Result1)['userID']);
+        $strSQL_Result2 = mysqli_query($conn," SELECT    userID2
+                                                     FROM      friendship
+                                                     WHERE     userID1 = '$q2' ");
 
         //ChromePhp::log($strSQL_Result2);
         //while ($row = mysqli_fetch_array($strSQL_Result2)) ChromePhp::log($row['userID2']);
@@ -37,8 +34,8 @@ if($_POST) {
             $userID     = $row['userID2'];
 
             // Look up the corresponding name and photo
-            $q3 = mysqli_real_escape_string($connection, $userID);
-            $strSQL_Result3 = mysqli_query($connection," SELECT   userID,
+            $q3 = mysqli_real_escape_string($conn, $userID);
+            $strSQL_Result3 = mysqli_query($conn," SELECT   userID,
                                                                   profilephotoURL,
                                                                   CONCAT_WS(' ', firstName, lastName) AS fullName
                                                          FROM     user
@@ -64,8 +61,8 @@ if($_POST) {
     }
     // If no keyword has been entered, search for persons with similar names
     else {
-        $q = mysqli_real_escape_string($connection,$_POST['search']);
-        $strSQL_Result = mysqli_query($connection," SELECT    userID,
+        $q = mysqli_real_escape_string($conn,$_POST['search']);
+        $strSQL_Result = mysqli_query($conn," SELECT    userID,
                                                               profilephotoURL,
                                                               CONCAT_WS(' ', firstName, lastName) AS fullName
                                                     FROM      user

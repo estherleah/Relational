@@ -1,5 +1,7 @@
 <?php
-//session_start();
+include '../database/database.php';
+session_start();
+
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
@@ -7,9 +9,6 @@ $name = $_SESSION['name'];
 // include '../ChromePhp.php';
 // ChromePhp::log("Hello");
 
-// DB Connection
-//$connection = connectDatabase();
-global $conn;
 // Search for circle data
 if(isset($_GET['id'])){
     $_SESSION['circleID'] = $_GET['id'];
@@ -18,8 +17,8 @@ if(isset($_GET['id'])){
 
 // Retrieve user status
 $userStatusResult = mysqli_query($conn,"  SELECT     userStatus
-                                                FROM       circle_participants
-                                                WHERE      userID = '$user' AND circleID = '$circleID' ", 0);
+                                          FROM       circle_participants
+                                          WHERE      userID = '$user' AND circleID = '$circleID' ", 0);
 
 $userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
 
@@ -33,8 +32,8 @@ $userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
 
 // Retrieve circle data
 $circleDataResult = mysqli_query($conn,"  SELECT     name, description
-                                                FROM       circle
-                                                WHERE      circleID = '$circleID' ");
+                                          FROM       circle
+                                          WHERE      circleID = '$circleID' ");
 
 $circleData = mysqli_fetch_array($circleDataResult);
 $circleName = $circleData['name'];
