@@ -43,10 +43,22 @@ include 'includes/initialisePhoto.php';
         </div>
       </div>
 
+      <div class="row" id="likes">
+        <div class="col-xs-12">
+          <p><?php echo $annotationLikesCount . " likes" ?></p>
+          <button type="button"
+             class="btn <?php echo $buttonClass?> pull-left btnLike"
+             role="button"
+             data-photoid="<?php echo $photoID?>"
+             data-annotationtype="<?php echo 0?>"
+             >
+             <span class="glyphicon <?php echo $buttonGlyphicon?>"></span>
+              <?php echo $buttonText?>
+          </button>
+        </div>
+      </div>
+
       <div class="row" id="entry">
-          <div class="col-xs-12">
-              <h2 class="text-center">Comments</h2>
-          </div>
           <div class="col-xs-2">
               <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="100%"/>
           </div>
