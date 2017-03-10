@@ -8,9 +8,6 @@ $name = $_SESSION['name'];
 // include '../ChromePhp.php';
 // ChromePhp::log("Hello");
 
-// DB Connection
-$conn = connectDatabase();
-
 // !! Inefficient to use join in this case, another solution would be preferrable
 // Search for circle memberships of user
 $userIDEscaped = mysqli_real_escape_string($conn, $user);

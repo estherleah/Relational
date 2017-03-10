@@ -55,17 +55,16 @@ EOM;
                 $user = $_SESSION['user'];
                 $circleName = $circle['circleName'];
                 $circleDescription = $circle['circleDesc'];
-                $conn = connectDatabase();
                 $sql = " INSERT INTO circle (name, description, privacyID) VALUES ('$circleName', '$circleDescription', 1) ";
-                $q1 = mysqli_query($conn, $sql);
-                $circle = mysqli_insert_id($conn);
+                $q1 = mysqli_query($GLOBALS['conn'], $sql);
+                $circle = mysqli_insert_id($GLOBALS['conn']);
                 $sql1 = " INSERT INTO circle_participants (circleID, userID, userStatus) VALUES ('$circle', '$user', 3) ";
-                $q2 = mysqli_query($conn, $sql1);
+                $q2 = mysqli_query($GLOBALS['conn'], $sql1);
                 if ($q1 && $q2) {
                     echo "New circle created successfully";
                     echo "<p><a href='../circles.php'>Back to circles</a></p>";
                 } else {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                    echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
                     echo "<p><a href='../createcircle.php'>Try again</a></p>";
                 }
             }

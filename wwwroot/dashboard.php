@@ -78,7 +78,7 @@ include 'header.php';
                 <div class="panel panel-primary">
                     <div class="panel-heading">Circles</div>
                     <?php
-                    $sql = "SELECT circle.name FROM circle_participants 
+                    $sql = "SELECT circle.name FROM circle_participants
                             INNER JOIN circle ON circle_participants.circleID = circle.circleID
                             WHERE userID = '$user' ORDER BY circle.circleID";
                     $result = mysqli_query($conn, $sql);
@@ -108,4 +108,3 @@ include 'header.php';
 </div>
 </body>
 </html>
-}
