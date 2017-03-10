@@ -1,5 +1,5 @@
 <?php
-include_once 'database/database.php';
+//include_once 'database/database.php';
 session_start();
 include 'header.php';
 include 'includes/showcircle.php';

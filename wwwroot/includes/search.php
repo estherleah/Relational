@@ -26,8 +26,8 @@ if($_POST) {
         // Look up friendships of userID
         $q2 = mysqli_real_escape_string($connection, mysqli_fetch_array($strSQL_Result1)['userID']);
         $strSQL_Result2 = mysqli_query($connection," SELECT    userID2
-                                                    FROM      friendship
-                                                    WHERE     userID1 = '$q2' ");
+                                                     FROM      friendship
+                                                     WHERE     userID1 = '$q2' ");
 
         //ChromePhp::log($strSQL_Result2);
         //while ($row = mysqli_fetch_array($strSQL_Result2)) ChromePhp::log($row['userID2']);
