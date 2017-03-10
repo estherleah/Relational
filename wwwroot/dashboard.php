@@ -60,7 +60,16 @@ include 'header.php';
             <div class="col-sm-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Blog</div>
-                    <div class="panel-body">Most recent blog posts</div>
+                    <?php
+                    $sql = "SELECT `entry` FROM `blog_entry` WHERE `userID` = '$user' ORDER BY `date` DESC LIMIT 1";
+                    $result = mysqli_query($conn, $sql);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $entry = $row['entry'];
+                    } else {
+                        echo "No blog posts";
+                    }
+                    ?>
+                    <div class="panel-body"><?php echo $entry; ?></div>
                 </div>
             </div>
         </div>
@@ -68,7 +77,24 @@ include 'header.php';
             <div class="col-sm-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Circles</div>
-                    <div class="panel-body">Circles</div>
+                    <?php
+                    $sql = "SELECT circle.name FROM circle_participants 
+                            INNER JOIN circle ON circle_participants.circleID = circle.circleID
+                            WHERE userID = '$user' ORDER BY circle.circleID";
+                    $result = mysqli_query($conn, $sql);
+                    ?>
+                    <div class="panel-body">
+                        <?php
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($circle = mysqli_fetch_array($result)) {
+                                $name = $circle['name'];
+                                echo "<div>$name</div>";
+                            }
+                        } else {
+                            echo "No circles";
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -82,3 +108,4 @@ include 'header.php';
 </div>
 </body>
 </html>
+}
