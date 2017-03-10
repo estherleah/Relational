@@ -21,7 +21,7 @@ include 'includes/showprofile.php';
     <div class="col-*-*">
         <div class="row text-center">
             <div class="col-sm-6 col-sm-offset-3">
-                <h2><?php echo $name ?></h2>
+                <h2><?php echo $thisUserFullName ?></h2>
             </div>
         </div>
         <div class="row" id="currentPic">
