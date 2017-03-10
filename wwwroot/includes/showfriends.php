@@ -6,9 +6,6 @@ session_start();
 // include '../ChromePhp.php';
 // ChromePhp::log("Hello");
 
-// DB Connection
-$connection = connectDatabase();
-
 //THIS PART IS FROM OLD initialiseFriends findcircles
 
 
@@ -167,13 +164,13 @@ if(isset($_GET['id'])){
     $circleID = $_SESSION['circleID'];
 }
 
-$userStatusResult = mysqli_query($connection,"  SELECT     userStatus
+$userStatusResult = mysqli_query($conn,"  SELECT     userStatus
                                                 FROM       circle_participants
                                                 WHERE      userID = '$user' AND circleID = '$circleID' ", 0);
 
 $userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
 
-$circleDataResult = mysqli_query($connection,"  SELECT     name, description
+$circleDataResult = mysqli_query($conn,"  SELECT     name, description
                                                 FROM       circle
                                                 WHERE      circleID = '$circleID' ");
 
@@ -182,7 +179,7 @@ $circleName = $circleData['name'];
 $circleDesc = $circleData['description'];
 
 // Search for circle members
-$circleMembersResult = mysqli_query($connection," SELECT      t1.userID, t1.firstName, t1.lastName, t1.profilephotoURL, t2.userStatus
+$circleMembersResult = mysqli_query($conn," SELECT      t1.userID, t1.firstName, t1.lastName, t1.profilephotoURL, t2.userStatus
                                                   FROM
                                                   ( SELECT      userID, firstName, lastName, profilephotoURL
                                                     FROM        user
@@ -215,7 +212,6 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
 }
 
 function deleteFriend(){
-    global $connection;
     $userID1 = $_SESSION['userID'];
     $userID2 = $_POST['id'];
 
@@ -227,19 +223,18 @@ function deleteFriend(){
                         FROM       friendship
                         WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
 
-    if (mysqli_query($connection, $deleteFriend1)) {
-          if (mysqli_query($connection, $deleteFriend2)) {
+    if (mysqli_query($GLOBALS['conn'], $deleteFriend1)) {
+          if (mysqli_query($GLOBALS['conn'], $deleteFriend2)) {
             echo "Friend deleted";
           } else {
-              echo "Error deleting friend " . mysqli_error($connection);
+              echo "Error deleting friend " . mysqli_error($GLOBALS['conn']);
           }
     } else {
-        echo "Error deleting friend: " . mysqli_error($connection);
+        echo "Error deleting friend: " . mysqli_error($GLOBALS['conn']);
     }
 }
 
 function cancelReq(){
-  global $connection;
   $userID1 = $_SESSION['userID'];
 
   $userID2 = $_POST['id'];
@@ -252,19 +247,18 @@ function cancelReq(){
                       FROM       friendship
                       WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
 
-  if (mysqli_query($connection, $deleteFriend1)) {
-        if (mysqli_query($connection, $deleteFriend2)) {
+  if (mysqli_query($GLOBALS['conn'], $deleteFriend1)) {
+        if (mysqli_query($GLOBALS['conn'], $deleteFriend2)) {
           echo "Friend request canceled";
         } else {
-            echo "Could not cancel friend request" . mysqli_error($connection);
+            echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
         }
   } else {
-      echo "Could not cancel friend request" . mysqli_error($connection);
+      echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
   }
 }
 
 function addFriend(){
-    global $connection;
     $circleID = $_SESSION['circleID'];
 
     $thisUserID = $_POST['id'];
@@ -274,10 +268,10 @@ function addFriend(){
                                 WHERE      circleID = '$circleID' AND userID = '$thisUserID' ";
 
 
-    if (mysqli_query($connection, $addFriendRights)) {
+    if (mysqli_query($GLOBALS['conn'], $addFriendRights)) {
         echo "You revoked admin rights for " . getName($thisUserID);
     } else {
-        echo "Error revoking admin rights: " . mysqli_error($connection);
+        echo "Error revoking admin rights: " . mysqli_error($GLOBALS['conn']);
     }
 }
 
