@@ -30,7 +30,7 @@ $(function() { // waits for document to be ready
         success: function(html) {
             // reload data
             $("#existingPhotos").load(location.href + " #existingPhotos");
-            alert(html);
+            console.log(html);
             // clear entry form
             $("#fileToUpload").val('');
         }

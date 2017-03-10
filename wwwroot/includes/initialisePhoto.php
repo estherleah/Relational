@@ -39,7 +39,47 @@ if (mysqli_num_rows($photoResult) === 1) {
     $photoURL = $row["photoURL"];
     $date = $row["date"];
 } else {
-  echo "Error: Unable to find photo collection";
+  echo "Error: Unable to find photo";
+}
+
+// Check number of likes on a photo
+$annotationLikesSql = "SELECT COUNT(*) AS count
+                  FROM photo_annotation
+                  WHERE photoID = '$photoIDEscaped'
+                  AND annotationType = 0;
+                  ";
+$annotationLikesResult = mysqli_query($conn, $annotationLikesSql);
+
+if (mysqli_num_rows($annotationLikesResult) === 1) {
+  $row = mysqli_fetch_assoc($annotationLikesResult);
+  $annotationLikesCount = $row["count"];
+} else {
+  echo "Error: photo annotation count error!";
+}
+
+$userLikesSql = "SELECT *
+                  FROM photo_annotation
+                  WHERE photoID = '$photoIDEscaped'
+                  AND userID = '$userIDEscaped'
+                  AND annotationType = 0;
+                ";
+$userLikesResult = mysqli_query($conn, $userLikesSql);
+
+if (mysqli_num_rows($userLikesResult) === 1) {
+  $row = mysqli_fetch_assoc($userLikesResult);
+  $userLikes = True;
+} else {
+  $userLikes = False;
+}
+
+if ($userLikes) {
+  $buttonClass = "btn-danger";
+  $buttonGlyphicon = "glyphicon-thumbs-down";
+  $buttonText = "Dislike";
+} else {
+  $buttonClass = "btn-primary";
+  $buttonGlyphicon = "glyphicon-thumbs-up";
+  $buttonText = "Like";
 }
 
 ?>
