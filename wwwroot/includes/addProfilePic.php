@@ -10,10 +10,10 @@ session_start();
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
-$target_dir = "../img/userId-$user/";
+$target_dir = "../uploads/userId-$user/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
-$dir = "img/userId-$user/";
+$dir = "uploads/userId-$user/";
 $dir_file = $dir . basename($_FILES["fileToUpload"]["name"]);;
 
 $uploadOk = 1;
