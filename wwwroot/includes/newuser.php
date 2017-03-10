@@ -95,7 +95,7 @@ EOM;
                     $password = $user['password'];
                     $hash = base64_encode(sha1($password, true));
                     $sql = "INSERT INTO user (firstName, lastName, email, password, profilephotoURL, privacyID)
-                        VALUES ('$firstName', '$lastName', '$email', '$hash', 'uploads/profile_default.jpg', 1)";
+                        VALUES ('$firstName', '$lastName', '$email', '$hash', 'assets/profile_default.jpg', 1)";
                     $conn = connectDatabase();
                     if (mysqli_query($conn, $sql)) {
                         addOptionalData($user);
@@ -120,7 +120,7 @@ EOM;
                     }
                     if(isset($_POST['location']) and trim($_POST['location']) != null) {
                         $location = $user["location"];
-                        $sql = "UPDATE `user` SET `gender`= '$location' WHERE `email` = '$email'";
+                        $sql = "UPDATE `user` SET `location`= '$location' WHERE `email` = '$email'";
                         $conn = connectDatabase();
                         if (!(mysqli_query($conn, $sql))) {
                             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -128,7 +128,7 @@ EOM;
                     }
                     if(isset($_POST['dob']) and trim($_POST['dob']) != null) {
                         $dob = $user["dob"];
-                        $sql = "UPDATE `user` SET `gender`= '$dob' WHERE `email` = '$email'";
+                        $sql = "UPDATE `user` SET `dob`= '$dob' WHERE `email` = '$email'";
                         $conn = connectDatabase();
                         if (!(mysqli_query($conn, $sql))) {
                             echo "Error: " . $sql . "<br>" . mysqli_error($conn);

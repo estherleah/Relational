@@ -25,7 +25,7 @@ $collectionSql = "SELECT pcol.collectionID, pcol.name, pcol.date, u.profilephoto
               FROM photo_collection AS pcol
               LEFT JOIN photo AS p ON pcol.collectionID = p.collectionID
               JOIN user AS u ON pcol.userID = u.userID
-              WHERE pcol.userID = 1
+              WHERE pcol.userID = '$userIDEscaped'
               GROUP BY pcol.collectionID
               ORDER BY date DESC;
               ";
