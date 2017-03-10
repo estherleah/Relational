@@ -1,4 +1,16 @@
 <?php
+include_once '../database/database.php';
+session_start();
+
+// Debugging
+// include '../ChromePhp.php';
+// ChromePhp::log("Hello");
+
+// DB Connection
+$connection = connectDatabase();
+
+//THIS PART IS FROM OLD initialiseFriends findcircles
+
 
 // Parts adapted from http://php.net/manual/en/mysqli.multi-query.php
 //CURRENT user check that they aren't in friendship.userID2
@@ -32,19 +44,6 @@ $pendingSql = "SELECT profilephotoURL, firstName, lastName, status
               ORDER BY lastName DESC;
               ";
 $pendingResult = mysqli_query($conn, $pendingSql);
-
-
-
-
-// if limit results is on...
-$limitOn = true;
-if ($limitOn) {
-  $friendsOfFriendsLimit = 4;
-  $circleFriendsLimit = 5;
-} else { // https://dev.mysql.com/doc/refman/5.7/en/select.html
-  $friendsOfFriendsLimit = 999999999999999999;
-  $circleFriendsLimit = 999999999999999999;
-}
 
 /* find friends of friends
 * make sure they're not already a current friend
@@ -151,5 +150,135 @@ $recommendedResult = mysqli_multi_query($conn, $recommendQuery);
 
 
 $numberOfRecommendations = 5;
+
+
+
+
+
+
+
+//here ends old friendsinitialise file
+
+
+// Search for circle data
+/*
+if(isset($_GET['id'])){
+    $_SESSION['circleID'] = $_GET['id'];
+    $circleID = $_SESSION['circleID'];
+}
+
+$userStatusResult = mysqli_query($connection,"  SELECT     userStatus
+                                                FROM       circle_participants
+                                                WHERE      userID = '$user' AND circleID = '$circleID' ", 0);
+
+$userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
+
+$circleDataResult = mysqli_query($connection,"  SELECT     name, description
+                                                FROM       circle
+                                                WHERE      circleID = '$circleID' ");
+
+$circleData = mysqli_fetch_array($circleDataResult);
+$circleName = $circleData['name'];
+$circleDesc = $circleData['description'];
+
+// Search for circle members
+$circleMembersResult = mysqli_query($connection," SELECT      t1.userID, t1.firstName, t1.lastName, t1.profilephotoURL, t2.userStatus
+                                                  FROM
+                                                  ( SELECT      userID, firstName, lastName, profilephotoURL
+                                                    FROM        user
+                                                    WHERE       userID
+                                                    IN ( SELECT DISTINCT    userID
+                                                         FROM               circle_participants
+                                                         WHERE              circleID = '$circleID' )
+                                                    ORDER BY    lastName ) t1
+
+                                                  INNER JOIN
+
+                                                  ( SELECT      userID, userStatus
+                                                    FROM        circle_participants
+                                                    WHERE       circleID = '$circleID' ) t2
+
+                                                  ON t1.userID = t2.userID
+                                                  WHERE t2.userStatus != 0
+                                                  ORDER BY t2.userStatus DESC
+                                                  ");
+*/
+//---------------------------------------------------------------------------------------------------
+
+if(isset($_POST['action']) && !empty($_POST['action'])) {
+  $action = $_POST['action'];
+  switch($action) {
+      case 'deleteFriend' : deleteFriend(); break;
+      case 'cancelReq' : cancelReq(); break;
+      case 'addFriend' : addFriend(); break;
+  }
+}
+
+function deleteFriend(){
+    global $connection;
+    $userID1 = $_SESSION['userID'];
+    $userID2 = $_POST['id'];
+
+    $deleteFriend1 = "   DELETE
+                        FROM       friendship
+                        WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
+    //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS
+    $deleteFriend2 = "   DELETE
+                        FROM       friendship
+                        WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
+
+    if (mysqli_query($connection, $deleteFriend1)) {
+          if (mysqli_query($connection, $deleteFriend2)) {
+            echo "Friend deleted";
+          } else {
+              echo "Error deleting friend " . mysqli_error($connection);
+          }
+    } else {
+        echo "Error deleting friend: " . mysqli_error($connection);
+    }
+}
+
+function cancelReq(){
+  global $connection;
+  $userID1 = $_SESSION['userID'];
+
+  $userID2 = $_POST['id'];
+
+  $deleteFriend1 = "   DELETE
+                      FROM       friendship
+                      WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
+  //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS (BASICALLY delete request)
+  $deleteFriend2 = "   DELETE
+                      FROM       friendship
+                      WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
+
+  if (mysqli_query($connection, $deleteFriend1)) {
+        if (mysqli_query($connection, $deleteFriend2)) {
+          echo "Friend request canceled";
+        } else {
+            echo "Could not cancel friend request" . mysqli_error($connection);
+        }
+  } else {
+      echo "Could not cancel friend request" . mysqli_error($connection);
+  }
+}
+
+function addFriend(){
+    global $connection;
+    $circleID = $_SESSION['circleID'];
+
+    $thisUserID = $_POST['id'];
+
+    $addFriendRights = "      UPDATE     circle_participants
+                                SET        userStatus = '1'
+                                WHERE      circleID = '$circleID' AND userID = '$thisUserID' ";
+
+
+    if (mysqli_query($connection, $addFriendRights)) {
+        echo "You revoked admin rights for " . getName($thisUserID);
+    } else {
+        echo "Error revoking admin rights: " . mysqli_error($connection);
+    }
+}
 
 ?>
