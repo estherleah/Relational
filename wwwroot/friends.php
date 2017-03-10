@@ -2,181 +2,217 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
-include 'includes/initialiseFriends.php';
-include 'includes/addFriend.php';
-$user = $_SESSION['user'];
-$name = $_SESSION['name'];
-$userIdEscaped = mysqli_real_escape_string($conn, $user);
+include 'includes/showfriends.php';
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Friends</title>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Dashboard</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/friends.js"></script>
+
 <!-- Content -->
 <div class="container">
-    <div class="row" id="heading">
-        <div class="col-xs-12">
-            <h2 class="text-center"><?php echo $name?>'s Friends</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-5">
-          <h3 class="text-center">Existing</h3>
-          <div class ="text-center">These are your friends!</div>
-          <p>
-          <?php
-          if (mysqli_num_rows($friendResult) > 0) {
-              while ($row = mysqli_fetch_assoc($friendResult)) {
-                  ?>
-                  <div class="row" id="existingFriends">
+    <div class="col-*-*">
+        <div class="text-center">
+            <div class="col-md-8 col-sm-offset-2 jumbotron">
 
-                    <div class="col-xs-3">
-                        <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="100%"/>
+                <h2>Friends</h2>
+                <?php echo "Friendship is magic y'all" ?>
+
+                <!--EXISTING FRIENDS ATTEMPT 2-->
+
+                <h3>Existing requests</h3>
+                <?php echo "Here are your friends" ?>
+                <?php
+                while ($row = mysqli_fetch_array($friendResult)) {
+                    $firstName = $row['firstName'];
+                    $lastName = $row['lastName'];
+                    $thisUserID = $row['userID'];
+                    $thisUserStatus = $row['status'];
+                    $profilePhotoURL = $row["profilephotoURL"];
+                    ?>
+
+                    <div class="existingFriends row">
+
+
+                            <button type="button"
+                               class="btn btn-danger btnChangeCircleMemberStatus btnDelete"
+                               role="button"
+                               data-id="<?php echo $thisUserID ?>"
+                               >
+                               Delete
+                           </button>
+
+
+
+                        <!-- </div> -->
+                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                        <span class="circleMemberName">
+                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                        </span>
+                        </br>
+                        <span class="circleMemberStatus">
+                            <?php
+                                if($status == 0) { ?>friend<?php }
+                                else if($thisUserStatus == 3) { ?>Owner<?php }
+                            ?>
+                        </span>
+                        <p>
                     </div>
-                    <div class="col-xs-9">
-                        <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                        <button class="btn btn-danger btn-xs pull-right" type="button">Unfriend</button>
-                        <div class="text-muted">
-                            <small>
-                              <?php
-                      $friendStatus = "Confirmed request";
-                  echo $friendStatus
-                             ?>
-                           </small>
-                        </div>
+                    <?php
+                }
+                ?>
+                <!--END OF existing attempt 2-->
+
+                <!--TRY TO DO PENDING FRIEND REQUESTS HERE-->
+
+                <h3>Pending requests</h3>
+                <?php echo "Here are your pending requests" ?>
+                <?php
+                while ($row = mysqli_fetch_array($pendingResult)) {
+                    $firstName = $row['firstName'];
+                    $lastName = $row['lastName'];
+                    $thisUserID = $row['userID'];
+                    $thisUserStatus = $row['status'];
+                    $profilePhotoURL = $row["profilephotoURL"];
+                    ?>
+
+                    <div class="pendingFriends row">
+
+                            <button type="button"
+                               class="btn btn-danger btnChangeCircleMemberStatus btnCancelReq"
+                               role="button"
+                               data-id="<?php echo $thisUserID ?>"
+                               >
+                               Cancel
+                           </button>
+
+
+
+                        <!-- </div> -->
+                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                        <span class="circleMemberName">
+                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                        </span>
+                        </br>
+                        <span class="circleMemberStatus">
+                            <?php
+                                if($status == 0) { ?>pending<?php }
+                                else if($thisUserStatus == 3) { ?>Owner<?php }
+                            ?>
+                        </span>
+                        <p>
                     </div>
-                  </div>
-                  <?php
-              }
-          }
-          ?>
+                    <?php
+                }
+                ?>
+                <!--END OF PENDING REQUEST-->
 
-            <h3 class="text-center">Pending</h3>
-            <div class ="text-center">Pending friend requests</div>
-            <p>
+                <!--START OF FRIEND RECOMMENDATIONS-->
+                <h3>Suggested Friends</h3>
+                <?php echo "Here are some friends you could add" ?>
 
-              <?php
-              if (mysqli_num_rows($pendingResult) > 0) {
-                  while ($row = mysqli_fetch_assoc($pendingResult)) {
-                      ?>
-                      <div class="row" id="existingFriends">
+                                <?php
+                                while ($row = mysqli_fetch_array($recommendedResult)) {
+                                    $firstName = $row['firstName'];
+                                    $lastName = $row['lastName'];
+                                    $thisUserID = $row['userID'];
+                                    
+                                    $profilePhotoURL = $row["profilephotoURL"];
+                                    ?>
 
-                        <div class="col-xs-3">
-                            <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="100%"/>
-                        </div>
-                        <div class="col-xs-9">
-                            <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                            <button class="btn btn-danger btn-xs pull-right" type="button">Cancel</button>
-                            <div class="text-muted">
-                                <small>
-                                  <?php
-                          $friendStatus = "Awaiting confirmation";
-                          echo $friendStatus
-                                 ?>
-                               </small>
-                            </div>
-                        </div>
-                      </div>
-                      <?php
-                  }
-              }
-              ?>
+                                    <div class="recommendedFriends row">
+
+                                            <button type="button"
+                                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                                               role="button"
+                                               data-id="<?php echo $thisUserID ?>"
+                                               >
+                                               Cancel
+                                           </button>
 
 
 
-        </div>
-
-
-
-
-        <div class="col-xs-2">
-        </div>
-        <div class="col-xs-5">
-          <h3 class="text-center">Find friends</h3>
-
-          <div class="row">
-            <form>
-            <label class="checkbox">
-              <input type="checkbox" name="optradio">All
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" name="optradio">Friends of friends
-            </label>
-            <label class="checkbox">
-              <input type="checkbox" name="optradio">In same circle
-            </label>
-            <button class="btn btn-primary btn-xs pull-right" type="button">Filter</button>
-          </form>
-          </div>
-          <p><p><p>
-            <div class="row"></div>
-          <h3 class="text-center">Results</h3>
-          <p>
-          <div class ="text-center">Here are some friends you could add:<p></div>
-
-
-          <?php
-          if ($recommendedResult) {
-            $count = 0;
-              do {
-                  if ($result = mysqli_store_result($conn)) {
-                      while ($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                        <div class="row" id="recommendedFriends">
-                          <div class="col-xs-3">
-                              <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="100%"/>
-                          </div>
-                          <div class="col-xs-9">
-                              <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                              <?php echo $row["userID"] ?>
-
-                              <!--button class="btn btn-primary btn-xs pull-right" name="addUser" type="button">Add</button-->
-
-                              <form method ="POST" action ="/includes/addFriend.php">
-                                <input type="hidden" name="addFriendID" value= <?php echo "". $row["userID"] .""?>>
-                                <input class="btn btn-primary btn-xs pull-right" type="submit" value= "Add" >
-                                  </form>
-
-
-
-                              <div class="text-muted">
-                                  <small>
+                                        <!-- </div> -->
+                                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                                        <span class="circleMemberName">
+                                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                                        </span>
+                                        </br>
+                                        <span class="circleMemberStatus">
+                                            <?php
+                                                if($status == 0) { ?>pending<?php }
+                                                else if($thisUserStatus == 3) { ?>Owner<?php }
+                                            ?>
+                                        </span>
+                                        <p>
+                                    </div>
                                     <?php
-                                    $recommendationSource = null;
-                                    if ($count == 0) {
-                                      $recommendationSource = "Friends of friends";
-                                    } else if ($count == 1) {
-                                      $recommendationSource = "Circle participants";
-                                    }
-                                   echo $recommendationSource;?>
-                                 </small>
-                              </div>
-                          </div>
-                        </div>
-                      <?php
-                      }
-                      $count++;
-                      mysqli_free_result($result);
-                  }
-              } while (mysqli_more_results($conn) && (mysqli_next_result($conn)));
-          }
-          ?>
+                                }
+                                ?>
+                                <!--END OF RECS-->
+
+
+                <!-- Include Modals -->
+                <!-- <script> $(function(){ $("#includeModals").load("includes/modals.html"); }); </script>
+                <div id="includeModals"></div> -->
+
+                <!-- Info Dialog -->
+                <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Cancel friend request</h4>
+                      </div>
+                      <div class="modal-body">
+                        <span class="message"></span>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.reload(true);">Close</button>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+                <!-- Confirmation Dialog -->
+                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Are you sure?</h4>
+                      </div>
+                      <div class="modal-body">
+                        <span class="message"></span>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default btnCancel" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary btnConfirm" data-dismiss="modal" onclick="window.location.reload(true);">Confirm</button>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+            </div>
         </div>
     </div>
 </div>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/addfriend.js"></script>
-<script src="js/acceptreq.js"></script>
-<script src="js/deletefriend.js"></script>
 </body>
 </html>
