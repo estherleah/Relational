@@ -94,8 +94,8 @@ EOM;
                     $email = $user['email'];
                     $password = $user['password'];
                     $hash = base64_encode(sha1($password, true));
-                    $sql = "INSERT INTO user (firstName, lastName, email, password, privacyID) 
-                        VALUES ('$firstName', '$lastName', '$email', '$hash', 1)";
+                    $sql = "INSERT INTO user (firstName, lastName, email, password, profilephotoURL, privacyID)
+                        VALUES ('$firstName', '$lastName', '$email', '$hash', 'assets/profile_default.jpg', 1)";
                     $conn = connectDatabase();
                     if (mysqli_query($conn, $sql)) {
                         addOptionalData($user);
@@ -110,7 +110,7 @@ EOM;
                 function addOptionalData($user)
                 {
                     $email = $user['email'];
-                    if(isset($_POST['gender'])) {
+                    if(isset($_POST['gender']) and trim($_POST['gender']) != null) {
                         $gender = $user["gender"];
                         $sql = "UPDATE `user` SET `gender`= '$gender' WHERE `email` = '$email'";
                         $conn = connectDatabase();
@@ -118,17 +118,17 @@ EOM;
                             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                         }
                     }
-                    if(isset($_POST['location'])) {
+                    if(isset($_POST['location']) and trim($_POST['location']) != null) {
                         $location = $user["location"];
-                        $sql = "UPDATE `user` SET `gender`= '$location' WHERE `email` = '$email'";
+                        $sql = "UPDATE `user` SET `location`= '$location' WHERE `email` = '$email'";
                         $conn = connectDatabase();
                         if (!(mysqli_query($conn, $sql))) {
                             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                         }
                     }
-                    if(isset($_POST['dob'])) {
+                    if(isset($_POST['dob']) and trim($_POST['dob']) != null) {
                         $dob = $user["dob"];
-                        $sql = "UPDATE `user` SET `gender`= '$dob' WHERE `email` = '$email'";
+                        $sql = "UPDATE `user` SET `dob`= '$dob' WHERE `email` = '$email'";
                         $conn = connectDatabase();
                         if (!(mysqli_query($conn, $sql))) {
                             echo "Error: " . $sql . "<br>" . mysqli_error($conn);

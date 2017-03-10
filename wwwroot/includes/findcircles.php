@@ -1,18 +1,20 @@
 <?php
-include_once '../database/database.php';
-session_start();
+//session_start();
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
+//include_once '../database/database.php';
 
 // Debugging
 // include '../ChromePhp.php';
 // ChromePhp::log("Hello");
 
 // DB Connection
-$connection = connectDatabase();
+$conn = connectDatabase();
 
 // !! Inefficient to use join in this case, another solution would be preferrable
 // Search for circle memberships of user
 $userIDEscaped = mysqli_real_escape_string($conn, $user);
-$circleResult = mysqli_query($connection,"  SELECT     circle.circleID, userID, name, description
+$circleResult = mysqli_query($conn,"  SELECT     circle.circleID, userID, name, description
                                             FROM       circle_participants
                                             INNER JOIN circle
                                             ON         circle_participants.circleID = circle.circleID
@@ -24,9 +26,9 @@ $circleResult = mysqli_query($connection,"  SELECT     circle.circleID, userID, 
 // Search for circles
 if($_POST) {
 
-    // !! Order by circleID probabl not the best solution. How can we get the most relevant entires?
-    $q = mysqli_real_escape_string($connection,$_POST['search']);
-    $strSQL_Result = mysqli_query($connection," SELECT    name,
+    // !! Order by circleID probably not the best solution. How can we get the most relevant entries?
+    $q = mysqli_real_escape_string($conn,$_POST['search']);
+    $strSQL_Result = mysqli_query($conn," SELECT    name,
                                                           description
                                                 FROM      circle
                                                 WHERE     name LIKE '%$q%' OR description LIKE '%$q%'

@@ -43,6 +43,7 @@ img {
 /******************
    ID
 *******************/
+
 #postText {
 	margin-bottom: 15px;
 }
@@ -82,3 +83,88 @@ img {
     color:#FFF;
     cursor:pointer;
     }
+
+
+/******************
+  User's Circles
+*******************/
+
+	#circles {
+
+	}
+
+	.circle {
+		border:1px #CCC solid;
+		padding: 10px;
+		margin: 20px;
+	}
+
+	.circleTitle {
+		font-size: 20px;
+		color: #4c66a4;
+		padding: 5px;
+	}
+
+	.circleDesc {
+		font-size: 15px;
+		color: #000;
+		padding: 5px;
+	}
+
+	.BtnLeaveCircle {
+		float: right;
+	}
+
+
+/******************
+   Circle Page
+*******************/
+
+	.BtnDeleteCircle {
+		margin: 20px;
+	}
+
+	.members {
+		padding-top: 50px;
+	}
+
+	.circleMember {
+		height: 50px;
+		margin: 20px;
+		align: left;
+		vertical-align: middle;
+		text-align: left;
+	}
+
+	.circleMemberName {
+		margin-top: 10px;
+		display: inline-block;
+	    vertical-align: middle;
+	    line-height: normal;
+	}
+
+	.circleMemberStatus {
+		color: #4c66a4;
+		font-weight: bold;
+	}
+
+	.circleMemberPhoto {
+		width: 50px;
+		height: 50px;
+		margin-right: 20px;
+		float: left;
+	}
+
+	.btnChangeCircleMemberStatus {
+		float: right;
+		margin-left: 20px;
+	}
+
+	.invited {
+		background-color: #4c66a4;
+		color: #fff;
+		display: inline-block;
+		padding: 8px;
+		padding-right: 10px;
+		margin: 5px;
+	}

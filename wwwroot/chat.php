@@ -51,7 +51,7 @@ include 'includes/initialiseChat.php';
         </div>
 
         <div class="row" id="newmessage">
-           <div class="col-xs-10 col-xs-offset-1">
+           <div class="col-xs-10">
              <textarea class="form-control" rows='3' id="messageText"></textarea>
              <button class="btn btn-primary pull-right" id="messageSubmit" type="button">Send</button>
            </div>

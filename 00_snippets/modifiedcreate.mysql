@@ -1,5 +1,6 @@
 # T29
 # MySQL code snippets
+# MODIFIED VERSION 10 MAR
 
 ####################
 # Create Statement #
@@ -15,20 +16,20 @@ CREATE TABLE `privacy_settings` (
   PRIMARY KEY (privacyID)
 );
 
+#This is Esther's gender_enum.sql thing
+
 CREATE TABLE `user` (
-  `userID` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(255) NOT NULL UNIQUE,
-  `password` VARCHAR(255) NOT NULL,
-  `firstName` VARCHAR(255) NOT NULL,
-  `lastName` VARCHAR(255) NOT NULL,
-  `dob` DATE,
-  `gender` INT,
-  `location` VARCHAR(255),
-  `profilephotoURL` VARCHAR(255),
-  `privacyID` INT NOT NULL,
-  PRIMARY KEY (userID),
-  FOREIGN KEY (privacyID) REFERENCES privacy_settings(privacyID)
-);
+  `userID` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `firstName` varchar(255) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
+  `dob` date DEFAULT NULL,
+  `gender` enum('Male','Female','Other','NULL') DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `profilephotoURL` varchar(255) DEFAULT NULL,
+  `privacyID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `friendship` (
   `userID1` INT NOT NULL,
@@ -117,12 +118,3 @@ CREATE TABLE `blog_entry` (
   PRIMARY KEY (entryID),
   FOREIGN KEY (userID) REFERENCES user(userID)
 );
-
-# insert items
-
-INSERT INTO `privacy_settings` (`privacyID`, `option`) VALUES
-(1, 'public'),
-(2, 'friends of friends'),
-(3, 'circles'),
-(4, 'friends'),
-(5, 'private');

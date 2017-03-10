@@ -3,8 +3,8 @@
 //if user1 adds user2 - you insert 1 2 0
 //but you also need to make user2 'get' the request so you also insert 2 1 0
 
-include_once '../database/database.php';
-session_start();
+// include_once '../database/database.php';
+// session_start();
 $user = $_SESSION['user'];
 $addFriendID = $_POST['addFriendID'];
 

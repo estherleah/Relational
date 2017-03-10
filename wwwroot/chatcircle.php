@@ -2,8 +2,8 @@
 
 <?php
 include_once 'database/database.php';
-session_start();
-include 'includes/initialiseChat.php';
+//session_start();
+include 'includes/initialiseCircleChat.php';
 ?>
 
 <!DOCTYPE html>
@@ -23,9 +23,9 @@ include 'includes/initialiseChat.php';
 <div class="container">
     <div class="row" id="message">
       <div class="row" id="headerrow">
-      <div class="col-xs-7">
+      <div class="col-xs-10">
         <!--this should echo circleID instead of name, fix later-->
-          <h2 class="text-centre">Chat for <?php echo $name ?></h2>
+          <h2 class="text-centre">Group Chat</h2>
       </div>
     </div>
 
@@ -34,10 +34,10 @@ include 'includes/initialiseChat.php';
             while ($row = mysqli_fetch_assoc($messageResult)) {
                 ?>
                 <div class="row" id="previousmessages">
-                  <div class="col-xs-2">
+                  <div class="col-xs-4">
                       <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="50%"/>
                   </div>
-                    <div class="col-xs-5">
+                    <div class="col-xs-16">
                       <div class = "text-left">
                         <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
                         <div><?php echo $row["message"] ?></div>
@@ -55,7 +55,7 @@ include 'includes/initialiseChat.php';
         </div>
 
         <div class="row" id="newmessage">
-           <div class="col-xs-7">
+           <div class="col-xs-16">
              <textarea class="form-control" rows='3' id="messageText"></textarea>
              <button class="btn btn-primary pull-right" id="messageSubmit" type="button">Send</button>
            </div>

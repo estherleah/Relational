@@ -1,6 +1,8 @@
 <?php
 include_once 'database/database.php';
 session_start();
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
 include 'header.php';
 
 /**
@@ -34,34 +36,76 @@ include 'header.php';
     <div class="col-*-*">
         <div class="row text-center">
             <div class="col-sm-6 col-sm-offset-3">
-                <h2><?php echo $name?></h2>
+                <h2><?php echo $name ?></h2>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading"><?php echo $name?></div>
-                <div class="panel-body">Profile picture</div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><?php echo $name ?></div>
+                    <?php
+                    $sql = "SELECT `profilephotoURL` FROM `user` WHERE `userID` = '$user'";
+                    $result = mysqli_query($conn, $sql);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $profile = $row['profilephotoURL'];
+                    } else {
+                        echo "Unable to find profile picture";
+                    }
+                    ?>
+                    <div class="panel-body">
+                        <img class="img-responsive img-rounded center-block" src="<?php echo $profile ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Blog</div>
+                    <?php
+                    $sql = "SELECT `entry` FROM `blog_entry` WHERE `userID` = '$user' ORDER BY `date` DESC LIMIT 1";
+                    $result = mysqli_query($conn, $sql);
+                    if ($row = mysqli_fetch_assoc($result)) {
+                        $entry = $row['entry'];
+                    } else {
+                        echo "No blog posts";
+                    }
+                    ?>
+                    <div class="panel-body"><?php echo $entry; ?></div>
+                </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Blog</div>
-                <div class="panel-body">Most recent blog posts</div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Circles</div>
+                    <?php
+                    $sql = "SELECT circle.name FROM circle_participants 
+                            INNER JOIN circle ON circle_participants.circleID = circle.circleID
+                            WHERE userID = '$user' ORDER BY circle.circleID";
+                    $result = mysqli_query($conn, $sql);
+                    ?>
+                    <div class="panel-body">
+                        <?php
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($circle = mysqli_fetch_array($result)) {
+                                $name = $circle['name'];
+                                echo "<div>$name</div>";
+                            }
+                        } else {
+                            echo "No circles";
+                        }
+                        ?>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Circles</div>
-                <div class="panel-body">Circles</div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Photos</div>
-                <div class="panel-body">Most recent photo collection</div>
+            <div class="col-sm-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Photos</div>
+                    <div class="panel-body">Most recent photo collection</div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
+}

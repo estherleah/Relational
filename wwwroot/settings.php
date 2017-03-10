@@ -93,6 +93,7 @@ include 'header.php';
                     </div>
                     <p><input class="btn btn-default" type="submit" value="Change"></a></p>
                 </form>
+                <a href="profile.php"><input class="btn btn-default" type="submit" value="Profile picture"></a>
             </div>
         </div>
     </div>

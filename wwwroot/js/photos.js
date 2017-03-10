@@ -21,7 +21,7 @@ $(function() { // waits for document to be ready
         // call php code to upload photo
       $.ajax({
         type: "POST",
-        url: "../includes/addPhoto.php",
+        url: 'includes/addPhoto.php',
         data: uploadFormData,
         cache: false,
         contentType: false,

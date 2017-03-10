@@ -11,7 +11,7 @@ $name = $_SESSION['name'];
 $collectionId = $_POST["id"];
 
 //echo "collectionId: " . $collectionId;
-
+/*
 $docRoot = $_SERVER['DOCUMENT_ROOT'] . "/";
 
 $sub_path = "uploads/userId-$user/collectionId-$collectionId/";
@@ -19,6 +19,14 @@ $system_path = $docRoot . $sub_path;
 
 $web_path_full = $sub_path . basename($_FILES["fileToUpload"]["name"]);
 $system_path_full = $system_path . basename($_FILES["fileToUpload"]["name"]);
+*/
+
+// Added by ELM
+$target_dir = "../uploads/userId-$user/collectionId-$collectionId/";
+$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
+$dir = "uploads/userId-$user/collectionId-$collectionId/";
+$dir_file = $dir . basename($_FILES["fileToUpload"]["name"]);
 
 $uploadOk = 1;
 
@@ -35,7 +43,7 @@ if(isset($_POST["submit"])) {
 }
 
 // Check if file already exists
-if (file_exists($system_path_full)) {
+if (file_exists($target_file)) {
     echo "Sorry, file already exists.";
     $uploadOk = 0;
 }
@@ -45,16 +53,16 @@ if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
 // if everything is ok, try to upload file
 } else {
-    $dirExists = file_exists($system_path);
+    $dirExists = file_exists($target_dir);
 
     if (!$dirExists) {
-      $dirExists = mkdir($system_path,0777,true);
+      $dirExists = mkdir($target_dir,0777,true);
     }
-    if ($dirExists && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $system_path_full)) {
+    if ($dirExists && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         // Add entry to DB
         $date = date("Y-m-d H:i:s");
         $collectionIdEscaped = mysqli_real_escape_string($conn, $collectionId);
-        $photoUrlEscaped = mysqli_real_escape_string($conn, $web_path_full);
+        $photoUrlEscaped = mysqli_real_escape_string($conn, $dir_file);
         $dateEscaped = mysqli_real_escape_string($conn, $date);
         $photoInsertSql = "INSERT INTO photo (collectionID, photoURL, date)
                         VALUES ('$collectionIdEscaped', '$photoUrlEscaped', '$dateEscaped')";
