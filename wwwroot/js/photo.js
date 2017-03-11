@@ -2,25 +2,28 @@
 $(function() { // waits for document to be ready
 
     $(document).on('click', '.btnRemovePhoto', function(event) {
-        var button = $(event.target);
-        var photoid = button.data("photoid");
-        var photourl = button.data("photourl");
+      getConfirm('Do you really want to delete this photo as well as all its annotations and comments?', function(result) {
+          if(result === true){
+            var button = $(event.target);
+            var photoid = button.data("photoid");
+            var photourl = button.data("photourl");
 
-        // call php code to remove photo
-        $.ajax({
-            type: "POST",
-            url: 'includes/removePhoto.php',
-            data: {
-                photoid,
-                photourl
-            },
-            cache: false,
+            // call php code to remove photo
+            $.ajax({
+                type: "POST",
+                url: 'includes/removePhoto.php',
+                data: {
+                    photoid,
+                    photourl
+                },
+                cache: false,
 
-            success: function(html) {
-                console.log(html);
-                window.history.back();
-            }
-        });
+                success: function(html) {
+                    console.log(html);
+                    window.history.back();
+                }
+            });
+          }});
     });
 
     $(document).on('click', '.btnPost', function(event) {
@@ -95,5 +98,22 @@ $(function() { // waits for document to be ready
           }
       });
     });
+
+    function getConfirm(confirmMessage,callback){
+      confirmMessage = confirmMessage || '';
+
+      $('#confirmationModal').modal();
+
+      $('.message').text(confirmMessage);
+      $('.btnCancel').click(function(){
+          $('#confirmationModal').modal('hide');
+          if (callback) callback(false);
+
+      });
+      $('.btnConfirm').click(function(){
+          $('#confirmationModal').modal('hide');
+          if (callback) callback(true);
+      });
+    }
 
 });
