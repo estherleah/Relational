@@ -3,6 +3,8 @@ include_once 'database/database.php';
 session_start();
 include 'header.php';
 include 'includes/showfriends.php';
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
 
 ?>
 
@@ -24,7 +26,7 @@ include 'includes/showfriends.php';
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-<script src="js/friends.js"></script>
+
 
 <!-- Content -->
 <div class="container">
@@ -32,8 +34,10 @@ include 'includes/showfriends.php';
         <div class="text-center">
             <div class="col-md-8 col-sm-offset-2 jumbotron">
 
-                <h2>Friends</h2>
-                <?php echo "Friendship is magic y'all" ?>
+
+
+                <h2><?php echo $name . "'s friends" ?></h2>
+                <?php echo "Friendship is magic" ?>
 
                 <!--EXISTING FRIENDS ATTEMPT 2-->
 
@@ -50,7 +54,6 @@ include 'includes/showfriends.php';
 
                     <div class="existingFriends row">
 
-
                             <button type="button"
                                class="btn btn-danger btnChangeCircleMemberStatus btnDelete"
                                role="button"
@@ -59,20 +62,21 @@ include 'includes/showfriends.php';
                                Delete
                            </button>
 
-
-
                         <!-- </div> -->
                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
                         <span class="circleMemberName">
                             <?php echo $firstName;?> <?php echo $lastName; ?>
                         </span>
+
                         </br>
                         <span class="circleMemberStatus">
                             <?php
-                                if($status == 0) { ?>friend<?php }
-                                else if($thisUserStatus == 3) { ?>Owner<?php }
+                                if($status == 1) { ?>friends<?php }
+                                else { ?>you are friends<?php }
                             ?>
                         </span>
+                        <p>
                         <p>
                     </div>
                     <?php
@@ -103,8 +107,6 @@ include 'includes/showfriends.php';
                                Cancel
                            </button>
 
-
-
                         <!-- </div> -->
                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
                         <span class="circleMemberName">
@@ -114,7 +116,7 @@ include 'includes/showfriends.php';
                         <span class="circleMemberStatus">
                             <?php
                                 if($status == 0) { ?>pending<?php }
-                                else if($thisUserStatus == 3) { ?>Owner<?php }
+                                else { ?>you are friends<?php }
                             ?>
                         </span>
                         <p>
@@ -133,7 +135,7 @@ include 'includes/showfriends.php';
                                     $firstName = $row['firstName'];
                                     $lastName = $row['lastName'];
                                     $thisUserID = $row['userID'];
-                                    
+
                                     $profilePhotoURL = $row["profilephotoURL"];
                                     ?>
 
@@ -146,8 +148,6 @@ include 'includes/showfriends.php';
                                                >
                                                Cancel
                                            </button>
-
-
 
                                         <!-- </div> -->
                                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />

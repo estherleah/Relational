@@ -2,7 +2,8 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
-include 'includes/findfriends.php';
+include 'includes/initialiseFriends.php';
+include 'includes/addFriend.php';
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 $userIdEscaped = mysqli_real_escape_string($conn, $user);
@@ -29,12 +30,14 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
     <div class="row">
         <div class="col-xs-5">
           <h3 class="text-center">Existing</h3>
-
+          <div class ="text-center">These are your friends!</div>
+          <p>
           <?php
           if (mysqli_num_rows($friendResult) > 0) {
               while ($row = mysqli_fetch_assoc($friendResult)) {
                   ?>
                   <div class="row" id="existingFriends">
+
                     <div class="col-xs-3">
                         <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="100%"/>
                     </div>
@@ -44,13 +47,7 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
                         <div class="text-muted">
                             <small>
                               <?php
-                              $friendStatus = null;
-                  if ($row["status"] == 0) {
-                      $friendStatus = "Awaiting confirmation";
-                  } elseif ($row["status"] == 1) {
                       $friendStatus = "Confirmed request";
-                  }
-
                   echo $friendStatus
                              ?>
                            </small>
@@ -58,15 +55,53 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
                     </div>
                   </div>
                   <?php
-
               }
           }
           ?>
+
+            <h3 class="text-center">Pending</h3>
+            <div class ="text-center">Pending friend requests</div>
+            <p>
+
+              <?php
+              if (mysqli_num_rows($pendingResult) > 0) {
+                  while ($row = mysqli_fetch_assoc($pendingResult)) {
+                      ?>
+                      <div class="row" id="existingFriends">
+
+                        <div class="col-xs-3">
+                            <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="100%"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
+                            <button class="btn btn-danger btn-xs pull-right" type="button">Cancel</button>
+                            <div class="text-muted">
+                                <small>
+                                  <?php
+                          $friendStatus = "Awaiting confirmation";
+                          echo $friendStatus
+                                 ?>
+                               </small>
+                            </div>
+                        </div>
+                      </div>
+                      <?php
+                  }
+              }
+              ?>
+
+
+
         </div>
+
+
+
+
         <div class="col-xs-2">
         </div>
         <div class="col-xs-5">
-          <h3 class="text-center">Recommended</h3>
+          <h3 class="text-center">Find friends</h3>
+
           <div class="row">
             <form>
             <label class="checkbox">
@@ -81,8 +116,14 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
             <button class="btn btn-primary btn-xs pull-right" type="button">Filter</button>
           </form>
           </div>
-          <?php
+          <p><p><p>
+            <div class="row"></div>
+          <h3 class="text-center">Results</h3>
+          <p>
+          <div class ="text-center">Here are some friends you could add:<p></div>
 
+
+          <?php
           if ($recommendedResult) {
             $count = 0;
               do {
@@ -95,7 +136,17 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
                           </div>
                           <div class="col-xs-9">
                               <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                              <button class="btn btn-primary btn-xs pull-right" type="button">Friend</button>
+                              <?php echo $row["userID"] ?>
+
+                              <!--button class="btn btn-primary btn-xs pull-right" name="addUser" type="button">Add</button-->
+
+                              <form method ="POST" action ="/includes/addFriend.php">
+                                <input type="hidden" name="addFriendID" value= <?php echo "". $row["userID"] .""?>>
+                                <input class="btn btn-primary btn-xs pull-right" type="submit" value= "Add" >
+                                  </form>
+
+
+
                               <div class="text-muted">
                                   <small>
                                     <?php
@@ -105,7 +156,6 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
                                     } else if ($count == 1) {
                                       $recommendationSource = "Circle participants";
                                     }
-
                                    echo $recommendationSource;?>
                                  </small>
                               </div>
@@ -125,6 +175,8 @@ $userIdEscaped = mysqli_real_escape_string($conn, $user);
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/friends.js"></script>
+<script src="js/addfriend.js"></script>
+<script src="js/acceptreq.js"></script>
+<script src="js/deletefriend.js"></script>
 </body>
 </html>

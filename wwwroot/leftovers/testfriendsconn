@@ -1,0 +1,31 @@
+<h3>TESTING CONNECTION HERE</h3>
+<?php echo "CURRENT USER ID" . " " . $user ?>
+<?php
+while ($row = mysqli_fetch_array($testConnResult)) {
+  $userID1 = $row['userID1'];
+  $userID2 = $row['userID2'];
+  $status = $row['status'];
+  $firstName = $row['firstName'];
+  $lastName = $row['lastName'];
+  $profilePhotoURL = $row['profilephotoURL'];
+    ?>
+
+    <div class="testconn row">
+        <img class="friendPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+           <?php echo "Test row" . " " . $status; ?> <?php echo $firstName; ?>
+            <?php echo $userID1;?> <?php echo $userID2; ?>
+            <button type="button"
+               class="btn btn-danger btnChangeCircleMemberStatus btnDelete"
+               role="button"
+               data-id="<?php echo $thisUserID ?>"
+               >
+               Delete
+            </button>
+
+        <p>
+          <br>
+    </div>
+    <?php
+}
+?>

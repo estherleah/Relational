@@ -11,7 +11,9 @@ session_start();
 
 // Parts adapted from http://php.net/manual/en/mysqli.multi-query.php
 //CURRENT user check that they aren't in friendship.userID2
-$userIDEscaped = mysqli_real_escape_string($conn, $user);
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
+$userIDEscaped = $user;
 
 $userSql = "SELECT firstName, lastName, profilephotoURL
               FROM user
@@ -25,10 +27,29 @@ if (mysqli_num_rows($userResult) === 1) {
     $profilephotoURL = $row["profilephotoURL"];
 }
 //FRIEND (STATUS = 1 i.e friend accepted)
+//this test query now works for mutual friendships
+
+$testConnSql = "SELECT profilephotoURL, firstName, lastName, userID1, userID2, status
+                FROM friendship AS f INNER JOIN user AS u
+                ON f.userID2 = u.userID AND f.userID1 = $user
+                WHERE (f.userID1 = 1) AND (f.status = 1)
+                ORDER BY firstName DESC;
+                ";
+$testConnResult = mysqli_query($conn, $testConnSql);
+
+/*
+
+$testConnSql = "SELECT profilephotoURL, firstName, lastName, status, userID1, userID2, status
+                FROM friendship AS f JOIN user AS u
+
+                ";
+$testConnResult = mysqli_query($conn, $testConnSql);
+*/
+
 $friendSql = "SELECT profilephotoURL, firstName, lastName, status
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
-              AND status = 1
+              WHERE status = 1
               ORDER BY lastName DESC;
               ";
 $friendResult = mysqli_query($conn, $friendSql);
@@ -145,14 +166,7 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, locatio
 
 $recommendedResult = mysqli_multi_query($conn, $recommendQuery);
 
-
 $numberOfRecommendations = 5;
-
-
-
-
-
-
 
 //here ends old friendsinitialise file
 
