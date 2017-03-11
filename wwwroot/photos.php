@@ -30,8 +30,18 @@ include 'includes/initialisePhotos.php';
         <div class="col-xs-12">
             <h1 class="page-header"><?php echo $name ?></h1>
             <b>Date created: <?php echo $date ?></b>
+            <?php if($currentUser) { ?>
+            <button type="button"
+               class="btn btn-danger btn-xs pull-right btnRemoveCollection"
+               role="button"
+               data-collectionid="<?php echo $collectionID?>"
+               >
+               Remove Collection
+            </button>
+            <?php } ?>
         </div>
     </div>
+    <?php if($currentUser) { ?>
     <div class="row">
         <div class="col-xs-12">
             <h3>Add photos</h3>
@@ -52,12 +62,12 @@ include 'includes/initialisePhotos.php';
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <h3>Existing photos</h3>
         </div>
     </div>
+    <?php } ?>
     <div class="row" id="existingPhotos">
         <?php
         if (mysqli_num_rows($photoResult) > 0) {
@@ -73,17 +83,9 @@ include 'includes/initialisePhotos.php';
                         </div>
                     </div>
                 </div>
-
-
-                <?php
-            }
-        }
-        ?>
+        <?php }} ?>
     </div>
-
-
 </div>
-
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
