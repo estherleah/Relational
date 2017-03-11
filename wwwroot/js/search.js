@@ -9,7 +9,7 @@ $(function() {
         } else {
             $.ajax({
                 type: "POST",
-                url: "../search.php",
+                url: 'includes/search.php',
                 data: dataString,
                 cache: false,
                 success: function(html) {
@@ -25,7 +25,7 @@ $(function() {
         var $userID = $clicked.find('.uid').html();
         //var decoded = $("<div/>").html($userID).text();
         //$('#searchid').val(decoded);
-        var url = "http://localhost:8888/user/" + $userID;
+        var url = "http://localhost:8888/profile.php?id=" + $userID;
         window.open(url, "_self");
     });
 

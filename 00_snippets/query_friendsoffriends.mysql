@@ -1,8 +1,69 @@
+/*query which does not remove friends of friends which are already my friends*/
 SELECT DISTINCT userID2
 FROM friendship
 WHERE userID1 IN
   (SELECT userID2
     FROM friendship
-    WHERE userID1 = 0
+    WHERE userID1 = 1
   )
   AND status = 1;
+
+/*query including removal of people who are already my friends*/
+SELECT DISTINCT userID2
+FROM friendship AS fo
+WHERE userID1 IN
+  (SELECT userID2
+    FROM friendship
+    WHERE userID1 = 1
+  )
+  AND status = 1
+  AND NOT EXISTS (
+    SELECT *
+    FROM friendship AS fi
+    WHERE fi.userID1 = 1
+    AND fi.userID2 = fo.userID2
+  )
+;
+
+/*full query to retrieve details of said users*/
+SELECT firstName, lastName, profilephotoURL, gender, location
+FROM user
+WHERE userID IN
+  (SELECT DISTINCT userID2
+  FROM friendship AS fo
+  WHERE userID1 IN
+    (SELECT userID2
+      FROM friendship
+      WHERE userID1 = 1
+    )
+    AND status = 1
+    AND NOT EXISTS (
+      SELECT *
+      FROM friendship AS fi
+      WHERE fi.userID1 = 1
+      AND fi.userID2 = fo.userID2
+    )
+  )
+;
+
+/*Return a random sample with specific size*/
+SELECT firstName, lastName, profilephotoURL, gender, location
+                            FROM user
+                            WHERE userID IN
+                              (SELECT DISTINCT userID2
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                  FROM friendship
+                                  WHERE userID1 = '$userIDEscaped'
+                                )
+                                AND status = 1
+                                AND NOT EXISTS (
+                                  SELECT *
+                                  FROM friendship AS fi
+                                  WHERE fi.userID1 = '$userIDEscaped'
+                                  AND fi.userID2 = fo.userID2
+                                )
+                              )
+                              ORDER BY RAND() LIMIT 2
+                            ;

@@ -1,0 +1,1 @@
+ALTER TABLE `message` CHANGE `circleID` `circleID` INT(11) NOT NULL;

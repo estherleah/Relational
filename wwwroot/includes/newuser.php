@@ -6,6 +6,8 @@ include '../database/database.php';
  * Date: 02/02/2017
  * Time: 20:52
  */
+
+// TODO: Check if the email address is already in the database before submitting the query.
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +47,7 @@ include '../database/database.php';
                         $errorMessage = 'You must enter your password';
                     else if (!isset($_POST['confirmPassword']) or trim($_POST['confirmPassword']) == '')
                         $errorMessage = 'You must confirm your password.';
-                    else if (trim($_POST['password']) != trim($_POST['confirmPassword']))
+                    else if (!isset($_POST['confirmPassword']) or (trim($_POST['password']) != trim($_POST['confirmPassword'])))
                         $errorMessage = 'Your passwords must match';
                     if ($errorMessage !== null)
                     {
@@ -65,6 +67,15 @@ EOM;
                     $user["lastName"] = $_POST["lastName"];
                     $user["email"] = $_POST["email"];
                     $user["password"] = $_POST["password"];
+                    if (isset($_POST['gender'])) {
+                        $user["gender"] = $_POST['gender'];
+                    }
+                    if (isset($_POST['location'])) {
+                        $user["location"] = $_POST['location'];
+                    }
+                    if (isset($_POST['dob'])) {
+                        $user["dob"] = $_POST['dob'];
+                    }
                     return $user;
                 }
 
@@ -82,14 +93,42 @@ EOM;
                     $lastName = $user['lastName'];
                     $email = $user['email'];
                     $password = $user['password'];
-                    $sql = "INSERT INTO user (firstName, lastName, email, password, privacyID) VALUES ('$firstName', '$lastName', '$email', '$password', 1)";
-                    $conn = connectDatabase();
-                    if (mysqli_query($conn, $sql)) {
+                    $hash = base64_encode(sha1($password, true));
+                    $sql = "INSERT INTO user (firstName, lastName, email, password, profilephotoURL, privacyID)
+                        VALUES ('$firstName', '$lastName', '$email', '$hash', 'assets/profile_default.jpg', 1)";
+                    if (mysqli_query($GLOBALS['conn'], $sql)) {
+                        addOptionalData($user);
                         echo "New user created successfully";
                         echo "<p><a href='../index.php'>Sign in</a></p>";
                     } else {
-                        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                        echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
                         echo "<p><a href='../signup.php'>Return to input form</a></p>";
+                    }
+                }
+
+                function addOptionalData($user)
+                {
+                    $email = $user['email'];
+                    if(isset($_POST['gender']) and trim($_POST['gender']) != null) {
+                        $gender = $user["gender"];
+                        $sql = "UPDATE `user` SET `gender`= '$gender' WHERE `email` = '$email'";
+                        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+                            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+                        }
+                    }
+                    if(isset($_POST['location']) and trim($_POST['location']) != null) {
+                        $location = $user["location"];
+                        $sql = "UPDATE `user` SET `location`= '$location' WHERE `email` = '$email'";
+                        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+                            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+                        }
+                    }
+                    if(isset($_POST['dob']) and trim($_POST['dob']) != null) {
+                        $dob = $user["dob"];
+                        $sql = "UPDATE `user` SET `dob`= '$dob' WHERE `email` = '$email'";
+                        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+                            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+                        }
                     }
                 }
 
