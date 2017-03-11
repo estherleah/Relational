@@ -107,6 +107,25 @@ include 'includes/initialisePhoto.php';
       }
       ?>
       </div>
+
+      <!-- Confirmation Dialog -->
+      <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+              <span class="message"></span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default btnCancel" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary btnConfirm" data-dismiss="modal">Confirm</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
   </div>
 
   <script src="js/jquery.min.js"></script>

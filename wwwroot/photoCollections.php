@@ -76,18 +76,10 @@ include 'includes/initialisePhotoCollections.php';
     }
     ?>
     </div>
-
-
-  </div>
-  </div>
-
-
-
-
   </div>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/addPhotoCollection.js"></script>
+  <script src="js/photoCollections.js"></script>
 </body>
 </html>
