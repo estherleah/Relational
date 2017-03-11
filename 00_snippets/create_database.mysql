@@ -65,7 +65,7 @@ CREATE TABLE `circle_participants` (
   `userStatus` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (circleID, userID),
   FOREIGN KEY (userID) REFERENCES user(userID),
-  FOREIGN KEY (circleID) REFERENCES circle(circleID)
+  FOREIGN KEY (circleID) REFERENCES circle(circleID) ON DELETE CASCADE
 );
 
 CREATE TABLE `photo` (
@@ -74,7 +74,7 @@ CREATE TABLE `photo` (
   `photoURL` VARCHAR(255) NOT NULL,
   `date` DATETIME NOT NULL,
   PRIMARY KEY (photoID),
-  FOREIGN KEY (collectionID) REFERENCES photo_collection(collectionID)
+  FOREIGN KEY (collectionID) REFERENCES photo_collection(collectionID) ON DELETE CASCADE
 );
 
 CREATE TABLE `photo_comment` (
@@ -85,7 +85,7 @@ CREATE TABLE `photo_comment` (
   `date` DATETIME NOT NULL,
   PRIMARY KEY (commentID),
   FOREIGN KEY (userID) REFERENCES user(userID),
-  FOREIGN KEY (photoID) REFERENCES photo(photoID)
+  FOREIGN KEY (photoID) REFERENCES photo(photoID) ON DELETE CASCADE
 );
 
 CREATE TABLE `message` (
@@ -96,7 +96,7 @@ CREATE TABLE `message` (
   `date` DATETIME NOT NULL,
   PRIMARY KEY (messageID),
   FOREIGN KEY (userID) REFERENCES user(userID),
-  FOREIGN KEY (circleID) REFERENCES circle(circleID)
+  FOREIGN KEY (circleID) REFERENCES circle(circleID) ON DELETE CASCADE
 );
 
 CREATE TABLE `photo_annotation` (
@@ -106,7 +106,7 @@ CREATE TABLE `photo_annotation` (
   `date` DATETIME NOT NULL,
   PRIMARY KEY (photoID, userID),
   FOREIGN KEY (userID) REFERENCES user(userID),
-  FOREIGN KEY (photoID) REFERENCES photo(photoID)
+  FOREIGN KEY (photoID) REFERENCES photo(photoID) ON DELETE CASCADE
 );
 
 CREATE TABLE `blog_entry` (
