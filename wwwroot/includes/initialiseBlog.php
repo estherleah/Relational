@@ -20,7 +20,7 @@ if (mysqli_num_rows($userResult) === 1) {
   echo "Error: unable to find user";
 }
 
-$blogSql = "SELECT entry, date, profilephotoURL, firstName, lastName
+$blogSql = "SELECT entryID, entry, date, profilephotoURL, firstName, lastName
               FROM blog_entry AS b JOIN user AS u
               ON b.userID = '$userIDEscaped' AND b.userID = u.userID
               ORDER BY date DESC;
