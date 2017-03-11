@@ -2,11 +2,11 @@
 include_once 'database/database.php';
 session_start();
 include 'header.php';
-include 'includes/initialiseFriends.php';
+include 'includes/showfriends.php';
 include 'includes/addFriend.php';
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
-$userIdEscaped = mysqli_real_escape_string($conn, $user);
+$userIdEscaped = $user;
 ?>
 
 <!DOCTYPE html>

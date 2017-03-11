@@ -29,3 +29,39 @@ while ($row = mysqli_fetch_array($testConnResult)) {
     <?php
 }
 ?>
+
+------------------------- find and display mutual friends -----------------------------------
+//this query current works for finding friends of friends
+ie if 2 is friends with 3 and 3 is friends with 4 (but not 2) then 4 will be returned as a result
+
+SELECT firstName, lastName, profilephotoURL, gender,
+                            location, userID
+                            FROM user
+                            WHERE userID IN
+                              (SELECT DISTINCT userID2
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                  FROM friendship
+                                  WHERE userID1 = 1
+
+                                )
+
+                                AND status = 1
+
+                                AND NOT EXISTS (
+                                  SELECT *
+                                  FROM friendship AS fi
+                                  WHERE fi.userID2 = fo.userID2
+                                  AND fi.userID2 = 1
+                                )
+
+                                AND NOT EXISTS (
+                                  SELECT *
+                                  FROM friendship AS fi
+                                  WHERE fi.userID1 = fo.userID1
+                                  AND fi.userID1 = 1
+
+                                )
+
+                              )

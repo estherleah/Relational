@@ -41,7 +41,7 @@ $name = $_SESSION['name'];
 
                 <!--EXISTING FRIENDS ATTEMPT 2-->
 
-                <h3>Existing requests</h3>
+                <h3>Existing friends</h3>
                 <?php echo "Here are your friends" ?>
                 <?php
                 while ($row = mysqli_fetch_array($friendResult)) {
@@ -59,7 +59,7 @@ $name = $_SESSION['name'];
                                role="button"
                                data-id="<?php echo $thisUserID ?>"
                                >
-                               Delete
+                               Unfriend
                            </button>
 
                         <!-- </div> -->
@@ -73,7 +73,7 @@ $name = $_SESSION['name'];
                         <span class="circleMemberStatus">
                             <?php
                                 if($status == 1) { ?>friends<?php }
-                                else { ?>you are friends<?php }
+                                else { ?>Friends<?php }
                             ?>
                         </span>
                         <p>
@@ -128,7 +128,28 @@ $name = $_SESSION['name'];
 
                 <!--START OF FRIEND RECOMMENDATIONS-->
                 <h3>Suggested Friends</h3>
-                <?php echo "Here are some friends you could add" ?>
+                <?php echo "Search for friends" ?>
+                <!-- THIS IS FROM "VERYOLDFRIENDS.PHP"-->
+                <div class="row">
+                  <form>
+                  <label class="checkbox">
+                    <input type="checkbox" name="optradio">All
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" name="optradio">Friends of friends
+                  </label>
+                  <label class="checkbox">
+                    <input type="checkbox" name="optradio">In same circle
+                  </label>
+                  <button class="btn btn-primary btn-xs pull-right" type="button">Filter</button>
+                </form>
+                </div>
+                <p><p><p>
+                  <div class="row"></div>
+                <h3 class="text-center">Results</h3>
+                <p>
+                <div class ="text-center">Here are some friends you could add:<p></div>
+
 
                                 <?php
                                 while ($row = mysqli_fetch_array($recommendedResult)) {
@@ -146,22 +167,27 @@ $name = $_SESSION['name'];
                                                role="button"
                                                data-id="<?php echo $thisUserID ?>"
                                                >
-                                               Cancel
+                                               Add
                                            </button>
 
                                         <!-- </div> -->
+
                                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
                                         <span class="circleMemberName">
                                             <?php echo $firstName;?> <?php echo $lastName; ?>
                                         </span>
-                                        </br>
+                                        <br>
                                         <span class="circleMemberStatus">
                                             <?php
-                                                if($status == 0) { ?>pending<?php }
-                                                else if($thisUserStatus == 3) { ?>Owner<?php }
+                                                if(1 == 1) { ?>strangers<?php }
+                                                else { ?>you are friends<?php }
                                             ?>
                                         </span>
+
+                                        </br>
                                         <p>
+
                                     </div>
                                     <?php
                                 }

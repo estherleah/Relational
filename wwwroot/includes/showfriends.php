@@ -50,7 +50,7 @@ $friendSql = "SELECT profilephotoURL, firstName, lastName, status
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               WHERE status = 1
-              ORDER BY lastName DESC;
+              ORDER BY lastName DESC
               ";
 $friendResult = mysqli_query($conn, $friendSql);
 
@@ -59,7 +59,7 @@ $pendingSql = "SELECT profilephotoURL, firstName, lastName, status
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               AND status = 0
-              ORDER BY lastName DESC;
+              ORDER BY lastName DESC
               ";
 $pendingResult = mysqli_query($conn, $pendingSql);
 
@@ -67,12 +67,9 @@ $pendingResult = mysqli_query($conn, $pendingSql);
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified)
 */
-
 //Exclude yourself (you can't be friends with yourself)??
   //this line prevents your own account from showing up in recommendationsList
 //WHERE fi.userID2 = '$userIDEscaped'
-//still displays pending friendships
-//check this query again at some point??? still displays yourself, friends etc
 
 $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
@@ -83,64 +80,18 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender,
                               WHERE userID1 IN
                                 (SELECT userID2
                                   FROM friendship
-                                  WHERE userID1 = '$userIDEscaped'
-
-                                )
-
-                                AND status = 1
-
-                                AND NOT EXISTS (
-                                  SELECT *
-                                  FROM friendship AS fi
-                                  WHERE fi.userID2 = fo.userID2
-                                  AND fi.userID2 = '$userIDEscaped'
-                                )
-
-                                AND NOT EXISTS (
-                                  SELECT *
-                                  FROM friendship AS fi
-                                  WHERE fi.userID1 = fo.userID1
-                                  AND fi.userID1 = '$userIDEscaped'
-
-                                )
-
-                              )
-                              ORDER BY RAND() LIMIT $friendsOfFriendsLimit
-                            ;
-                          ";
-
-
-/*
-$recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
-                            FROM user
-                            WHERE userID IN
-                              (SELECT DISTINCT userID2
-                              FROM friendship AS fo
-                              WHERE userID1 IN
-                                (SELECT userID2
-                                  FROM friendship
-                                  WHERE userID1 = '$userIDEscaped'
-
-                                )
-                                AND status = 1
-
-                                AND NOT EXISTS (
-                                  SELECT *
-                                  FROM friendship AS fi
-                                  WHERE fi.userID2 = fo.userID2
-                                  AND fi.userID2 = '$userIDEscaped'
-
+                                  WHERE userID1 = 1
 
                                 )
                               )
-                              ORDER BY RAND() LIMIT $friendsOfFriendsLimit
-                            ;
+
                           ";
 /*
  find circle participants that user is not friends with of circles user is in
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified) */
 
+/*
 $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
                             FROM user
                             WHERE userID IN
@@ -163,58 +114,13 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, locatio
                               ORDER BY RAND() LIMIT $circleFriendsLimit
                             ;
                   ";
+ */
 
-$recommendedResult = mysqli_multi_query($conn, $recommendQuery);
+$recommendedResult = mysqli_query($conn, $recommendQuery);
 
 $numberOfRecommendations = 5;
 
 //here ends old friendsinitialise file
-
-
-// Search for circle data
-/*
-if(isset($_GET['id'])){
-    $_SESSION['circleID'] = $_GET['id'];
-    $circleID = $_SESSION['circleID'];
-}
-
-$userStatusResult = mysqli_query($conn,"  SELECT     userStatus
-                                                FROM       circle_participants
-                                                WHERE      userID = '$user' AND circleID = '$circleID' ", 0);
-
-$userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
-
-$circleDataResult = mysqli_query($conn,"  SELECT     name, description
-                                                FROM       circle
-                                                WHERE      circleID = '$circleID' ");
-
-$circleData = mysqli_fetch_array($circleDataResult);
-$circleName = $circleData['name'];
-$circleDesc = $circleData['description'];
-
-// Search for circle members
-$circleMembersResult = mysqli_query($conn," SELECT      t1.userID, t1.firstName, t1.lastName, t1.profilephotoURL, t2.userStatus
-                                                  FROM
-                                                  ( SELECT      userID, firstName, lastName, profilephotoURL
-                                                    FROM        user
-                                                    WHERE       userID
-                                                    IN ( SELECT DISTINCT    userID
-                                                         FROM               circle_participants
-                                                         WHERE              circleID = '$circleID' )
-                                                    ORDER BY    lastName ) t1
-
-                                                  INNER JOIN
-
-                                                  ( SELECT      userID, userStatus
-                                                    FROM        circle_participants
-                                                    WHERE       circleID = '$circleID' ) t2
-
-                                                  ON t1.userID = t2.userID
-                                                  WHERE t2.userStatus != 0
-                                                  ORDER BY t2.userStatus DESC
-                                                  ");
-*/
-//---------------------------------------------------------------------------------------------------
 
 if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];
@@ -229,11 +135,11 @@ function deleteFriend(){
     $userID1 = $_SESSION['userID'];
     $userID2 = $_POST['id'];
 
-    $deleteFriend1 = "   DELETE
+    $deleteFriend1 = "  DELETE
                         FROM       friendship
                         WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
     //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS
-    $deleteFriend2 = "   DELETE
+    $deleteFriend2 = "  DELETE
                         FROM       friendship
                         WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
 
