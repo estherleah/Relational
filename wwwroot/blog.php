@@ -18,22 +18,14 @@ include 'includes/initialiseBlog.php';
 <body>
 <!-- Content -->
 <div class="container">
+  <?php if($currentUser) { ?>
     <div class="row" id="entry">
         <div class="col-xs-12">
-            <h2 class="text-center">Blog for <?php echo $name ?></h2>
-        </div>
-        <div class="col-xs-2">
-            <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="100%"/>
-        </div>
-        <div class="col-xs-10">
           <textarea class="form-control" rows='3' id="postText"></textarea>
           <button class="btn btn-primary pull-right" id="postSubmit" type="button">Post</button>
-            <!--form method="post" action="includes/addblogpost.php">
-                <textarea name="post" class="form-control" rows='3' id="postText"></textarea>
-                <input class="btn btn-primary pull-right" type="submit" value="Post">
-            </form-->
         </div>
     </div>
+  <?php } ?>
 
     <div class="row" id="previousposts">
     <?php
@@ -41,11 +33,9 @@ include 'includes/initialiseBlog.php';
         while ($row = mysqli_fetch_assoc($blogResult)) {
             ?>
             <div class="row">
-                <div class="col-xs-2">
-                    <img src="<?php echo $row["profilephotoURL"] ?>" class="img-circle center-block" width="50%"/>
-                </div>
-                <div class="col-xs-10">
-                    <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
+                <div class="col-xs-12">
+                    <b><?php echo $row["date"] ?></b>
+                    <?php if($currentUser) { ?>
                     <button type="button"
                        class="btn btn-danger btn-xs pull-right btnRemove"
                        role="button"
@@ -53,9 +43,7 @@ include 'includes/initialiseBlog.php';
                        >
                        Remove
                     </button>
-                    <div class="text-muted">
-                        <small><?php echo $row["date"] ?></small>
-                    </div>
+                    <?php } ?>
                     <div><?php echo $row["entry"] ?></div>
                 </div>
             </div>
