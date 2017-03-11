@@ -27,14 +27,16 @@ include 'includes/initialisePhoto.php';
     <div class="row">
         <div class="col-xs-12">
             <h1 class="page-header">Date created: <?php echo $date?></h1>
+            <?php if($currentUser) { ?>
             <button type="button"
-               class="btn btn-danger pull-right btnRemove"
+               class="btn btn-danger btn-xs pull-right btnRemovePhoto"
                role="button"
-               data-id="<?php echo $photoID?>"
-               data-url="<?php echo $photoURL?>"
+               data-photoid="<?php echo $photoID?>"
+               data-photourl="<?php echo $photoURL?>"
                >
-               Remove
+               Remove Photo
             </button>
+            <?php } ?>
         </div>
       </div>
       <div class="row">
@@ -43,10 +45,22 @@ include 'includes/initialisePhoto.php';
         </div>
       </div>
 
+      <div class="row" id="likes">
+        <div class="col-xs-12">
+          <p><?php echo $annotationLikesCount . " likes" ?></p>
+          <button type="button"
+             class="btn <?php echo $buttonClass?> pull-left btnLike"
+             role="button"
+             data-photoid="<?php echo $photoID?>"
+             data-annotationtype="<?php echo 0?>"
+             >
+             <span class="glyphicon <?php echo $buttonGlyphicon?>"></span>
+              <?php echo $buttonText?>
+          </button>
+        </div>
+      </div>
+
       <div class="row" id="entry">
-          <div class="col-xs-12">
-              <h2 class="text-center">Comments</h2>
-          </div>
           <div class="col-xs-2">
               <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="100%"/>
           </div>
@@ -73,7 +87,15 @@ include 'includes/initialisePhoto.php';
                   </div>
                   <div class="col-xs-10">
                       <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                      <!--button class="btn btn-danger btn-xs pull-right" type="button">Delete</button-->
+                      <?php if($currentUser || ($row["userID"] == $user)) { ?>
+                      <button type="button"
+                         class="btn btn-danger btn-xs pull-right btnRemoveComment"
+                         role="button"
+                         data-commentid="<?php echo $row["commentID"]?>"
+                         >
+                         Remove
+                      </button>
+                      <?php } ?>
                       <div class="text-muted">
                           <small><?php echo $row["date"] ?></small>
                       </div>

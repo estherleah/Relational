@@ -1,28 +1,23 @@
 <?php
 
-//session_start();
+session_start();
 $user = $_SESSION['user'];
-$name = $_SESSION['name'];
 
-$userIDEscaped = mysqli_real_escape_string($conn, $user);
+// TEMP HACK! This will become either the current user ID or the ID of the profile being viewed
+$thisUserID = $user;
 
-$userSql = "SELECT firstName, lastName, profilephotoURL
-              FROM user
-              WHERE userID = '$userIDEscaped';
-              ";
-$userResult = mysqli_query($conn, $userSql);
-
-if (mysqli_num_rows($userResult) === 1) {
-    $row = mysqli_fetch_assoc($userResult);
-    $fullName = $row["firstName"] . " " . $row["lastName"];
-    $profilephotoURL = $row["profilephotoURL"];
+// check if viewing the current user
+if ($thisUserID == $user) {
+  $currentUser = True;
 } else {
-  echo "Error: unable to find user";
+  $currentUser = False;
 }
 
-$blogSql = "SELECT entry, date, profilephotoURL, firstName, lastName
-              FROM blog_entry AS b JOIN user AS u
-              ON b.userID = '$userIDEscaped' AND b.userID = u.userID
+$thisUserIDEscaped = mysqli_real_escape_string($conn, $user);
+
+$blogSql = "SELECT entryID, entry, date
+              FROM blog_entry AS b
+              WHERE b.userID = '$thisUserIDEscaped'
               ORDER BY date DESC;
               ";
 $blogResult = mysqli_query($conn, $blogSql);

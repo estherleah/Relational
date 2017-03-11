@@ -1,50 +1,99 @@
 // Adapted from http://stackoverflow.com/questions/166221/how-can-i-upload-files-asynchronously
 $(function() { // waits for document to be ready
 
-  $(".btnRemove").on("click", function(event) {
-      var button = $(event.target);
-      var id = button.data("id");
-      var url = button.data("url");
+    $(document).on('click', '.btnRemovePhoto', function(event) {
+        var button = $(event.target);
+        var photoid = button.data("photoid");
+        var photourl = button.data("photourl");
 
-      // call php code to remove photo
-      $.ajax({
-        type: "POST",
-        url: 'includes/removePhoto.php',
-        data: {id, url},
-        cache: false,
+        // call php code to remove photo
+        $.ajax({
+            type: "POST",
+            url: 'includes/removePhoto.php',
+            data: {
+                photoid,
+                photourl
+            },
+            cache: false,
 
-        success: function(html) {
-            window.history.back();
+            success: function(html) {
+                console.log(html);
+                window.history.back();
+            }
+        });
+    });
+
+    $(document).on('click', '.btnPost', function(event) {
+        var button = $(event.target);
+        var photoid = button.data("photoid");
+
+        var post = $('#postText').val();
+        //var dataString = 'post=' + post;
+        if (!post) {
+            alert('Enter some text');
+        } else {
+            // call php code to write to DB
+            $.ajax({
+                type: "POST",
+                url: 'includes/addPhotoComment.php',
+                data: {
+                    photoid,
+                    post
+                },
+                cache: false,
+                success: function(html) {
+                    // reload data
+                    $("#previousposts").load(location.href + " #previousposts");
+                    console.log(html);
+                    // clear entry form
+                    $("#postText").val('');
+                }
+            });
         }
+
+    });
+
+    $(document).on("click", ".btnLike", function(event) {
+      var button = $(event.target);
+      var photoid = button.data("photoid");
+      var annotationtype = button.data("annotationtype");
+
+      // call php code to write to DB
+      $.ajax({
+          type: "POST",
+          url: 'includes/changePhotoAnnotation.php',
+          data: {
+              photoid,
+              annotationtype
+          },
+          cache: false,
+          success: function(html) {
+              // reload data
+              $("#likes").load(location.href + " #likes");
+              //location.reload();
+              console.log(html);
+          }
       });
     });
 
-    $(".btnPost").on("click", function(event) {
+    $(document).on('click', '.btnRemoveComment', function(event) {
       var button = $(event.target);
-      var photoid = button.data("photoid");
+      var commentid = button.data('commentid');
 
-      var post = $('#postText').val();
-      //var dataString = 'post=' + post;
-      if (!post) {
-        alert('Enter some text');
-      }
-      else {
-        // call php code to write to DB
-        $.ajax({
-            type: "POST",
-            url: 'includes/addPhotoComment.php',
-            data: {photoid, post},
-            cache: false,
-            success: function(html) {
-                // reload data
-                $("#previousposts").load(location.href + " #previousposts");
-                console.log(html);
-                // clear entry form
-                $("#postText").val('');
-            }
-        });
-      }
-
+      // call php code to remove photo comment from DB
+      $.ajax({
+          type: 'POST',
+          url: 'includes/removePhotoComment.php',
+          data: {
+              commentid
+          },
+          cache: false,
+          success: function(html) {
+              // reload data
+              $('#previousposts').load(location.href + ' #previousposts');
+              console.log(html);
+          }
+      });
     });
 
 });
