@@ -30,6 +30,13 @@ include 'includes/initialisePhotos.php';
         <div class="col-xs-12">
             <h1 class="page-header"><?php echo $name ?></h1>
             <b>Date created: <?php echo $date ?></b>
+            <button type="button"
+               class="btn btn-danger btn-xs pull-right btnRemoveCollection"
+               role="button"
+               data-collectionid="<?php echo $collectionID?>"
+               >
+               Remove Collection
+            </button>
         </div>
     </div>
     <div class="row">

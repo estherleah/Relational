@@ -21,7 +21,7 @@ if (mysqli_num_rows($userResult) === 1) {
   echo "Error: unable to find user";
 }
 
-$commentSql = "SELECT comment, date, profilephotoURL, firstName, lastName
+$commentSql = "SELECT commentID, comment, date, profilephotoURL, firstName, lastName
               FROM photo_comment AS pc JOIN user AS u
               ON pc.photoID = '$photoIDEscaped' AND pc.userID = u.userID
               ORDER BY date DESC;
