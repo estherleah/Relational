@@ -46,7 +46,13 @@ include 'includes/initialiseBlog.php';
                 </div>
                 <div class="col-xs-10">
                     <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                    <!--button class="btn btn-danger btn-xs pull-right" type="button">Delete</button-->
+                    <button type="button"
+                       class="btn btn-danger btn-xs pull-right btnRemove"
+                       role="button"
+                       data-entryid="<?php echo $row["entryID"]?>"
+                       >
+                       Remove
+                    </button>
                     <div class="text-muted">
                         <small><?php echo $row["date"] ?></small>
                     </div>
@@ -63,6 +69,6 @@ include 'includes/initialiseBlog.php';
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/blogentry.js"></script>
+<script src="js/blog.js"></script>
 </body>
 </html>
