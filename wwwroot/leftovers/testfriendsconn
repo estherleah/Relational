@@ -65,3 +65,59 @@ SELECT firstName, lastName, profilephotoURL, gender,
                                 )
 
                               )
+-----------------------------------------------------------------------------
+  ORDER BY RAND() LIMIT $circleFriendsLimit
+more troubleshooting
+FOR CIRCLE RECOMMENDATIONS
+-----------------------------------------------------------------------------
+ORIGINAL (from a long time ago)
+$recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
+                            FROM user
+                            WHERE userID IN
+                              (SELECT DISTINCT userID
+                              FROM circle_participants AS c
+                              WHERE c.circleID IN
+                                (SELECT circleID
+                                  FROM circle_participants
+                                  WHERE userID = '$userIDEscaped'
+                                )
+                                AND userID != '$userIDEscaped'
+                                AND NOT EXISTS (
+                                  SELECT *
+                                  FROM friendship AS f
+                                  WHERE f.userID1 = '$userIDEscaped'
+                                  AND f.userID2 = c.userID
+                                )
+
+                              )
+                              ORDER BY RAND() LIMIT $circleFriendsLimit
+                            ;
+                  ";
+-----
+trying another approach - this seems to work
+(return members in a circle the user is in, excluding anyone they are already friends with)
+
+SELECT firstName, lastName, profilephotoURL, gender, location
+                            FROM user
+                            WHERE userID IN
+                              (SELECT DISTINCT userID
+                              FROM circle_participants AS c
+                              WHERE c.circleID IN
+                                (SELECT circleID
+                                  FROM circle_participants
+                                  WHERE userID = 7
+                                 )
+
+                               AND userID != 7
+
+                               AND NOT EXISTS (
+                                  SELECT *
+                                  FROM friendship AS f
+                                  WHERE f.userID1 = 7
+                                  AND f.userID2 = c.userID
+                                )
+                               )
+
+
+
+--------------------------------------------------------------------------------

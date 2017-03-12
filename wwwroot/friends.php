@@ -148,11 +148,11 @@ $name = $_SESSION['name'];
                   <div class="row"></div>
                 <h3 class="text-center">Results</h3>
                 <p>
-                <div class ="text-center">Here are some friends you could add:<p></div>
-
+                  <!--I haven't figured out how to join the queries so I will just do separate sections for now-->
+                <div class ="text-center">Friends of friends<p></div>
 
                                 <?php
-                                while ($row = mysqli_fetch_array($recommendedResult)) {
+                                while ($row = mysqli_fetch_array($recommendedResult1)) {
                                     $firstName = $row['firstName'];
                                     $lastName = $row['lastName'];
                                     $thisUserID = $row['userID'];
@@ -192,6 +192,54 @@ $name = $_SESSION['name'];
                                     <?php
                                 }
                                 ?>
+
+                                <!--members of circles you are in who aren't friends with you-->
+
+                                <div class ="text-center">People in the same circles as you<p></div>
+
+                                                <?php
+                                                while ($row = mysqli_fetch_array($recommendedResult2)) {
+                                                    $firstName = $row['firstName'];
+                                                    $lastName = $row['lastName'];
+                                                    $thisUserID = $row['userID'];
+
+                                                    $profilePhotoURL = $row["profilephotoURL"];
+                                                    ?>
+
+                                                    <div class="recommendedFriends row">
+
+                                                            <button type="button"
+                                                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                                                               role="button"
+                                                               data-id="<?php echo $thisUserID ?>"
+                                                               >
+                                                               Add
+                                                           </button>
+
+                                                        <!-- </div> -->
+
+                                                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+                                                        <span class="circleMemberName">
+                                                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                                                        </span>
+                                                        <br>
+                                                        <span class="circleMemberStatus">
+                                                            <?php
+                                                                if(1 == 1) { ?>strangers<?php }
+                                                                else { ?>you are friends<?php }
+                                                            ?>
+                                                        </span>
+
+                                                        </br>
+                                                        <p>
+
+                                                    </div>
+                                                    <?php
+                                                }
+                                                ?>
+
+
                                 <!--END OF RECS-->
 
 

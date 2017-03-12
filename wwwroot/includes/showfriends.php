@@ -37,14 +37,6 @@ $testConnSql = "SELECT profilephotoURL, firstName, lastName, userID1, userID2, s
                 ";
 $testConnResult = mysqli_query($conn, $testConnSql);
 
-/*
-
-$testConnSql = "SELECT profilephotoURL, firstName, lastName, status, userID1, userID2, status
-                FROM friendship AS f JOIN user AS u
-
-                ";
-$testConnResult = mysqli_query($conn, $testConnSql);
-*/
 
 $friendSql = "SELECT profilephotoURL, firstName, lastName, status
               FROM friendship AS f JOIN user AS u
@@ -68,10 +60,9 @@ $pendingResult = mysqli_query($conn, $pendingSql);
 * Randomise and limit the output (if specified)
 */
 //Exclude yourself (you can't be friends with yourself)??
-  //this line prevents your own account from showing up in recommendationsList
-//WHERE fi.userID2 = '$userIDEscaped'
+  //this currently (mostly) works but it shows pending friends in your recs... if your friends are friends with htem
 
-$recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender,
+$recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
                             FROM user
                             WHERE userID IN
@@ -94,13 +85,15 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender,
                             )
 
                           ";
+
 /*
+this part doesn't work-----SHOULD BE FIXED NOW 12 MAR
  find circle participants that user is not friends with of circles user is in
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified) */
 
-/*
-$recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
+
+$recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, location
                             FROM user
                             WHERE userID IN
                               (SELECT DISTINCT userID
@@ -109,22 +102,22 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, locatio
                                 (SELECT circleID
                                   FROM circle_participants
                                   WHERE userID = '$userIDEscaped'
-                                )
-                                AND userID != '$userIDEscaped'
-                                AND NOT EXISTS (
+                                 )
+
+                               AND userID != '$userIDEscaped'
+
+                               AND NOT EXISTS (
                                   SELECT *
                                   FROM friendship AS f
                                   WHERE f.userID1 = '$userIDEscaped'
                                   AND f.userID2 = c.userID
                                 )
-
-                              )
-                              ORDER BY RAND() LIMIT $circleFriendsLimit
-                            ;
+                               )
                   ";
- */
 
-$recommendedResult = mysqli_query($conn, $recommendQuery);
+
+$recommendedResult1 = mysqli_query($conn, $recommendQuery1);
+$recommendedResult2 = mysqli_query($conn, $recommendQuery2);
 
 $numberOfRecommendations = 5;
 
