@@ -1,15 +1,23 @@
 <?php
 
-//include_once '../database/database.php';
-//session_start();
 $user = $_SESSION['user'];
-$name = $_SESSION['name'];
 
-$userIDEscaped = mysqli_real_escape_string($conn, $user);
+if(isset($_GET['id'])) {
+  // another user
+  $thisUserID = $_GET['id'];
+  $currentUser = False;
+} else {
+  // current user
+  $thisUserID = $user;
+  $currentUser = True;
+}
+
+// get user details
+$thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
 
 $userSql = "SELECT firstName, lastName, profilephotoURL
               FROM user
-              WHERE userID = '$userIDEscaped';
+              WHERE userID = '$thisUserIDEscaped';
               ";
 $userResult = mysqli_query($conn, $userSql);
 
@@ -25,7 +33,7 @@ $collectionSql = "SELECT pcol.collectionID, pcol.name, pcol.date, u.profilephoto
               FROM photo_collection AS pcol
               LEFT JOIN photo AS p ON pcol.collectionID = p.collectionID
               JOIN user AS u ON pcol.userID = u.userID
-              WHERE pcol.userID = '$userIDEscaped'
+              WHERE pcol.userID = '$thisUserIDEscaped'
               GROUP BY pcol.collectionID
               ORDER BY date DESC;
               ";

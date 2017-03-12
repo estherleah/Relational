@@ -30,8 +30,18 @@ include 'includes/initialisePhotos.php';
         <div class="col-xs-12">
             <h1 class="page-header"><?php echo $name ?></h1>
             <b>Date created: <?php echo $date ?></b>
+            <?php if($currentUser) { ?>
+            <button type="button"
+               class="btn btn-danger btn-xs pull-right btnRemoveCollection"
+               role="button"
+               data-collectionid="<?php echo $collectionID?>"
+               >
+               Remove Collection
+            </button>
+            <?php } ?>
         </div>
     </div>
+    <?php if($currentUser) { ?>
     <div class="row">
         <div class="col-xs-12">
             <h3>Add photos</h3>
@@ -52,12 +62,12 @@ include 'includes/initialisePhotos.php';
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-xs-12">
             <h3>Existing photos</h3>
         </div>
     </div>
+    <?php } ?>
     <div class="row" id="existingPhotos">
         <?php
         if (mysqli_num_rows($photoResult) > 0) {
@@ -73,17 +83,28 @@ include 'includes/initialisePhotos.php';
                         </div>
                     </div>
                 </div>
-
-
-                <?php
-            }
-        }
-        ?>
+        <?php }} ?>
     </div>
 
-
+    <!-- Confirmation Dialog -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Are you sure?</h4>
+          </div>
+          <div class="modal-body">
+            <span class="message"></span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btnCancel" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary btnConfirm" data-dismiss="modal">Confirm</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </div>
-
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

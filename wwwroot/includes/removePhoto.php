@@ -2,13 +2,10 @@
 
 include_once '../database/database.php';
 session_start();
-$user = $_SESSION['user'];
-$name = $_SESSION['name'];
 
-$photoId = $_POST["id"];
-$photoUrl = $_POST["url"];
+$photoId = $_POST["photoid"];
+$photoUrl = $_POST["photourl"];
 
-//$docRoot = $_SERVER['DOCUMENT_ROOT'] . "/";
 $system_path_full = "../" . $photoUrl;
 
 // remove entry from DB

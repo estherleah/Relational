@@ -27,14 +27,16 @@ include 'includes/initialisePhoto.php';
     <div class="row">
         <div class="col-xs-12">
             <h1 class="page-header">Date created: <?php echo $date?></h1>
+            <?php if($currentUser) { ?>
             <button type="button"
-               class="btn btn-danger pull-right btnRemove"
+               class="btn btn-danger btn-xs pull-right btnRemovePhoto"
                role="button"
-               data-id="<?php echo $photoID?>"
-               data-url="<?php echo $photoURL?>"
+               data-photoid="<?php echo $photoID?>"
+               data-photourl="<?php echo $photoURL?>"
                >
-               Remove
+               Remove Photo
             </button>
+            <?php } ?>
         </div>
       </div>
       <div class="row">
@@ -85,7 +87,15 @@ include 'includes/initialisePhoto.php';
                   </div>
                   <div class="col-xs-10">
                       <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
-                      <!--button class="btn btn-danger btn-xs pull-right" type="button">Delete</button-->
+                      <?php if($currentUser || ($row["userID"] == $user)) { ?>
+                      <button type="button"
+                         class="btn btn-danger btn-xs pull-right btnRemoveComment"
+                         role="button"
+                         data-commentid="<?php echo $row["commentID"]?>"
+                         >
+                         Remove
+                      </button>
+                      <?php } ?>
                       <div class="text-muted">
                           <small><?php echo $row["date"] ?></small>
                       </div>
@@ -97,6 +107,25 @@ include 'includes/initialisePhoto.php';
       }
       ?>
       </div>
+
+      <!-- Confirmation Dialog -->
+      <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+              <span class="message"></span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default btnCancel" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary btnConfirm" data-dismiss="modal">Confirm</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
   </div>
 
   <script src="js/jquery.min.js"></script>

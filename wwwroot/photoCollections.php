@@ -22,10 +22,14 @@ include 'includes/initialisePhotoCollections.php';
   <!-- Content -->
   <div class="container">
     <div class="row">
-        <div class="col-xs-12">
-            <h1 class="page-header"><?php echo $name ?>'s Photo Collections</h1>
-        </div>
+      <div class="col-xs-10">
+          <h1 class="page-header"><?php echo $fullName ?>'s Photo Collections</h1>
+      </div>
+      <div class="col-xs-2">
+        <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="100%"/>
+      </div>
     </div>
+    <?php if($currentUser) { ?>
     <div class="row">
           <div class="col-xs-12">
               <h3>Create a new collection</h3>
@@ -46,6 +50,7 @@ include 'includes/initialisePhotoCollections.php';
               <h3>Existing collections</h3>
           </div>
     </div>
+    <?php } ?>
     <div class="row" id="existingCollections">
     <?php
     if (mysqli_num_rows($collectionResult) > 0) {
@@ -71,18 +76,10 @@ include 'includes/initialisePhotoCollections.php';
     }
     ?>
     </div>
-
-
-  </div>
-  </div>
-
-
-
-
   </div>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script src="js/addPhotoCollection.js"></script>
+  <script src="js/photoCollections.js"></script>
 </body>
 </html>
