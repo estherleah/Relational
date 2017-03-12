@@ -29,15 +29,28 @@ $name = $_SESSION['name'];
 
 
 <!-- Content -->
+<!--CONTAINER BEGINS HERE-->
 <div class="container">
-    <div class="col-*-*">
+  <!--trying to split the page in half-->
+
+    <!--div class="col-*-*"-->
         <div class="text-center">
-            <div class="col-md-8 col-sm-offset-2 jumbotron">
 
 
+            <div class="row">
+              <div class="col-xs-2">
+                <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="80%"/>
+              </div>
+              <div class="col-xs-7">
+                  <h1 class="page-header"><?php echo $fullName ?>'s Friends</h1>
+                  <h4><?php echo "Friendship is magic" ?></h4>
+              </div>
 
-                <h2><?php echo $name . "'s friends" ?></h2>
-                <?php echo "Friendship is magic" ?>
+            </div>
+
+            <!--ROW BEGINS HERE -->
+            <div class = "row">
+            <div class="col-xs-5 jumbotron">
 
                 <!--EXISTING FRIENDS ATTEMPT 2-->
 
@@ -125,6 +138,9 @@ $name = $_SESSION['name'];
                 }
                 ?>
                 <!--END OF PENDING REQUEST-->
+              </div>
+
+              <div class="col-xs-5 col-xs-offset-1 jumbotron">
 
                 <!--START OF FRIEND RECOMMENDATIONS-->
                 <h3>Suggested Friends</h3>
@@ -328,8 +344,11 @@ $name = $_SESSION['name'];
                 </div><!-- /.modal -->
 
             </div>
+          </div> <!--the div for the row I put both columns in ends here-->
         </div>
     </div>
+
 </div>
+<!--CONTAINER ENDS HERE-->
 </body>
 </html>
