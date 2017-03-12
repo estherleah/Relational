@@ -149,7 +149,7 @@ $name = $_SESSION['name'];
                 <h3 class="text-center">Results</h3>
                 <p>
                   <!--I haven't figured out how to join the queries so I will just do separate sections for now-->
-                <div class ="text-center">Friends of friends<p></div>
+                <div class ="text-center"><b>Friends of friends (both existing and pending)</b><p></div>
 
                                 <?php
                                 while ($row = mysqli_fetch_array($recommendedResult1)) {
@@ -193,7 +193,7 @@ $name = $_SESSION['name'];
 
                                 <!--members of circles you are in who aren't friends with you-->
 
-                                <div class ="text-center">People in the same circles as you<p></div>
+                                <div class ="text-center"><b>People in the same circles as you</b><p></div>
 
                                                 <?php
                                                 while ($row = mysqli_fetch_array($recommendedResult2)) {
@@ -237,7 +237,7 @@ $name = $_SESSION['name'];
 
                                                 <!--PEOPLE IN THE SAME LOCATION (NOT ALREADY FRIENDS)-->
 
-                                                <div class ="text-center">Same location<p></div>
+                                                <div class ="text-center"><b>People near you (location)</b><p></div>
 
                                                                 <?php
                                                                 while ($row = mysqli_fetch_array($recommendedResult3)) {

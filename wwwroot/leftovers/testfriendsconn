@@ -33,6 +33,7 @@ while ($row = mysqli_fetch_array($testConnResult)) {
 ------------------------- find and display mutual friends -----------------------------------
 //this query current works for finding friends of friends
 ie if 2 is friends with 3 and 3 is friends with 4 (but not 2) then 4 will be returned as a result
+still having issues with this
 
 SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
@@ -65,6 +66,60 @@ SELECT firstName, lastName, profilephotoURL, gender,
                                 )
 
                               )
+
+                              SELECT firstName, lastName, profilephotoURL, gender,
+                                                          location, userID
+                                                          FROM user
+                                                          WHERE userID IN
+                                                            (SELECT DISTINCT userID2
+                                                            FROM friendship AS fo
+                                                            WHERE userID1 IN
+                                                              (SELECT userID2
+                                                                FROM friendship
+                                                                WHERE userID1 = 3
+                                                              )
+
+                                                              AND status = 1
+                                                              AND NOT EXISTS (
+                                                                SELECT *
+                                                                FROM friendship AS fi
+                                                                WHERE fi.userID2 = fo.userID2
+                                                                AND fi.userID2 = 3
+
+                                                             		AND NOT EXISTS (
+                                                                  	SELECT *
+                                                                 	 	FROM friendship AS fi2
+                                                                  	WHERE fi2.userID1 = fo.userID1
+                                                                		AND fi2.userID1 = 3
+
+
+                                                            			)
+
+
+                                                          	)
+                                                            )
+--- not entirely sure if this works
+---- this excludes your pending friends but it recommends friends of pending friends
+SELECT firstName, lastName, profilephotoURL, gender,
+                            location, userID
+                            FROM user
+                            WHERE userID IN
+                              (SELECT DISTINCT userID2
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                  FROM friendship
+                                  WHERE userID1 = 3
+                                )
+
+                                AND status = 1
+                                AND fo.userID2 NOT IN
+                             	(SELECT userID2
+                                 FROM friendship
+                                 WHERE userID1 = 3)
+                               	AND userID != 3
+
+                            )
 -----------------------------------------------------------------------------
   ORDER BY RAND() LIMIT $circleFriendsLimit
 more troubleshooting
@@ -140,9 +195,4 @@ SELECT * FROM `user` as u WHERE u.userID IN
                                   AND f.userID2 = u2.userID
                                 )
                               )
-
-
-
-
-
 --------------------------------------------------------------------------------
