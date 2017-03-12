@@ -80,10 +80,18 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender,
                               WHERE userID1 IN
                                 (SELECT userID2
                                   FROM friendship
-                                  WHERE userID1 = 1
-
+                                  WHERE userID1 = '$userIDEscaped'
                                 )
-                              )
+
+                                AND status = 1
+                                AND NOT EXISTS (
+                                  SELECT *
+                                  FROM friendship AS fi
+                                  WHERE fi.userID2 = fo.userID2
+                                  AND fi.userID2 = '$userIDEscaped'
+                                )
+
+                            )
 
                           ";
 /*
