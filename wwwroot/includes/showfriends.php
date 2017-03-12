@@ -55,7 +55,7 @@ $pendingSql = "SELECT profilephotoURL, firstName, lastName, status
               ";
 $pendingResult = mysqli_query($conn, $pendingSql);
 
-/* find friends of friends
+/*FRIENDS OF FRIENDS
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified)
 */
@@ -87,7 +87,7 @@ $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                           ";
 
 /*
-this part doesn't work-----SHOULD BE FIXED NOW 12 MAR
+CIRCLERECS-----SHOULD BE FIXED NOW 12 MAR
  find circle participants that user is not friends with of circles user is in
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified) */
@@ -115,9 +115,31 @@ $recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, locati
                                )
                   ";
 
+/*RECS BY LOCATION*/
+
+$recommendQuery3 = " SELECT * FROM `user` as u WHERE u.userID IN
+                      				(SELECT DISTINCT userID
+                                       FROM user AS u2
+                                       WHERE u2.location IN
+                                           (SELECT location
+                                            FROM user
+                                            WHERE userID = '$userIDEscaped'
+                                                       )
+                                             AND u.userID != '$userIDEscaped'
+                                             AND NOT EXISTS (
+                                                              SELECT *
+                                                              FROM friendship AS f
+                                                              WHERE f.userID1 = '$userIDEscaped'
+                                                              AND f.userID2 = u2.userID
+                                                            )
+                                                          )
+                  ";
+
+
 
 $recommendedResult1 = mysqli_query($conn, $recommendQuery1);
 $recommendedResult2 = mysqli_query($conn, $recommendQuery2);
+$recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 
 $numberOfRecommendations = 5;
 
@@ -139,7 +161,7 @@ function deleteFriend(){
     $deleteFriend1 = "  DELETE
                         FROM       friendship
                         WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
-    //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS
+    //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS, POSSIBLY NEXT THESE QUERIES
     $deleteFriend2 = "  DELETE
                         FROM       friendship
                         WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";

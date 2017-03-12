@@ -118,6 +118,31 @@ SELECT firstName, lastName, profilephotoURL, gender, location
                                 )
                                )
 
+----------
+this query returns all the people in the same location as the selected user (not already friends)
+----------
+SELECT * FROM `user` as u WHERE u.userID IN
+				(SELECT DISTINCT userID
+                 FROM user AS u2
+                 WHERE u2.location IN
+                     (SELECT location
+                      FROM user
+                      WHERE userID = 7
+                                 )
+
+
+                 AND u.userID != 7
+
+                  AND NOT EXISTS (
+                                  SELECT *
+                                  FROM friendship AS f
+                                  WHERE f.userID1 = 7
+                                  AND f.userID2 = u2.userID
+                                )
+                              )
+
+
+
 
 
 --------------------------------------------------------------------------------

@@ -179,10 +179,8 @@ $name = $_SESSION['name'];
                                         </span>
                                         <br>
                                         <span class="circleMemberStatus">
-                                            <?php
-                                                if(1 == 1) { ?>strangers<?php }
-                                                else { ?>you are friends<?php }
-                                            ?>
+                                          <?php
+                                              echo "Friend of a friend" ?>
                                         </span>
 
                                         </br>
@@ -225,10 +223,8 @@ $name = $_SESSION['name'];
                                                         </span>
                                                         <br>
                                                         <span class="circleMemberStatus">
-                                                            <?php
-                                                                if(1 == 1) { ?>strangers<?php }
-                                                                else { ?>you are friends<?php }
-                                                            ?>
+                                                          <?php
+                                                              echo "Fellow circle member" ?>
                                                         </span>
 
                                                         </br>
@@ -238,6 +234,53 @@ $name = $_SESSION['name'];
                                                     <?php
                                                 }
                                                 ?>
+
+                                                <!--PEOPLE IN THE SAME LOCATION (NOT ALREADY FRIENDS)-->
+
+                                                <div class ="text-center">Same location<p></div>
+
+                                                                <?php
+                                                                while ($row = mysqli_fetch_array($recommendedResult3)) {
+                                                                    $firstName = $row['firstName'];
+                                                                    $lastName = $row['lastName'];
+                                                                    $thisUserID = $row['userID'];
+
+                                                                    $profilePhotoURL = $row["profilephotoURL"];
+                                                                    ?>
+
+                                                                    <div class="recommendedFriends row">
+
+                                                                            <button type="button"
+                                                                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                                                                               role="button"
+                                                                               data-id="<?php echo $thisUserID ?>"
+                                                                               >
+                                                                               Add
+                                                                           </button>
+
+                                                                        <!-- </div> -->
+
+                                                                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+                                                                        <span class="circleMemberName">
+                                                                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="circleMemberStatus">
+                                                                            <?php
+                                                                                echo "Same location" ?>
+
+
+                                                                        </span>
+
+                                                                        </br>
+                                                                        <p>
+
+                                                                    </div>
+                                                                    <?php
+                                                                }
+                                                                ?>
+
 
 
                                 <!--END OF RECS-->
