@@ -45,10 +45,22 @@ $friendSql = "SELECT profilephotoURL, firstName, lastName, userID, status
 $friendResult = mysqli_query($conn, $friendSql);
 
 //PENDING (ADDED BUT YET TO ACCEPT (on either end))
-$pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status
+$requestedSql = "SELECT profilephotoURL, firstName, lastName, userID, status, origin
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               AND status = 0
+              AND origin != '$userIDEscaped'
+              ORDER BY lastName DESC
+              ";
+$requestedResult = mysqli_query($conn, $requestedSql);
+
+
+//PENDING (ADDED BUT THE OTHER PARTY HAS YET TO ACCEPT
+$pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status, origin
+              FROM friendship AS f JOIN user AS u
+              ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
+              AND status = 0
+              AND origin = '$userIDEscaped'
               ORDER BY lastName DESC
               ";
 $pendingResult = mysqli_query($conn, $pendingSql);
@@ -71,18 +83,16 @@ $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                                   FROM friendship
                                   WHERE userID1 = '$userIDEscaped'
                                 )
-
                                 AND status = 1
                                 AND fo.userID2 NOT IN
                              	(SELECT userID2
                                  FROM friendship
                                  WHERE userID1 = '$userIDEscaped')
-                               	AND userID != '$userIDEscaped'
+                               	AND userID2 != '$userIDEscaped'
 
                             )
 
                           ";
-
 /*
 CIRCLERECS-----SHOULD BE FIXED NOW 12 MAR
  find circle participants that user is not friends with of circles user is in
@@ -147,6 +157,7 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];
   switch($action) {
       case 'deleteFriend' : deleteFriend(); break;
+      case 'acceptReq' : acceptReq(); break;
       case 'cancelReq' : cancelReq(); break;
       case 'addFriend' : addFriend(); break;
   }
@@ -170,6 +181,26 @@ function deleteFriend(){
 }
 
 //THIS NOW WORKS
+
+//ACCEPT FRIEND REQ #4
+function acceptReq(){
+
+  $userID1 = $_SESSION['user'];
+  $userID2 = $_POST['id'];
+
+  $acceptReq = "  UPDATE friendship
+                  SET status = 1
+                  WHERE (userID1 = '$userID1' AND userID2 = '$userID2')
+                  OR (userID1 = '$userID1' AND userID2 = '$userID1')";
+
+  if (mysqli_query($GLOBALS['conn'], $acceptReq)) {
+
+          echo "You are now friends!";
+        } else {
+          echo "Could not accept friend request" . mysqli_error($GLOBALS['conn']);
+        }
+}
+
 //CANCEL FRIEND REQ #2
 function cancelReq(){
   $userID1 = $_SESSION['user'];
@@ -186,9 +217,10 @@ function cancelReq(){
 
           echo "Friend request canceled";
         } else {
-            echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
+          echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
         }
 }
+
 #ADD FRIEND #3
 //YES ADDING FRIENDS WORKS NOW - but I forgot about accepting friend requests
 //intval cast isn't actually needed
@@ -202,9 +234,9 @@ function addFriend(){
 
 //SYMMETRIC RELATION - must work both ways
 //YES THIS WORKS NOW
-    $addFriend = "INSERT INTO friendship (userID1, userID2, status)
-                  VALUES ('$userID1', '$userID2', '0'),
-                        ('$userID2', '$userID1', '0');
+    $addFriend = "INSERT INTO friendship (userID1, userID2, status, origin)
+                  VALUES ('$userID1', '$userID2', '0', '$userID1'),
+                        ('$userID2', '$userID1', '0', '$userID1');
                     ";
 
 /*

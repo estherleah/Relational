@@ -214,3 +214,10 @@ $addFriend = "INSERT INTO friendship (userID1, userID2, status)
                                                                   ";
 
                                                                   ugh
+--------------------------------------
+
+INSERT INTO friendship (userID1, userID2, status, origin)
+                  VALUES ('7', '7', '0', 7),
+                        ('6', '6', '0', 7);
+
+this works - trying an 'origin' flag to see who sent the request
