@@ -208,3 +208,9 @@ $addFriend = "INSERT INTO friendship (userID1, userID2, status)
               $deleteFriend = "  DELETE FROM friendship
                                   WHERE      (userID1 = '4' AND userID2 = '4'
                                               OR userID1 = '$userID2' AND userID2 = '$userID1')";
+
+                                                  $addFriend = "INSERT INTO friendship (userID1, userID2, status)
+                                                                VALUES ('$userID1', '7', '0');
+                                                                  ";
+
+                                                                  ugh

@@ -157,6 +157,8 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
 function deleteFriend(){
   $userID1 = $user;
   $userID2= $_POST['id'];
+  $userID1 = intval($userID1);
+  $userID2 = intval($userID2);
 
     $deleteFriend = "  DELETE FROM friendship
                         WHERE      (userID1 = '$userID1' AND userID2 = '$userID2')
@@ -171,8 +173,10 @@ function deleteFriend(){
 //CANCEL FRIEND REQ #2
 function cancelReq(){
   $userID1 = $_SESSION['userID'];
+  $userID1 = intval($userID1);
   $thisUserID= $_POST['id'];
   $userID2 = $thisUserID;
+  $userID2 = intval($userID2);
 
   $cancelReq = "  DELETE FROM friendship
                       WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
@@ -187,18 +191,27 @@ function cancelReq(){
 }
 #ADD FRIEND #3
 function addFriend(){
-  $userIdEscaped = mysqli_real_escape_string($GLOBALS['conn'], $user);
+//  $userIdEscaped = mysqli_real_escape_string($GLOBALS['conn'], $user);
 
-  $userID1 = $userIDEscaped;
+  $userID1 = $_SESSION['user'];
+  $userID1 = intval($userID1);
+
   $thisUserID= $_POST['id'];
   $userID2 = $thisUserID;
+  $userID2 = intval($userID2);
 
-
+//YES THIS WORKS NOW
     $addFriend = "INSERT INTO friendship (userID1, userID2, status)
-                  VALUES ($userID1, $userID2, 0),
-                          (1, 1, 0);
-                  ";
+                  VALUES ('$userID1', '$userID2', '0'),
+                        ('$userID2', '$userID1', '0');
+                    ";
 
+
+/*
+                    '$userID2', 0),
+                          ('$userID2', '$userID1', 0);
+                  ";
+*/
     if (mysqli_query($GLOBALS['conn'], $addFriend)) {
         echo "Friend added";
     } else {
