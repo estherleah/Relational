@@ -215,7 +215,7 @@ function cancelReq(){
 
   if (mysqli_query($GLOBALS['conn'], $cancelReq)) {
 
-          echo "Friend request canceled";
+          echo "Friend request cancelled";
         } else {
           echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
         }

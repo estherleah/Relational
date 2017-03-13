@@ -2,7 +2,7 @@ $(function() {
 
     //Friends - adapted from CircleMembers
 
-    var removeMsg = "this might not be working";
+    var removeMsg = "";
 
     // Include member name in info modal
     $('#infoModal').on('show.bs.modal', function (event) {
