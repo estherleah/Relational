@@ -36,7 +36,7 @@ $testConnSql = "SELECT profilephotoURL, firstName, lastName, userID1, userID2, s
 $testConnResult = mysqli_query($conn, $testConnSql);
 
 
-$friendSql = "SELECT profilephotoURL, firstName, lastName, status
+$friendSql = "SELECT profilephotoURL, firstName, lastName, userID, status
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               WHERE status = 1
@@ -45,7 +45,7 @@ $friendSql = "SELECT profilephotoURL, firstName, lastName, status
 $friendResult = mysqli_query($conn, $friendSql);
 
 //PENDING (ADDED BUT YET TO ACCEPT (on either end))
-$pendingSql = "SELECT profilephotoURL, firstName, lastName, status
+$pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               AND status = 0
@@ -141,7 +141,7 @@ $recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 $numberOfRecommendations = 5;
 
 //here ends old friendsinitialise file
-//FUNCTIONS FOR DELETING FRIENDS ETC
+//FUNCTIONS FOR DELETING FRIENDS ETC - DON'T THINK THE PROBLEM IS HERE
 
 if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];
@@ -159,8 +159,8 @@ function deleteFriend(){
   $userID2= $_POST['id'];
 
     $deleteFriend = "  DELETE FROM friendship
-                        WHERE      (userID1 = '4' AND userID2 = '4'
-                                    OR userID1 = '$userID2' AND userID2 = '$userID1')";
+                        WHERE      (userID1 = '$userID1' AND userID2 = '$userID2')
+                                    OR (userID1 = '$userID2' AND userID2 = '$userID1')";
 
     if (mysqli_query($GLOBALS['conn'], $deleteFriend)) {
             echo "Friend deleted";
@@ -195,7 +195,7 @@ function addFriend(){
 
 
     $addFriend = "INSERT INTO friendship (userID1, userID2, status)
-                  VALUES ($userID1, $userID1, 0),
+                  VALUES ($userID1, $userID2, 0),
                           (1, 1, 0);
                   ";
 
