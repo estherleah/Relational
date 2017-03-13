@@ -153,55 +153,68 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
       case 'addFriend' : addFriend(); break;
   }
 }
-//DELETE A FRIEND #1
+
 function deleteFriend(){
-  $userID1 = $_SESSION['userID'];
-  $thisUserID= $_POST['id'];
-  $userID2 = $thisUserID;
+    $userID1 = $_SESSION['userID'];
+    $userID2 = $_POST['id'];
 
-    $deleteFriend = "  DELETE FROM friendship
-                        WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
-                                    OR userID1 = '$userID2' AND userID2 = '$userID1')";
+    $deleteFriend1 = "  DELETE    *
+                        FROM       friendship
+                        WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
+    //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS, POSSIBLY NEXT THESE QUERIES
+    $deleteFriend2 = "  DELETE     *
+                        FROM       friendship
+                        WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
 
-    if (mysqli_query($GLOBALS['conn'], $deleteFriend)) {
+    if (mysqli_query($GLOBALS['conn'], $deleteFriend1)) {
+          if (mysqli_query($GLOBALS['conn'], $deleteFriend2)) {
             echo "Friend deleted";
           } else {
               echo "Error deleting friend " . mysqli_error($GLOBALS['conn']);
           }
+    } else {
+        echo "Error deleting friend: " . mysqli_error($GLOBALS['conn']);
+    }
 }
-//CANCEL FRIEND REQ #2
+
 function cancelReq(){
   $userID1 = $_SESSION['userID'];
-  $thisUserID= $_POST['id'];
-  $userID2 = $thisUserID;
 
-  $cancelReq = "  DELETE FROM friendship
-                      WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
-                                  OR userID1 = '$userID2' AND userID2 = '$userID1')";
+  $userID2 = $_POST['id'];
 
-  if (mysqli_query($GLOBALS['conn'], $cancelReq)) {
+  $deleteFriend1 = "   DELETE
+                      FROM       friendship
+                      WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
+  //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS (BASICALLY delete request)
+  $deleteFriend2 = "   DELETE
+                      FROM       friendship
+                      WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
 
+  if (mysqli_query($GLOBALS['conn'], $deleteFriend1)) {
+        if (mysqli_query($GLOBALS['conn'], $deleteFriend2)) {
           echo "Friend request canceled";
         } else {
             echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
         }
+  } else {
+      echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
+  }
 }
-#ADD FRIEND #3
+
 function addFriend(){
+    $circleID = $_SESSION['circleID'];
 
-  $userID1 = $_SESSION['userID'];
-  $thisUserID= $_POST['id'];
-  $userID2 = $thisUserID;
+    $thisUserID = $_POST['id'];
 
-    $addFriend = "INSERT INTO friendship (userID1, userID2, status)
-                  VALUES ('$userID1', '$userID2', '0'),
-                  ('$userID2', '$userID1', '0');
-                  ";
+    $addFriendRights = "      UPDATE     circle_participants
+                                SET        userStatus = '1'
+                                WHERE      circleID = '$circleID' AND userID = '$thisUserID' ";
 
-    if (mysqli_query($GLOBALS['conn'], $addFriend)) {
-        echo "Friend added";
+
+    if (mysqli_query($GLOBALS['conn'], $addFriendRights)) {
+        echo "You revoked admin rights for " . getName($thisUserID);
     } else {
-        echo "Error adding friend" . mysqli_error($GLOBALS['conn']);
+        echo "Error revoking admin rights: " . mysqli_error($GLOBALS['conn']);
     }
 }
 

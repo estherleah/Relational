@@ -1,6 +1,6 @@
 $(function() {
 
-    // Circle Members --------------------------------------------
+    //Friends - adapted from CircleMembers
 
     var removeMsg = "";
 
