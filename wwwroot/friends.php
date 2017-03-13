@@ -53,7 +53,86 @@ $name = $_SESSION['name'];
             <div class = "row">
             <div class="col-xs-5 jumbotron">
 
-                <!--EXISTING FRIENDS ATTEMPT 2-->
+
+                <!--PEOPLE WHO HAVE SENT YOU REQUESTS-->
+                <h3>Received requests</h3>
+                <?php echo "These people want to be friends" ?>
+                <?php
+                while ($row = mysqli_fetch_array($requestedResult)) {
+                    $firstName = $row['firstName'];
+                    $lastName = $row['lastName'];
+                    $thisUserID = $row['userID'];
+                    $thisUserStatus = $row['status'];
+                    $profilePhotoURL = $row["profilephotoURL"];
+                    ?>
+
+                    <div class="requestedFriends row">
+
+                            <button type="button"
+                               class="btn btn-primary btnChangeCircleMemberStatus btnAcceptReq"
+                               role="button"
+                               data-id="<?php echo $thisUserID ?>"
+                               >
+                               Accept
+                           </button>
+
+                        <!-- </div> -->
+                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                        <span class="circleMemberName">
+                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                        </span>
+                        </br>
+                        <span class="circleMemberStatus">
+                          <?php
+                              echo "Add this person?" ?>
+                        </span>
+                        <p>
+                    </div>
+                    <?php
+                }
+                ?>
+                <!--END OF ACCEPTREQ-->
+
+                <!--PENDING FRIEND REQUESTS HERE-->
+                <h3>Pending requests</h3>
+                <?php echo "Here are your pending requests" ?>
+                <?php
+                while ($row = mysqli_fetch_array($pendingResult)) {
+                    $firstName = $row['firstName'];
+                    $lastName = $row['lastName'];
+                    $thisUserID = $row['userID'];
+                    $thisUserStatus = $row['status'];
+                    $profilePhotoURL = $row["profilephotoURL"];
+                    ?>
+
+                    <div class="pendingFriends row">
+
+                            <button type="button"
+                               class="btn btn-danger btnChangeCircleMemberStatus btnCancelReq"
+                               role="button"
+                               data-id="<?php echo $thisUserID ?>"
+                               >
+                               Cancel
+                           </button>
+
+                        <!-- </div> -->
+                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                        <span class="circleMemberName">
+                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                        </span>
+                        </br>
+                        <span class="circleMemberStatus">
+                          <?php
+                              echo "Request sent" ?>
+                        </span>
+                        <p>
+                    </div>
+                    <?php
+                }
+                ?>
+                <!--END OF PENDING REQUEST-->
+
+                <!--EXISTING FRIENDS THIS BASICALLY WORKS-->
 
                 <h3>Existing friends</h3>
                 <?php echo "Here are your friends" ?>
@@ -96,45 +175,11 @@ $name = $_SESSION['name'];
                 ?>
                 <!--END OF existing attempt 2-->
 
-                <!--TRY TO DO PENDING FRIEND REQUESTS HERE-->
 
-                <h3>Pending requests</h3>
-                <?php echo "Here are your pending requests" ?>
-                <?php
-                while ($row = mysqli_fetch_array($pendingResult)) {
-                    $firstName = $row['firstName'];
-                    $lastName = $row['lastName'];
-                    $thisUserID = $row['userID'];
-                    $thisUserStatus = $row['status'];
-                    $profilePhotoURL = $row["profilephotoURL"];
-                    ?>
 
-                    <div class="pendingFriends row">
 
-                            <button type="button"
-                               class="btn btn-danger btnChangeCircleMemberStatus btnCancelReq"
-                               role="button"
-                               data-id="<?php echo $thisUserID ?>"
-                               >
-                               Cancel
-                           </button>
 
-                        <!-- </div> -->
-                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
-                        <span class="circleMemberName">
-                            <?php echo $firstName;?> <?php echo $lastName; ?>
-                        </span>
-                        </br>
-                        <span class="circleMemberStatus">
-                          <?php
-                              echo "Request sent" ?>
-                        </span>
-                        <p>
-                    </div>
-                    <?php
-                }
-                ?>
-                <!--END OF PENDING REQUEST-->
+
               </div>
 
               <div class="col-xs-5 col-xs-offset-1 jumbotron">

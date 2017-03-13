@@ -2,7 +2,7 @@ $(function() {
 
     //Friends - adapted from CircleMembers
 
-    var removeMsg = "";
+    var removeMsg = "this might not be working";
 
     // Include member name in info modal
     $('#infoModal').on('show.bs.modal', function (event) {
@@ -36,6 +36,24 @@ $(function() {
             }
         });
     });
+
+    $(".btnAcceptReq").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
+
+        $.ajax({ url: 'includes/showfriends.php',
+            data: {
+                action: 'acceptReq',
+                id
+            },
+            type: 'post',
+            success: function(output) {
+                removeMsg = output;
+                $('#infoModal').modal()
+            }
+        });
+    });
+
 
     $(".btnCancelReq").on("click", function(event) {
         var button = $(event.target)
