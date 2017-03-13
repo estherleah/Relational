@@ -7,8 +7,6 @@ session_start();
 // ChromePhp::log("Hello");
 
 //THIS PART IS FROM OLD initialiseFriends findcircles
-
-
 // Parts adapted from http://php.net/manual/en/mysqli.multi-query.php
 //CURRENT user check that they aren't in friendship.userID2
 $user = $_SESSION['user'];
@@ -153,14 +151,15 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
       case 'addFriend' : addFriend(); break;
   }
 }
+//currently getting this error PHP Notice:  Undefined index: userID in /var/www/html/friends.php on line 215, referer: http://localhost/friends.php
+
 //DELETE A FRIEND #1
 function deleteFriend(){
-  $userID1 = $_SESSION['userID'];
-  $thisUserID= $_POST['id'];
-  $userID2 = $thisUserID;
+  $userID1 = $user;
+  $userID2= $_POST['id'];
 
     $deleteFriend = "  DELETE FROM friendship
-                        WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
+                        WHERE      (userID1 = '4' AND userID2 = '4'
                                     OR userID1 = '$userID2' AND userID2 = '$userID1')";
 
     if (mysqli_query($GLOBALS['conn'], $deleteFriend)) {
@@ -188,14 +187,16 @@ function cancelReq(){
 }
 #ADD FRIEND #3
 function addFriend(){
+  $userIdEscaped = mysqli_real_escape_string($GLOBALS['conn'], $user);
 
-  $userID1 = $_SESSION['userID'];
+  $userID1 = $userIDEscaped;
   $thisUserID= $_POST['id'];
   $userID2 = $thisUserID;
 
+
     $addFriend = "INSERT INTO friendship (userID1, userID2, status)
-                  VALUES ('$userID1', '$userID2', '0'),
-                  ('$userID2', '$userID1', '0');
+                  VALUES ($userID1, $userID1, 0),
+                          (1, 1, 0);
                   ";
 
     if (mysqli_query($GLOBALS['conn'], $addFriend)) {

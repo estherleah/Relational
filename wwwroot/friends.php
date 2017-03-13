@@ -32,7 +32,7 @@ $name = $_SESSION['name'];
 <!-- Content -->
 <!--CONTAINER BEGINS HERE-->
 <div class="container">
-  <!--trying to split the page in half-->
+  <!--trying to split the page in half OK i did it-->
 
     <!--div class="col-*-*"-->
         <div class="text-center">
@@ -85,10 +85,8 @@ $name = $_SESSION['name'];
 
                         </br>
                         <span class="circleMemberStatus">
-                            <?php
-                                if($status == 1) { ?>friends<?php }
-                                else { ?>Friends<?php }
-                            ?>
+                          <?php
+                              echo "Friend" ?>
                         </span>
                         <p>
                         <p>
@@ -128,10 +126,8 @@ $name = $_SESSION['name'];
                         </span>
                         </br>
                         <span class="circleMemberStatus">
-                            <?php
-                                if($status == 0) { ?>pending<?php }
-                                else { ?>you are friends<?php }
-                            ?>
+                          <?php
+                              echo "Request sent" ?>
                         </span>
                         <p>
                     </div>

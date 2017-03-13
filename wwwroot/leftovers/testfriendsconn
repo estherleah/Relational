@@ -198,8 +198,13 @@ SELECT * FROM `user` as u WHERE u.userID IN
 --------------------------------------------------------------------------------
 this should definitely work for adding friends (so it's a js/php problem)
 ------------------
+//this will work i don't know if you need escapestring
+$addFriend = "INSERT INTO friendship (userID1, userID2, status)
+              VALUES (4, 4, 0),
+                      (1, 1, 0);
+              ";
+//this works too
 
-    $addFriend = "INSERT INTO friendship (userID1, userID2, status)
-                  VALUES ('$userID1', '$userID2', '0'),
-                  ('$userID2', '$userID1', '0');
-                  ";
+              $deleteFriend = "  DELETE FROM friendship
+                                  WHERE      (userID1 = '4' AND userID2 = '4'
+                                              OR userID1 = '$userID2' AND userID2 = '$userID1')";
