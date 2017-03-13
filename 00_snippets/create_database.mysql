@@ -34,6 +34,7 @@ CREATE TABLE `friendship` (
   `userID1` INT NOT NULL,
   `userID2` INT NOT NULL,
   `status` BOOLEAN NOT NULL DEFAULT FALSE,
+  `origin` INT NOT NULL,
   PRIMARY KEY (userID1, userID2),
   FOREIGN KEY (userID1) REFERENCES user(userID),
   FOREIGN KEY (userID2) REFERENCES user(userID)
