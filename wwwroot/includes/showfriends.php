@@ -152,13 +152,11 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
   }
 }
 //currently getting this error PHP Notice:  Undefined index: userID in /var/www/html/friends.php on line 215, referer: http://localhost/friends.php
-
+//HEY THIS WORKS TOO
 //DELETE A FRIEND #1
 function deleteFriend(){
-  $userID1 = $user;
+  $userID1 = $_SESSION['user'];
   $userID2= $_POST['id'];
-  $userID1 = intval($userID1);
-  $userID2 = intval($userID2);
 
     $deleteFriend = "  DELETE FROM friendship
                         WHERE      (userID1 = '$userID1' AND userID2 = '$userID2')
@@ -170,13 +168,15 @@ function deleteFriend(){
               echo "Error deleting friend " . mysqli_error($GLOBALS['conn']);
           }
 }
+
+//THIS NOW WORKS
 //CANCEL FRIEND REQ #2
 function cancelReq(){
-  $userID1 = $_SESSION['userID'];
-  $userID1 = intval($userID1);
-  $thisUserID= $_POST['id'];
-  $userID2 = $thisUserID;
-  $userID2 = intval($userID2);
+  $userID1 = $_SESSION['user'];
+  //$userID1 = intval($userID1);
+  $userID2 = $_POST['id'];
+  //$userID2 = $thisUserID;
+  //$userID2 = intval($userID2);
 
   $cancelReq = "  DELETE FROM friendship
                       WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
@@ -190,22 +190,22 @@ function cancelReq(){
         }
 }
 #ADD FRIEND #3
+//YES ADDING FRIENDS WORKS NOW - but I forgot about accepting friend requests
+//intval cast isn't actually needed
 function addFriend(){
 //  $userIdEscaped = mysqli_real_escape_string($GLOBALS['conn'], $user);
 
   $userID1 = $_SESSION['user'];
-  $userID1 = intval($userID1);
+//  $userID1 = intval($userID1);
+  $userID2 = $_POST['id'];
+//  $userID2 = intval($userID2);
 
-  $thisUserID= $_POST['id'];
-  $userID2 = $thisUserID;
-  $userID2 = intval($userID2);
-
+//SYMMETRIC RELATION - must work both ways
 //YES THIS WORKS NOW
     $addFriend = "INSERT INTO friendship (userID1, userID2, status)
                   VALUES ('$userID1', '$userID2', '0'),
                         ('$userID2', '$userID1', '0');
                     ";
-
 
 /*
                     '$userID2', 0),
