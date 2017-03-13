@@ -90,7 +90,7 @@ CIRCLERECS-----SHOULD BE FIXED NOW 12 MAR
 * Randomise and limit the output (if specified) */
 
 
-$recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, location
+$recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, location, userID
                             FROM user
                             WHERE userID IN
                               (SELECT DISTINCT userID

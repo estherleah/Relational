@@ -219,13 +219,13 @@ $name = $_SESSION['name'];
 
                                                     <div class="recommendedFriends row">
 
-                                                            <button type="button"
-                                                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
-                                                               role="button"
-                                                               data-id="<?php echo $thisUserID ?>"
-                                                               >
-                                                               Add
-                                                           </button>
+                                                      <button type="button"
+                                                         class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                                                         role="button"
+                                                         data-id="<?php echo $thisUserID ?>"
+                                                         >
+                                                         Add
+                                                     </button>
 
                                                         <!-- </div> -->
 
