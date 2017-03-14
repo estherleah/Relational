@@ -23,7 +23,7 @@ include 'includes/initialiseBlog.php';
         <div class="col-xs-3">
             <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>" style="padding-bottom:25px;">
             <?php
-                if ($currentUser) {
+                if (!$currentUser) {
                     ?>
                     <!-- Change profile picture -->
                     <form action="includes/addProfilePic.php" method="post" enctype="multipart/form-data" style="padding-bottom:50px;">
@@ -32,7 +32,16 @@ include 'includes/initialiseBlog.php';
                     </form>
                     <?php
                 }
-            ?>
+                ?>
+                <p>
+                <button type="button"
+                   class="btn btn-primary btnProfileAdd btnAcceptReq"
+                   role="button"
+                   data-id="<?php echo $thisUserID ?>"
+                   >
+                   + Add
+               </button>
+
             <br>
             <div>
               <?php if($currentUser) { ?>

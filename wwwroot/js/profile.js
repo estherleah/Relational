@@ -1,6 +1,6 @@
 $(function() { // waits for document to be ready
+//add the like add button thing somewhere
 
-    
 
     $(".btnUpload").on("click", function() {
         var uploadForm = document.getElementById('uploadForm');

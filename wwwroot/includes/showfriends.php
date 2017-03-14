@@ -74,7 +74,7 @@ $pendingResult = mysqli_query($conn, $pendingSql);
 */
 //Exclude yourself (you can't be friends with yourself)??
   //this currently (mostly) works but it shows pending friends in your recs... if your friends are friends with htem
-
+//THIS IS THE NEW AND UPDATED FRIENDS OF FRIENDS QUERY
 $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
                             FROM user
@@ -91,9 +91,10 @@ $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                              	(SELECT userID2
                                  FROM friendship
                                  WHERE userID1 = '$userIDEscaped')
-                               	AND userID2 != '$userIDEscaped'
+                               	AND userID2 = '$userIDEscaped'
 
                             )
+                            AND userID != '$userIDEscaped'
 
                           ";
 /*
