@@ -192,7 +192,8 @@ $collaborativeFilter = "SELECT userID, COUNT(userID) AS matches
                             GROUP BY result.userID
                             ORDER BY matches DESC;
                             ";
-                            
+
+
 $collaborativeFilterResult = mysqli_query($conn, $collaborativeFilter);
 
 
