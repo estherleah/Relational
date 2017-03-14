@@ -22,7 +22,7 @@ CREATE TABLE `user` (
   `firstName` VARCHAR(255) NOT NULL,
   `lastName` VARCHAR(255) NOT NULL,
   `dob` DATE,
-  `gender` INT,
+  `gender` enum('Male','Female','Other'),
   `location` VARCHAR(255),
   `profilephotoURL` VARCHAR(255),
   `privacyID` INT NOT NULL,
