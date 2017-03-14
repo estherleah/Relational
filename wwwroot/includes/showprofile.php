@@ -77,7 +77,7 @@ function showCircles(){
         $circleID   = $row['circleID'];
         $circleName = $row['name'];
         ?>
-            <a href="http://localhost:8888/circle.php?id=<?php echo $circleID ?>" class="circleName"><?php echo $circleName; ?></a></br>
+            <a href="circle.php?id=<?php echo $circleID ?>" class="circleName"><?php echo $circleName; ?></a></br>
         <?php
     }
 };
@@ -91,7 +91,7 @@ function showFriends(){
         $friendPhoto    = $row['profilephotoURL'];
         ?>
             <div style="margin:10px; overflow:auto;">
-                <a href="http://localhost:8888/profile.php?id=<?php echo $friendID ?>">
+                <a href="profile.php?id=<?php echo $friendID ?>">
                     <img src="<?php echo $friendPhoto ?>" style="width:50px; height:50px; float:left; margin-right:10px;" />
                     <p class="friendName"><?php echo $friendFullName; ?></p>
                 </a>

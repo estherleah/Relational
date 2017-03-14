@@ -59,7 +59,7 @@ include 'includes/initialiseBlog.php';
                     echo $thisUserGender;
                 ?><br>
                 Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?></br>
-                From: <?php echo $thisUserLocation ?></br>
+                Location: <?php echo $thisUserLocation ?></br>
             </p>
 
             <!-- Blog -->
