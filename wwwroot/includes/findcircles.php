@@ -1,8 +1,11 @@
 <?php
-//session_start();
+ini_set('display_errors',0);
+if (!isset($_SESSION)) {
+    session_start();
+}
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
-//include_once '../database/database.php';
+include_once '../database/database.php';
 
 // Debugging
 // include '../ChromePhp.php';

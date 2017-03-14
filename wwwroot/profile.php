@@ -19,11 +19,11 @@ include 'includes/initialiseBlog.php';
 <?php include 'header.php'; ?>
 <!-- Content -->
 <div class="container">
-    <div class="row">
-        <div class="col-xs-3">
+    <div class="row justify-content-center">
+        <div class="col-xs-3 col-xs-offset-1">
             <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>" style="padding-bottom:25px;">
             <?php
-                if ($currentUser) {
+                if ($thisUserID == $user) {
                     ?>
                     <!-- Change profile picture -->
                     <form action="includes/addProfilePic.php" method="post" enctype="multipart/form-data" style="padding-bottom:50px;">
@@ -35,24 +35,16 @@ include 'includes/initialiseBlog.php';
             ?>
             <br>
             <div>
-              <?php if($currentUser) { ?>
-                <a href="friends.php"><h3>Friends</h3></a>
-              <?php } else { ?>
                 <h3>Friends</h3>
-              <?php } ?>
                 <?php showFriends(); ?>
             </div>
             <br>
             <div>
-              <?php if($currentUser) { ?>
-                <a href="circles.php"><h3>Circles</h3></a>
-              <?php } else { ?>
                 <h3>Circles</h3>
-              <?php } ?>
                 <?php showCircles(); ?>
             </div>
         </div>
-        <div class="col-xs-6 jumbotron">
+        <div class="col-xs-7 jumbotron">
             <h2><?php echo $thisUserFullName ?></h2>
             <p>
                 <?php
@@ -63,14 +55,16 @@ include 'includes/initialiseBlog.php';
             </p>
 
             <!-- Blog -->
-            <?php if($currentUser) { ?>
+            <?php if ($currentUser) {
+                    ?>
               <div class="row" id="entry">
                   <div class="col-xs-12">
                     <textarea class="form-control" rows='3' id="postText"></textarea>
                     <button class="btn btn-primary pull-right" id="postSubmit" type="button">Post</button>
                   </div>
               </div>
-            <?php } ?>
+            <?php
+                } ?>
 
               <div class="row" id="previousposts">
               <?php
@@ -80,7 +74,8 @@ include 'includes/initialiseBlog.php';
                       <div class="row">
                           <div class="col-xs-12">
                               <b><?php echo $row["date"] ?></b>
-                              <?php if($currentUser) { ?>
+                              <?php if ($currentUser) {
+                          ?>
                               <button type="button"
                                  class="btn btn-danger btn-xs pull-right btnRemove"
                                  role="button"
@@ -88,27 +83,17 @@ include 'includes/initialiseBlog.php';
                                  >
                                  Remove
                               </button>
-                              <?php } ?>
+                              <?php
+                      } ?>
                               <div><?php echo $row["entry"] ?></div>
                           </div>
                       </div>
                       <?php
+
                   }
               }
               ?>
               </div>
-            </div>
-            <div class="col-xs-3">
-              <div>
-                <?php if($currentUser) { ?>
-                  <a href="photoCollections.php"><h3>Photo Collections</h3></a>
-                <?php } else { ?>
-                  <a href="photoCollections.php<?php echo "?id=" . $thisUserID ?>"><h3>Photo Collections</h3></a>
-                <?php } ?>
-                <?php showPhotoCollection(); ?>
-              </div>
-            </div>
-          </div>
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

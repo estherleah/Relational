@@ -7,7 +7,7 @@ $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
 // DB Connection
-//global $thisUserData; I don't think this does anything in this context!
+global $thisUserData;
 
 // Check if current user or visitor
 if(isset($_GET['id'])){
@@ -19,12 +19,10 @@ if(isset($_GET['id'])){
     $thisUserID = $user;
 }
 
-$thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
-
 // Get user's data
 $thisUserData = mysqli_fetch_array(mysqli_query($conn," SELECT   firstName, lastName, dob, gender, location, profilephotoURL
                                                         FROM     user
-                                                        WHERE    userID = '$thisUserIDEscaped' ", 0));
+                                                        WHERE    userID = '$thisUserID' ", 0));
 
 // Get user's circles
 $thisUserCircles = mysqli_query($conn," SELECT   circleID, name
@@ -33,9 +31,8 @@ $thisUserCircles = mysqli_query($conn," SELECT   circleID, name
                                         IN (
                                             SELECT   circleID
                                             FROM     circle_participants
-                                            WHERE    userID = '$thisUserIDEscaped'
-                                        )
-                                        LIMIT 5 ");
+                                            WHERE    userID = '$thisUserID'
+                                        ) ");
 
 // Get user's friends
 $thisUserFriends = mysqli_query($conn," SELECT  userID, profilephotoURL, CONCAT(firstName, ' ', lastName) AS fullName
@@ -44,20 +41,11 @@ $thisUserFriends = mysqli_query($conn," SELECT  userID, profilephotoURL, CONCAT(
                                         IN      (
                                                     SELECT userID2
                                                     FROM friendship
-                                                    WHERE userID1 = '$thisUserIDEscaped' AND status = 1
+                                                    WHERE userID1 = '$thisUserID' AND status = 1
                                                 )
                                         ORDER BY RAND()
                                         LIMIT 5 ");
-
-// Get user's photo collections
-$thisUserPhotoCollections = mysqli_query($conn," SELECT pcol.collectionID, pcol.name, pcol.date, u.profilephotoURL, u.firstName, u.lastName, COUNT(p.photoID) AS count
-                                                    FROM photo_collection AS pcol
-                                                    LEFT JOIN photo AS p ON pcol.collectionID = p.collectionID
-                                                    JOIN user AS u ON pcol.userID = u.userID
-                                                    WHERE pcol.userID = '$thisUserIDEscaped'
-                                                    GROUP BY pcol.collectionID
-                                                    ORDER BY date DESC
-                                                    LIMIT 5 ;");
+                                        //echo $thisUserID;
 
 // Set local variables
 $thisUserFullName = $thisUserData['firstName'] . " " . $thisUserData['lastName'];
@@ -96,33 +84,6 @@ function showFriends(){
                     <p class="friendName"><?php echo $friendFullName; ?></p>
                 </a>
             </div>
-        <?php
-    }
-
-};
-
-function showPhotoCollection(){
-    global $thisUserPhotoCollections;
-
-    while ($row = mysqli_fetch_array($thisUserPhotoCollections)) {
-
-        ?>
-
-              <div class="col-xs-12 ">
-              <div class="thumbnail">
-                <b><?php echo $row["name"]?></b>
-                <a  href="photos.php?collectionID=<?php echo $row["collectionID"]?>">
-                  <div class="">
-                    <h1><?php echo $row["count"]?></h1>
-                    <p>photo(s)</p>
-                  </div>
-                </a>
-                <div class="text-muted">
-                    <small><?php echo $row["date"] ?></small>
-                </div>
-              </div>
-            </div>
-
         <?php
     }
 

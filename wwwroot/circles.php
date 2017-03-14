@@ -24,7 +24,7 @@ include 'includes/findcircles.php';
                 <h2>Circles</h2>
                 <!-- Search Form -->
                 <div class="form-group">
-                    <input type="text" class="form-control search center-block" id="searchid" placeholder="Search"/>
+                    <input type="text" class="form-control search" id="searchid" placeholder="Search"/>
                     <div id="result"></div>
                 </div>
                 <a href="createcircle.php" class="btn btn-primary btnCreateCircle" type="button">Create Circle</a>
