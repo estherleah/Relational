@@ -6,17 +6,13 @@ if (!isset($_SESSION)) {
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
-// DB Connection
-//global $thisUserData; I don't think this does anything in this context!
-
 // Check if current user or visitor
 if(isset($_GET['id'])){
-    // Get userID
-    // $_SESSION['thisUserID'] = $_GET['id'];
-    // $thisUserID = $_SESSION['thisUserID'];
     $thisUserID = $_GET['id'];
+    $currentUser = False;
 } else {
     $thisUserID = $user;
+    $currentUser = True;
 }
 
 $thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);

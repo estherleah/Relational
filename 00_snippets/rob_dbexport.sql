@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Mar 10, 2017 at 02:35 PM
+-- Generation Time: Mar 14, 2017 at 03:11 PM
 -- Server version: 5.6.34
 -- PHP Version: 7.1.0
 
@@ -32,10 +32,15 @@ CREATE TABLE `blog_entry` (
 --
 
 INSERT INTO `blog_entry` (`entryID`, `userID`, `entry`, `date`) VALUES
-(24, 1, 'new blog post', '2017-03-02 01:13:16'),
-(25, 1, 'and another', '2017-03-02 01:13:19'),
-(26, 1, 'yet another', '2017-03-02 01:13:23'),
-(27, 1, 'yay!', '2017-03-02 02:02:35');
+(34, 13, 'Hey I\'m John Smith', '2017-03-11 17:58:15'),
+(37, 1, 'lonely post from me', '2017-03-11 18:31:40'),
+(38, 1, 'Pages that you view in incognito tabs won’t stick around in your browser’s history, cookie store or search history after you’ve closed all of your incognito tabs. Any files you download or bookmarks you create will be kept.\\n\\nHowever, you aren’t invisible. Going incognito doesn’t hide your browsing from your employer, your Internet service provider or the websites that you visit.', '2017-03-11 18:31:47'),
+(39, 1, 'between being skilled as a surgeon and skilled as a tennis player. Translating\\nthis argument correctly requires two separate predicates, one for each type of\\nskill. If we let K1x mean ‘x is skilled as a surgeon’ and K2x mean ‘x is skilled\\nas a tennis player,’ then we can symbolize the argument in this way:\\n(Rc ', '2017-03-11 18:32:17'),
+(40, 1, ' between being skilled as a surgeon and skilled as a tennis player. Translating\\nthis argument correctly requires two separate predicates, one for each type of\\nskill. If we let K1x mean ‘x is skilled as a surgeon’ and K2x mean ‘x is skilled\\nas a tennis player,’ then we can symbolize the argument in this way:\\n(Rc  K1c) T c\\n.˙. T c ', '2017-03-11 18:32:52'),
+(44, 13, 'new post on my profile', '2017-03-14 12:15:41'),
+(45, 13, 'and another', '2017-03-14 12:15:44'),
+(46, 13, 'yay!', '2017-03-14 12:15:47'),
+(47, 14, 'new blog post', '2017-03-14 12:45:12');
 
 -- --------------------------------------------------------
 
@@ -59,7 +64,11 @@ INSERT INTO `circle` (`circleID`, `name`, `description`, `privacyID`) VALUES
 (2, 'circle2', NULL, 1),
 (3, 'circle3', NULL, 2),
 (4, '', '', 1),
-(5, 'new circle', 'bob', 1);
+(5, 'new circle', 'bob', 1),
+(6, 'bob', 'bob', 1),
+(7, 'vg', 'cdc', 1),
+(9, 'hello world', 'bobby', 1),
+(10, 'novmob', 'rowing', 1);
 
 -- --------------------------------------------------------
 
@@ -78,13 +87,16 @@ CREATE TABLE `circle_participants` (
 --
 
 INSERT INTO `circle_participants` (`circleID`, `userID`, `userStatus`) VALUES
-(1, 1, 0),
 (1, 2, 0),
 (1, 5, 0),
 (1, 6, 0),
 (1, 10, 0),
 (2, 6, 0),
-(2, 7, 0);
+(2, 7, 0),
+(6, 1, 3),
+(7, 1, 3),
+(9, 1, 3),
+(10, 14, 3);
 
 -- --------------------------------------------------------
 
@@ -95,27 +107,31 @@ INSERT INTO `circle_participants` (`circleID`, `userID`, `userStatus`) VALUES
 CREATE TABLE `friendship` (
   `userID1` int(11) NOT NULL,
   `userID2` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0'
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `origin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `friendship`
 --
 
-INSERT INTO `friendship` (`userID1`, `userID2`, `status`) VALUES
-(1, 2, 1),
-(1, 3, 1),
-(1, 5, 1),
-(1, 9, 1),
-(1, 10, 0),
-(2, 3, 1),
-(2, 4, 1),
-(3, 4, 1),
-(5, 6, 1),
-(5, 7, 0),
-(5, 8, 1),
-(5, 9, 1),
-(5, 10, 1);
+INSERT INTO `friendship` (`userID1`, `userID2`, `status`, `origin`) VALUES
+(1, 3, 1, 0),
+(1, 5, 1, 0),
+(1, 6, 1, 1),
+(1, 8, 1, 1),
+(1, 9, 1, 0),
+(1, 10, 1, 0),
+(2, 3, 1, 0),
+(2, 4, 1, 0),
+(3, 4, 1, 0),
+(5, 6, 1, 0),
+(5, 7, 0, 0),
+(5, 8, 1, 0),
+(5, 9, 1, 0),
+(5, 10, 1, 0),
+(6, 1, 0, 1),
+(8, 1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -138,7 +154,10 @@ CREATE TABLE `message` (
 INSERT INTO `message` (`messageID`, `circleID`, `userID`, `message`, `date`) VALUES
 (3, NULL, 1, 'new', '2017-02-22 18:55:33'),
 (4, NULL, 1, '$(function() { // waits for document to be ready\\r\\n  $(document).on(\'click\',\'#postSubmit\',function(){\\r\\n    var post = $(\'#name\').val();\\r\\n    var dataString = \'name=\' + post;\\r\\n    if (!post) {\\r\\n      alert(\'Enter some text\');\\r\\n    }\\r\\n    else {\\r\\n      // call php code to write to DB\\r\\n      $.ajax({\\r\\n          type: \"POST\",\\r\\n          url: \"../includes/addPhotoCollection.php\",\\r\\n          data: dataString,\\r\\n          cache: false,\\r\\n          success: function(html) {\\r\\n              // reload data\\r\\n              $(\"#previousposts\").load(location.href + \" #previousposts\");\\r\\n          }\\r\\n      });\\r\\n    }\\r\\n\\r\\n  });\\r\\n\\r\\n});\\r\\n', '2017-02-22 18:57:42'),
-(5, NULL, 1, 'hey everyone!', '2017-03-02 02:02:45');
+(5, NULL, 1, 'hey everyone!', '2017-03-02 02:02:45'),
+(6, 10, 14, 'epic chat', '2017-03-14 12:47:00'),
+(7, 10, 14, 'wtf', '2017-03-14 12:47:02'),
+(8, 6, 1, 'Hey chat!', '2017-03-14 14:18:52');
 
 -- --------------------------------------------------------
 
@@ -158,13 +177,11 @@ CREATE TABLE `photo` (
 --
 
 INSERT INTO `photo` (`photoID`, `collectionID`, `photoURL`, `date`) VALUES
-(23, 4, 'uploads/userId-1/collectionId-4/Screen Shot 2017-03-01 at 20.14.00.png', '2017-03-01 22:52:46'),
-(26, 4, 'uploads/userId-1/collectionId-4/Screen Shot 2017-03-01 at 22.15.33.png', '2017-03-01 23:15:38'),
-(27, 4, 'uploads/userId-1/collectionId-4/Screen Shot 2017-03-02 at 00.15.24.png', '2017-03-02 01:16:08'),
-(28, 3, 'uploads/userId-1/collectionId-3/Screen Shot 2017-03-02 at 00.15.24.png', '2017-03-02 01:45:08'),
-(29, 5, 'uploads/userId-1/collectionId-5/Screen Shot 2017-03-01 at 22.15.33.png', '2017-03-02 01:45:32'),
 (32, 8, 'uploads/userId-1/collectionId-8/Screen Shot 2017-03-05 at 18.22.00.png', '2017-03-07 14:16:29'),
-(33, 9, 'uploads/userId-1/collectionId-9/LWScreenShot 2017-03-10 at 11.46.54.png', '2017-03-10 14:31:02');
+(34, 10, 'uploads/userId-13/collectionId-10/0fc59efffd13d661c3231986d2d7c60b4cb03b10a15b266dd6694c0326a224a2.jpg', '2017-03-11 17:59:12'),
+(35, 8, 'uploads/userId-1/collectionId-8/LWScreenShot 2017-03-10 at 11.46.54.png', '2017-03-11 19:52:57'),
+(39, 16, 'uploads/userId-14/collectionId-16/LWScreenShot 2017-03-10 at 11.46.54.png', '2017-03-14 12:46:21'),
+(40, 17, 'uploads/userId-1/collectionId-17/0fc59efffd13d661c3231986d2d7c60b4cb03b10a15b266dd6694c0326a224a2.jpg', '2017-03-14 12:54:07');
 
 -- --------------------------------------------------------
 
@@ -178,6 +195,17 @@ CREATE TABLE `photo_annotation` (
   `annotationType` int(11) NOT NULL,
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `photo_annotation`
+--
+
+INSERT INTO `photo_annotation` (`photoID`, `userID`, `annotationType`, `date`) VALUES
+(32, 1, 0, '2017-03-14 11:56:21'),
+(34, 1, 0, '2017-03-11 19:07:21'),
+(34, 13, 0, '2017-03-11 19:06:52'),
+(39, 14, 0, '2017-03-14 12:46:23'),
+(40, 1, 0, '2017-03-14 12:54:18');
 
 -- --------------------------------------------------------
 
@@ -198,14 +226,10 @@ CREATE TABLE `photo_collection` (
 --
 
 INSERT INTO `photo_collection` (`collectionID`, `userID`, `name`, `privacyID`, `date`) VALUES
-(2, 1, 'r f', 1, '2017-02-22 19:53:21'),
-(3, 1, 'yet another', 1, '2017-02-22 19:55:32'),
-(4, 1, 'new photo collection', 1, '2017-02-23 16:01:41'),
-(5, 1, 'the best photo collection ever', 1, '2017-03-02 01:45:28'),
-(6, 1, 'try me', 1, '2017-03-02 01:56:32'),
-(7, 1, 'new collection', 1, '2017-03-03 21:33:36'),
 (8, 1, 'new collection 2', 1, '2017-03-07 14:16:19'),
-(9, 1, 'remove photo test', 1, '2017-03-09 17:05:01');
+(10, 13, 'New collection', 1, '2017-03-11 17:59:05'),
+(16, 14, 'A collection', 1, '2017-03-14 12:46:14'),
+(17, 1, 'Rowing', 1, '2017-03-14 12:54:01');
 
 -- --------------------------------------------------------
 
@@ -226,21 +250,13 @@ CREATE TABLE `photo_comment` (
 --
 
 INSERT INTO `photo_comment` (`commentID`, `photoID`, `userID`, `comment`, `date`) VALUES
-(2, 23, 1, 'comment', '2017-03-02 01:05:41'),
-(3, 23, 1, 'comment', '2017-03-02 01:06:17'),
-(4, 23, 1, 'comment', '2017-03-02 01:06:49'),
-(5, 23, 1, 'new comment', '2017-03-02 01:07:29'),
-(6, 23, 1, 'blah blah blah', '2017-03-02 01:08:13'),
-(7, 23, 1, 'yo yo', '2017-03-02 01:09:13'),
-(8, 26, 1, 'new comment', '2017-03-02 01:11:43'),
-(9, 27, 1, 'hey', '2017-03-02 01:16:16'),
-(10, 28, 1, 'some comment', '2017-03-02 02:02:30'),
 (11, 32, 1, 'new comment from me', '2017-03-07 14:17:05'),
-(12, 27, 1, 'This is a nice photo!', '2017-03-09 21:05:20'),
-(13, 26, 1, 'hello!', '2017-03-09 21:07:25'),
-(14, 27, 1, 'much better', '2017-03-09 21:09:33'),
-(15, 33, 1, 'hello!', '2017-03-10 14:31:10'),
-(16, 33, 1, 'this works now', '2017-03-10 14:31:13');
+(18, 32, 1, 'hey hey!', '2017-03-11 17:32:27'),
+(22, 34, 1, 'hey!', '2017-03-11 19:06:10'),
+(24, 34, 13, 'Other user cannot delete this!', '2017-03-11 19:06:51'),
+(25, 32, 1, 'Add new', '2017-03-11 19:08:50'),
+(29, 39, 14, 'testing testing 123', '2017-03-14 12:46:31'),
+(30, 40, 1, 'Avatar!', '2017-03-14 12:54:16');
 
 -- --------------------------------------------------------
 
@@ -288,7 +304,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `email`, `password`, `firstName`, `lastName`, `dob`, `gender`, `location`, `profilephotoURL`, `privacyID`) VALUES
-(1, 'rf@email.com', 'UWuXg/ylF+7L0dBk2i0WUxCxl1k=', 'r', 'f', '2017-03-10', 0, 'QA', 'img/userId-1/0fc59efffd13d661c3231986d2d7c60b4cb03b10a15b266dd6694c0326a224a2.jpg', 1),
+(1, 'rf@email.com', 'UWuXg/ylF+7L0dBk2i0WUxCxl1k=', 'Rob', 'Farthing', '2017-03-10', 0, 'AD', 'uploads/userId-1/0fc59efffd13d661c3231986d2d7c60b4cb03b10a15b266dd6694c0326a224a2.jpg', 3),
 (2, 'bsmith@email.com', 'p', 'bob', 'smith', NULL, NULL, NULL, 'https://robohash.org/quamnihileveniet.jpg?size=50x50&set=set1', 1),
 (3, 'user3@email.com', 'p', 'user3', 'user3', NULL, NULL, NULL, 'https://robohash.org/quasiodiout.jpg?size=50x50&set=set1', 1),
 (4, 'user4@email.com', 'p', 'user4', 'user4', NULL, NULL, NULL, 'https://robohash.org/doloresanimiest.jpg?size=50x50&set=set1', 1),
@@ -298,7 +314,10 @@ INSERT INTO `user` (`userID`, `email`, `password`, `firstName`, `lastName`, `dob
 (8, 'abishop2@topsy.com', 'IUJPRgFM', 'Bishop', 'Anne', '1955-12-09', 1, 'Campoverde', 'https://robohash.org/estetiure.jpg?size=50x50&set=set1', 3),
 (9, 'ecooper3@google.com.au', 'OSKnWXN', 'Cooper', 'Elizabeth', '1995-09-10', 2, 'Sintansin', 'https://robohash.org/doloresanimiest.jpg?size=50x50&set=set1', 4),
 (10, 'jlane4@yellowpages.com', '8i6ZYa', 'Lane', 'Jacqueline', '1999-04-01', 3, 'Punta Hermosa', 'https://robohash.org/consecteturtemporenatus.jpg?size=50x50&set=set1', 5),
-(11, 'testuser@email.com', 'UWuXg/ylF+7L0dBk2i0WUxCxl1k=', 'Test', 'User', NULL, 2017, NULL, NULL, 1);
+(11, 'testuser@email.com', 'UWuXg/ylF+7L0dBk2i0WUxCxl1k=', 'Test', 'User', NULL, 2017, NULL, NULL, 1),
+(12, 'rf@email.com', 'UWuXg/ylF+7L0dBk2i0WUxCxl1k=', 'Rob', 'Farthing', NULL, 2017, NULL, 'uploads/profile_default.jpg', 1),
+(13, 'js@email.com', 'UWuXg/ylF+7L0dBk2i0WUxCxl1k=', 'John', 'Smith', '1999-01-01', 0, 'AL', 'assets/profile_default.jpg', 1),
+(14, 'sm@email.com', 'UWuXg/ylF+7L0dBk2i0WUxCxl1k=', 'Sally', 'McGinn', '2017-01-03', 0, 'GH', 'assets/profile_default.jpg', 1);
 
 --
 -- Indexes for dumped tables
@@ -345,7 +364,7 @@ ALTER TABLE `message`
 --
 ALTER TABLE `photo`
   ADD PRIMARY KEY (`photoID`),
-  ADD KEY `collectionID` (`collectionID`);
+  ADD KEY `photo_ibfk_1` (`collectionID`);
 
 --
 -- Indexes for table `photo_annotation`
@@ -367,8 +386,8 @@ ALTER TABLE `photo_collection`
 --
 ALTER TABLE `photo_comment`
   ADD PRIMARY KEY (`commentID`),
-  ADD KEY `userID` (`userID`),
-  ADD KEY `photoID` (`photoID`);
+  ADD KEY `photo_comment_ibfk_1` (`userID`),
+  ADD KEY `photo_comment_ibfk_2` (`photoID`);
 
 --
 -- Indexes for table `privacy_settings`
@@ -391,32 +410,32 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `blog_entry`
 --
 ALTER TABLE `blog_entry`
-  MODIFY `entryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `entryID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `circle`
 --
 ALTER TABLE `circle`
-  MODIFY `circleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `circleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `messageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `messageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `photo`
 --
 ALTER TABLE `photo`
-  MODIFY `photoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `photoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT for table `photo_collection`
 --
 ALTER TABLE `photo_collection`
-  MODIFY `collectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `collectionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `photo_comment`
 --
 ALTER TABLE `photo_comment`
-  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `privacy_settings`
 --
@@ -426,7 +445,7 @@ ALTER TABLE `privacy_settings`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Constraints for dumped tables
 --
@@ -468,14 +487,14 @@ ALTER TABLE `message`
 -- Constraints for table `photo`
 --
 ALTER TABLE `photo`
-  ADD CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`collectionID`) REFERENCES `photo_collection` (`collectionID`);
+  ADD CONSTRAINT `photo_ibfk_1` FOREIGN KEY (`collectionID`) REFERENCES `photo_collection` (`collectionID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `photo_annotation`
 --
 ALTER TABLE `photo_annotation`
   ADD CONSTRAINT `photo_annotation_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  ADD CONSTRAINT `photo_annotation_ibfk_2` FOREIGN KEY (`photoID`) REFERENCES `photo` (`photoID`);
+  ADD CONSTRAINT `photo_annotation_ibfk_2` FOREIGN KEY (`photoID`) REFERENCES `photo` (`photoID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `photo_collection`
@@ -489,7 +508,7 @@ ALTER TABLE `photo_collection`
 --
 ALTER TABLE `photo_comment`
   ADD CONSTRAINT `photo_comment_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`),
-  ADD CONSTRAINT `photo_comment_ibfk_2` FOREIGN KEY (`photoID`) REFERENCES `photo` (`photoID`);
+  ADD CONSTRAINT `photo_comment_ibfk_2` FOREIGN KEY (`photoID`) REFERENCES `photo` (`photoID`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user`
