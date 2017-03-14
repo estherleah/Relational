@@ -1,6 +1,9 @@
 <?php
+ini_set('display_errors',0);
 include '../database/database.php';
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];

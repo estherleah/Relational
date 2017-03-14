@@ -1,6 +1,9 @@
 <?php
+ini_set('display_errors',0);
 include_once '../database/database.php';
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 // Debugging
 // include '../ChromePhp.php';

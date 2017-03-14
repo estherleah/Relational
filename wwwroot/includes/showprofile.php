@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
@@ -43,7 +45,7 @@ $thisUserFriends = mysqli_query($conn," SELECT  userID, profilephotoURL, CONCAT(
                                                 )
                                         ORDER BY RAND()
                                         LIMIT 5 ");
-                                        echo $thisUserIDEscaped;
+                                        //echo $thisUserID;
 
 // Set local variables
 $thisUserFullName = $thisUserData['firstName'] . " " . $thisUserData['lastName'];

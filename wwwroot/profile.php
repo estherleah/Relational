@@ -8,7 +8,7 @@ include 'includes/initialiseBlog.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Photo</title>
+    <title>Profile</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -33,12 +33,12 @@ include 'includes/initialiseBlog.php';
                     <?php
                 }
             ?>
-            </br>
+            <br>
             <div>
                 <h3>Friends</h3>
                 <?php showFriends(); ?>
             </div>
-            </br>
+            <br>
             <div>
                 <h3>Circles</h3>
                 <?php showCircles(); ?>
@@ -48,12 +48,8 @@ include 'includes/initialiseBlog.php';
             <h2><?php echo $thisUserFullName ?></h2>
             <p>
                 <?php
-                    switch ($thisUserGender) {
-                        case 0: ?> Male <?php break;
-                        case 1: ?> Female <?php break;
-                        case 2: ?> Other <?php break;
-                    }
-                ?></br>
+                    echo $thisUserGender;
+                ?><br>
                 Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?></br>
                 From: <?php echo $thisUserLocation ?></br>
             </p>
