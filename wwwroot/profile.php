@@ -3,6 +3,7 @@ include_once 'database/database.php';
 session_start();
 include 'header.php';
 include 'includes/showprofile.php';
+include 'includes/initialiseBlog.php';
 ?>
 
 <!DOCTYPE html>
@@ -18,28 +19,72 @@ include 'includes/showprofile.php';
 <body>
 <!-- Content -->
 <div class="container">
-    <div class="col-*-*">
-        <div class="row text-center">
-            <div class="col-sm-6 col-sm-offset-3">
-                <h2><?php echo $thisUserFullName ?></h2>
+    <div class="row justify-content-center">
+        <div class="col-xs-3 col-xs-offset-1">
+            <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>">
+            </br>
+            <div>
+                <h3>Friends</h3>
+                <?php showFriends(); ?>
+            </div>
+            </br>
+            <div>
+                <h3>Circles</h3>
+                <?php showCircles(); ?>
             </div>
         </div>
-        <div class="row" id="currentPic">
-            <div class="col-xs-12">
-                <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-8 col-xs-10 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 form-group">
-                <form action="includes/addProfilePic.php" method="post" enctype="multipart/form-data">
-                    <input id="fileToUpload" type="file" class="pull-left" name="fileToUpload">
-                    <input type="submit" class="btn btn-primary pull-right" value="Change profile picture" name="submit">
-                </form>
-            </div>
-        </div>
-    </div>
+        <div class="col-xs-7 jumbotron">
+            <h2><?php echo $thisUserFullName ?></h2>
+            <p>
+                <?php
+                    switch ($thisUserGender){
+                        case 0: ?> Male <?php break;
+                        case 1: ?> Female <?php break;
+                        case 2: ?> Other <?php break;
+                    }
+                ?></br>
+                Birthday: <?php echo substr($thisUserDOB,8,2) . "." .  substr($thisUserDOB,5,2) . "." .  substr($thisUserDOB,0,4); ?></br>
+                From: <?php echo $thisUserLocation ?></br>
+            </p>
+
+            <!-- Blog -->
+            <?php if($currentUser) { ?>
+              <div class="row" id="entry">
+                  <div class="col-xs-12">
+                    <textarea class="form-control" rows='3' id="postText"></textarea>
+                    <button class="btn btn-primary pull-right" id="postSubmit" type="button">Post</button>
+                  </div>
+              </div>
+            <?php } ?>
+
+              <div class="row" id="previousposts">
+              <?php
+              if (mysqli_num_rows($blogResult) > 0) {
+                  while ($row = mysqli_fetch_assoc($blogResult)) {
+                      ?>
+                      <div class="row">
+                          <div class="col-xs-12">
+                              <b><?php echo $row["date"] ?></b>
+                              <?php if($currentUser) { ?>
+                              <button type="button"
+                                 class="btn btn-danger btn-xs pull-right btnRemove"
+                                 role="button"
+                                 data-entryid="<?php echo $row["entryID"]?>"
+                                 >
+                                 Remove
+                              </button>
+                              <?php } ?>
+                              <div><?php echo $row["entry"] ?></div>
+                          </div>
+                      </div>
+                      <?php
+                  }
+              }
+              ?>
+              </div>
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/blog.js"></script>
 </body>
 </html>

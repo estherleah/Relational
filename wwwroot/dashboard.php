@@ -35,8 +35,8 @@ include 'header.php';
 <div class="container">
     <div class="col-*-*">
         <div class="row text-center">
-            <div class="col-sm-6 col-sm-offset-3">
-                <h2><?php echo $name ?></h2>
+            <div>
+                <h1 class="page-header"><?php echo $name ?></h1>
             </div>
         </div>
         <div class="row">
@@ -53,7 +53,9 @@ include 'header.php';
                     }
                     ?>
                     <div class="panel-body">
-                        <img class="img-responsive img-rounded center-block" src="<?php echo $profile ?>">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <a href="profile.php"><img class="img-responsive img-rounded center-block" src="<?php echo $profile; ?>"></a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,7 +80,7 @@ include 'header.php';
                 <div class="panel panel-primary">
                     <div class="panel-heading">Circles</div>
                     <?php
-                    $sql = "SELECT circle.name FROM circle_participants
+                    $sql = "SELECT circle.name, circle.circleID FROM circle_participants
                             INNER JOIN circle ON circle_participants.circleID = circle.circleID
                             WHERE userID = '$user' ORDER BY circle.circleID";
                     $result = mysqli_query($conn, $sql);
@@ -88,7 +90,10 @@ include 'header.php';
                         if (mysqli_num_rows($result) > 0) {
                             while ($circle = mysqli_fetch_array($result)) {
                                 $name = $circle['name'];
-                                echo "<div>$name</div>";
+                                $id = $circle['circleID'];
+                                ?>
+                                <div><a href="circle.php?id=<?php echo $id;?>"><?php echo $name;?></a></div>
+                                <?php
                             }
                         } else {
                             echo "No circles";
@@ -99,8 +104,8 @@ include 'header.php';
             </div>
             <div class="col-sm-6">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Photos</div>
-                    <div class="panel-body">Most recent photo collection</div>
+                    <div class="panel-heading">Friends</div>
+                    <div class="panel-body">Show a list of friends</div>
                 </div>
             </div>
         </div>
