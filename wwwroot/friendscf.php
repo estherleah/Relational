@@ -185,61 +185,16 @@ $name = $_SESSION['name'];
               <div class="col-xs-5 col-xs-offset-1 jumbotron">
 
                 <!--START OF FRIEND RECOMMENDATIONS-->
-                <h3>Suggested Friends</h3>
-                <?php echo "Here are some friends we found for you with our patented collaborative filtering method" ?>
-                <!-- THIS IS FROM "VERYOLDFRIENDS.PHP"-->
+                <!--THIS REPLACES THE OLD REC QUERIES-->
+                <h3>Collaborative Filtering</h3>
+                <?php echo "We found these friends for you:" ?> <p>
 
-                <?php
-                while ($row = mysqli_fetch_array($collaborativeFilterResult)) {
-                    $firstName = $row['firstName'];
-                    $lastName = $row['lastName'];
-                    $thisUserID = $row['userID'];
-
-                    $profilePhotoURL = $row["profilephotoURL"];
-                    ?>
-
-                    <div class="recommendedFriends row">
-
-                            <button type="button"
-                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
-                               role="button"
-                               data-id="<?php echo $thisUserID ?>"
-                               >
-                               Add
-                           </button>
-
-                        <!-- </div> -->
-
-                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
-
-                        <span class="circleMemberName">
-                            <?php echo $firstName;?> <?php echo $lastName; ?>
-                        </span>
-                        <br>
-                        <span class="circleMemberStatus">
-                          <?php
-                              echo "Collaborative Filter" ?>
-                        </span>
-
-                        </br>
-                        <p>
-
-                    </div>
-                    <?php
-                }
-                ?>
-
-
-                  <div class="row"></div>
-
-                <p>
+                <!--REMOVED THE FILTER BOX-->
                   <!--I haven't figured out how to join the queries so I will just do separate sections for now-->
-                  <!--FRIENDS OF FRIENDS-->
-                  <h3>Old recommendations</h3>
-                    <?php echo "Basically just recommendQueries 1 - 3 without headers/dividers" ?>
+                <div class ="text-center"><b>Friends of friends (both existing and pending)</b><p></div>
 
                                 <?php
-                                while ($row = mysqli_fetch_array($recommendedResult1)) {
+                                while ($row = mysqli_fetch_array($collaborativeFilterResult)) {
                                     $firstName = $row['firstName'];
                                     $lastName = $row['lastName'];
                                     $thisUserID = $row['userID'];
@@ -267,7 +222,7 @@ $name = $_SESSION['name'];
                                         <br>
                                         <span class="circleMemberStatus">
                                           <?php
-                                              echo "Friend of a friend" ?>
+                                              echo "Collaborative Filter" ?>
                                         </span>
 
                                         </br>
@@ -277,96 +232,6 @@ $name = $_SESSION['name'];
                                     <?php
                                 }
                                 ?>
-
-                                <!--members of circles you are in who aren't friends with you-->
-
-                                <!--SAME CIRCLES-->
-
-                                                <?php
-                                                while ($row = mysqli_fetch_array($recommendedResult2)) {
-                                                    $firstName = $row['firstName'];
-                                                    $lastName = $row['lastName'];
-                                                    $thisUserID = $row['userID'];
-
-                                                    $profilePhotoURL = $row["profilephotoURL"];
-                                                    ?>
-
-                                                    <div class="recommendedFriends row">
-
-                                                      <button type="button"
-                                                         class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
-                                                         role="button"
-                                                         data-id="<?php echo $thisUserID ?>"
-                                                         >
-                                                         Add
-                                                     </button>
-
-                                                        <!-- </div> -->
-
-                                                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
-
-                                                        <span class="circleMemberName">
-                                                            <?php echo $firstName;?> <?php echo $lastName; ?>
-                                                        </span>
-                                                        <br>
-                                                        <span class="circleMemberStatus">
-                                                          <?php
-                                                              echo "Fellow circle member" ?>
-                                                        </span>
-
-                                                        </br>
-                                                        <p>
-
-                                                    </div>
-                                                    <?php
-                                                }
-                                                ?>
-
-                                                <!--PEOPLE IN THE SAME LOCATION (NOT ALREADY FRIENDS)-->
-
-                                                                <?php
-                                                                while ($row = mysqli_fetch_array($recommendedResult3)) {
-                                                                    $firstName = $row['firstName'];
-                                                                    $lastName = $row['lastName'];
-                                                                    $thisUserID = $row['userID'];
-
-                                                                    $profilePhotoURL = $row["profilephotoURL"];
-                                                                    ?>
-
-                                                                    <div class="recommendedFriends row">
-
-                                                                            <button type="button"
-                                                                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
-                                                                               role="button"
-                                                                               data-id="<?php echo $thisUserID ?>"
-                                                                               >
-                                                                               Add
-                                                                           </button>
-
-                                                                        <!-- </div> -->
-
-                                                                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
-
-                                                                        <span class="circleMemberName">
-                                                                            <?php echo $firstName;?> <?php echo $lastName; ?>
-                                                                        </span>
-                                                                        <br>
-                                                                        <span class="circleMemberStatus">
-                                                                            <?php
-                                                                                echo "Same location" ?>
-
-
-                                                                        </span>
-
-                                                                        </br>
-                                                                        <p>
-
-                                                                    </div>
-                                                                    <?php
-                                                                }
-                                                                ?>
-
-
 
                                 <!--END OF RECS-->
 

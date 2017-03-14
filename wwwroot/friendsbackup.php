@@ -189,47 +189,6 @@ $name = $_SESSION['name'];
                 <?php echo "Here are some friends we found for you with our patented collaborative filtering method" ?>
                 <!-- THIS IS FROM "VERYOLDFRIENDS.PHP"-->
 
-                <?php
-                while ($row = mysqli_fetch_array($collaborativeFilterResult)) {
-                    $firstName = $row['firstName'];
-                    $lastName = $row['lastName'];
-                    $thisUserID = $row['userID'];
-
-                    $profilePhotoURL = $row["profilephotoURL"];
-                    ?>
-
-                    <div class="recommendedFriends row">
-
-                            <button type="button"
-                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
-                               role="button"
-                               data-id="<?php echo $thisUserID ?>"
-                               >
-                               Add
-                           </button>
-
-                        <!-- </div> -->
-
-                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
-
-                        <span class="circleMemberName">
-                            <?php echo $firstName;?> <?php echo $lastName; ?>
-                        </span>
-                        <br>
-                        <span class="circleMemberStatus">
-                          <?php
-                              echo "Collaborative Filter" ?>
-                        </span>
-
-                        </br>
-                        <p>
-
-                    </div>
-                    <?php
-                }
-                ?>
-
-
                   <div class="row"></div>
 
                 <p>
