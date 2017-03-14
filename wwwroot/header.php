@@ -1,28 +1,5 @@
-<?php
-include_once 'database/database.php';
-// session_start();
-
-/**
- * Created by PhpStorm.
- * User: Esther Leah
- * Date: 15/02/2017
- * Time: 14:16
- */
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Header</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-
-<!-- Navigation -->
+<?php $name = $_SESSION['name'];?>
+<!-- Navigation bar -->
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -31,7 +8,7 @@ include_once 'database/database.php';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="profile.php">Relational</a>
+            <a class="navbar-brand" href="profile.php"><?php echo $name ?></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
@@ -47,8 +24,3 @@ include_once 'database/database.php';
         </div>
     </div>
 </nav>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-</body>
-</html>

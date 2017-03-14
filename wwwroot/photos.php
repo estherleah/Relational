@@ -1,7 +1,6 @@
 <?php
 include_once 'database/database.php';
 session_start();
-include 'header.php';
 include 'includes/initialisePhotos.php';
 ?>
 
@@ -18,6 +17,7 @@ include 'includes/initialisePhotos.php';
 </head>
 
 <body>
+<?php include 'header.php'; ?>
 <!-- Content -->
 <div class="container">
     <button class="btn btn-primary pull-left" onclick="back()">Back</button>
