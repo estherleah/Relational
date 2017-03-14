@@ -22,7 +22,7 @@ CREATE TABLE `user` (
   `firstName` VARCHAR(255) NOT NULL,
   `lastName` VARCHAR(255) NOT NULL,
   `dob` DATE,
-  `gender` INT,
+  `gender` enum('Male','Female','Other'),
   `location` VARCHAR(255),
   `profilephotoURL` VARCHAR(255),
   `privacyID` INT NOT NULL,
@@ -34,6 +34,7 @@ CREATE TABLE `friendship` (
   `userID1` INT NOT NULL,
   `userID2` INT NOT NULL,
   `status` BOOLEAN NOT NULL DEFAULT FALSE,
+  `origin` INT NOT NULL,
   PRIMARY KEY (userID1, userID2),
   FOREIGN KEY (userID1) REFERENCES user(userID),
   FOREIGN KEY (userID2) REFERENCES user(userID)

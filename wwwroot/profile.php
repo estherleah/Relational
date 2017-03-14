@@ -1,7 +1,6 @@
 <?php
 include_once 'database/database.php';
 session_start();
-include 'header.php';
 include 'includes/showprofile.php';
 include 'includes/initialiseBlog.php';
 ?>
@@ -17,6 +16,7 @@ include 'includes/initialiseBlog.php';
 </head>
 
 <body>
+<?php include 'header.php'; ?>
 <!-- Content -->
 <div class="container">
     <div class="row justify-content-center">

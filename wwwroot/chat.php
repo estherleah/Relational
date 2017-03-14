@@ -1,7 +1,6 @@
 <?php
 include_once 'database/database.php';
 session_start();
-include 'header.php';
 include 'includes/initialiseChat.php';
 ?>
 
@@ -15,9 +14,8 @@ include 'includes/initialiseChat.php';
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-
-
 <body>
+<?php include 'header.php'; ?>
 <!-- Content -->
 <div class="container">
     <div class="row" id="message">

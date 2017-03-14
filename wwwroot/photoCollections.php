@@ -1,8 +1,6 @@
 <?php
 include_once 'database/database.php';
 session_start();
-include_once 'database/database.php';
-include 'header.php';
 include 'includes/initialisePhotoCollections.php';
 ?>
 
@@ -19,14 +17,15 @@ include 'includes/initialisePhotoCollections.php';
 </head>
 
 <body>
+  <?php include 'header.php'; ?>
   <!-- Content -->
   <div class="container">
     <div class="row">
-      <div class="col-xs-10">
-          <h1 class="page-header"><?php echo $fullName ?>'s Photo Collections</h1>
-      </div>
       <div class="col-xs-2">
         <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="100%"/>
+      </div>
+      <div class="col-xs-10">
+          <h1 class="page-header"><?php echo $fullName ?>'s Photo Collections</h1>
       </div>
     </div>
     <?php if($currentUser) { ?>

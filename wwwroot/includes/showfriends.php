@@ -7,11 +7,11 @@ session_start();
 // ChromePhp::log("Hello");
 
 //THIS PART IS FROM OLD initialiseFriends findcircles
-
-
 // Parts adapted from http://php.net/manual/en/mysqli.multi-query.php
 //CURRENT user check that they aren't in friendship.userID2
-$userIDEscaped = mysqli_real_escape_string($conn, $user);
+$user = $_SESSION['user'];
+$name = $_SESSION['name'];
+$userIDEscaped = $user;
 
 $userSql = "SELECT firstName, lastName, profilephotoURL
               FROM user
@@ -25,35 +25,54 @@ if (mysqli_num_rows($userResult) === 1) {
     $profilephotoURL = $row["profilephotoURL"];
 }
 //FRIEND (STATUS = 1 i.e friend accepted)
-$friendSql = "SELECT profilephotoURL, firstName, lastName, status
+//this test query now works for mutual friendships
+
+$testConnSql = "SELECT profilephotoURL, firstName, lastName, userID1, userID2, status
+                FROM friendship AS f INNER JOIN user AS u
+                ON f.userID2 = u.userID AND f.userID1 = $user
+                WHERE (f.userID1 = 1) AND (f.status = 1)
+                ORDER BY firstName DESC;
+                ";
+$testConnResult = mysqli_query($conn, $testConnSql);
+
+
+$friendSql = "SELECT profilephotoURL, firstName, lastName, userID, status
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
-              AND status = 1
-              ORDER BY lastName DESC;
+              WHERE status = 1
+              ORDER BY lastName DESC
               ";
 $friendResult = mysqli_query($conn, $friendSql);
 
 //PENDING (ADDED BUT YET TO ACCEPT (on either end))
-$pendingSql = "SELECT profilephotoURL, firstName, lastName, status
+$requestedSql = "SELECT profilephotoURL, firstName, lastName, userID, status, origin
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               AND status = 0
-              ORDER BY lastName DESC;
+              AND origin != '$userIDEscaped'
+              ORDER BY lastName DESC
+              ";
+$requestedResult = mysqli_query($conn, $requestedSql);
+
+
+//PENDING (ADDED BUT THE OTHER PARTY HAS YET TO ACCEPT
+$pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status, origin
+              FROM friendship AS f JOIN user AS u
+              ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
+              AND status = 0
+              AND origin = '$userIDEscaped'
+              ORDER BY lastName DESC
               ";
 $pendingResult = mysqli_query($conn, $pendingSql);
 
-/* find friends of friends
+/*FRIENDS OF FRIENDS
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified)
 */
-
 //Exclude yourself (you can't be friends with yourself)??
-  //this line prevents your own account from showing up in recommendationsList
-//WHERE fi.userID2 = '$userIDEscaped'
-//still displays pending friendships
-//check this query again at some point??? still displays yourself, friends etc
+  //this currently (mostly) works but it shows pending friends in your recs... if your friends are friends with htem
 
-$recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender,
+$recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
                             FROM user
                             WHERE userID IN
@@ -63,64 +82,25 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender,
                                 (SELECT userID2
                                   FROM friendship
                                   WHERE userID1 = '$userIDEscaped'
-
-                                )
-
-                                AND status = 1
-
-                                AND NOT EXISTS (
-                                  SELECT *
-                                  FROM friendship AS fi
-                                  WHERE fi.userID2 = fo.userID2
-                                  AND fi.userID2 = '$userIDEscaped'
-                                )
-
-                                AND NOT EXISTS (
-                                  SELECT *
-                                  FROM friendship AS fi
-                                  WHERE fi.userID1 = fo.userID1
-                                  AND fi.userID1 = '$userIDEscaped'
-
-                                )
-
-                              )
-                              ORDER BY RAND() LIMIT $friendsOfFriendsLimit
-                            ;
-                          ";
-
-
-/*
-$recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
-                            FROM user
-                            WHERE userID IN
-                              (SELECT DISTINCT userID2
-                              FROM friendship AS fo
-                              WHERE userID1 IN
-                                (SELECT userID2
-                                  FROM friendship
-                                  WHERE userID1 = '$userIDEscaped'
-
                                 )
                                 AND status = 1
+                                AND fo.userID2 NOT IN
+                             	(SELECT userID2
+                                 FROM friendship
+                                 WHERE userID1 = '$userIDEscaped')
+                               	AND userID2 != '$userIDEscaped'
 
-                                AND NOT EXISTS (
-                                  SELECT *
-                                  FROM friendship AS fi
-                                  WHERE fi.userID2 = fo.userID2
-                                  AND fi.userID2 = '$userIDEscaped'
+                            )
 
-
-                                )
-                              )
-                              ORDER BY RAND() LIMIT $friendsOfFriendsLimit
-                            ;
                           ";
 /*
+CIRCLERECS-----SHOULD BE FIXED NOW 12 MAR
  find circle participants that user is not friends with of circles user is in
 * make sure they're not already a current friend
 * Randomise and limit the output (if specified) */
 
-$recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, location
+
+$recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, location, userID
                             FROM user
                             WHERE userID IN
                               (SELECT DISTINCT userID
@@ -129,149 +109,145 @@ $recommendQuery = " SELECT firstName, lastName, profilephotoURL, gender, locatio
                                 (SELECT circleID
                                   FROM circle_participants
                                   WHERE userID = '$userIDEscaped'
-                                )
-                                AND userID != '$userIDEscaped'
-                                AND NOT EXISTS (
+                                 )
+
+                               AND userID != '$userIDEscaped'
+
+                               AND NOT EXISTS (
                                   SELECT *
                                   FROM friendship AS f
                                   WHERE f.userID1 = '$userIDEscaped'
                                   AND f.userID2 = c.userID
                                 )
-
-                              )
-                              ORDER BY RAND() LIMIT $circleFriendsLimit
-                            ;
+                               )
                   ";
 
-$recommendedResult = mysqli_multi_query($conn, $recommendQuery);
+/*RECS BY LOCATION*/
 
+$recommendQuery3 = " SELECT * FROM `user` as u WHERE u.userID IN
+                      				(SELECT DISTINCT userID
+                                       FROM user AS u2
+                                       WHERE u2.location IN
+                                           (SELECT location
+                                            FROM user
+                                            WHERE userID = '$userIDEscaped'
+                                                       )
+                                             AND u.userID != '$userIDEscaped'
+                                             AND NOT EXISTS (
+                                                              SELECT *
+                                                              FROM friendship AS f
+                                                              WHERE f.userID1 = '$userIDEscaped'
+                                                              AND f.userID2 = u2.userID
+                                                            )
+                                                          )
+                  ";
+
+
+
+$recommendedResult1 = mysqli_query($conn, $recommendQuery1);
+$recommendedResult2 = mysqli_query($conn, $recommendQuery2);
+$recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 
 $numberOfRecommendations = 5;
 
-
-
-
-
-
-
 //here ends old friendsinitialise file
-
-
-// Search for circle data
-/*
-if(isset($_GET['id'])){
-    $_SESSION['circleID'] = $_GET['id'];
-    $circleID = $_SESSION['circleID'];
-}
-
-$userStatusResult = mysqli_query($conn,"  SELECT     userStatus
-                                                FROM       circle_participants
-                                                WHERE      userID = '$user' AND circleID = '$circleID' ", 0);
-
-$userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
-
-$circleDataResult = mysqli_query($conn,"  SELECT     name, description
-                                                FROM       circle
-                                                WHERE      circleID = '$circleID' ");
-
-$circleData = mysqli_fetch_array($circleDataResult);
-$circleName = $circleData['name'];
-$circleDesc = $circleData['description'];
-
-// Search for circle members
-$circleMembersResult = mysqli_query($conn," SELECT      t1.userID, t1.firstName, t1.lastName, t1.profilephotoURL, t2.userStatus
-                                                  FROM
-                                                  ( SELECT      userID, firstName, lastName, profilephotoURL
-                                                    FROM        user
-                                                    WHERE       userID
-                                                    IN ( SELECT DISTINCT    userID
-                                                         FROM               circle_participants
-                                                         WHERE              circleID = '$circleID' )
-                                                    ORDER BY    lastName ) t1
-
-                                                  INNER JOIN
-
-                                                  ( SELECT      userID, userStatus
-                                                    FROM        circle_participants
-                                                    WHERE       circleID = '$circleID' ) t2
-
-                                                  ON t1.userID = t2.userID
-                                                  WHERE t2.userStatus != 0
-                                                  ORDER BY t2.userStatus DESC
-                                                  ");
-*/
-//---------------------------------------------------------------------------------------------------
+//FUNCTIONS FOR DELETING FRIENDS ETC - DON'T THINK THE PROBLEM IS HERE
 
 if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];
   switch($action) {
       case 'deleteFriend' : deleteFriend(); break;
+      case 'acceptReq' : acceptReq(); break;
       case 'cancelReq' : cancelReq(); break;
       case 'addFriend' : addFriend(); break;
   }
 }
-
+//currently getting this error PHP Notice:  Undefined index: userID in /var/www/html/friends.php on line 215, referer: http://localhost/friends.php
+//HEY THIS WORKS TOO
+//DELETE A FRIEND #1
 function deleteFriend(){
-    $userID1 = $_SESSION['userID'];
-    $userID2 = $_POST['id'];
+  $userID1 = $_SESSION['user'];
+  $userID2= $_POST['id'];
 
-    $deleteFriend1 = "   DELETE
-                        FROM       friendship
-                        WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
-    //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS
-    $deleteFriend2 = "   DELETE
-                        FROM       friendship
-                        WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
+    $deleteFriend = "  DELETE FROM friendship
+                        WHERE      (userID1 = '$userID1' AND userID2 = '$userID2')
+                                    OR (userID1 = '$userID2' AND userID2 = '$userID1')";
 
-    if (mysqli_query($GLOBALS['conn'], $deleteFriend1)) {
-          if (mysqli_query($GLOBALS['conn'], $deleteFriend2)) {
+    if (mysqli_query($GLOBALS['conn'], $deleteFriend)) {
             echo "Friend deleted";
           } else {
               echo "Error deleting friend " . mysqli_error($GLOBALS['conn']);
           }
-    } else {
-        echo "Error deleting friend: " . mysqli_error($GLOBALS['conn']);
-    }
 }
 
-function cancelReq(){
-  $userID1 = $_SESSION['userID'];
+//THIS NOW WORKS
 
+//ACCEPT FRIEND REQ #4
+function acceptReq(){
+
+  $userID1 = $_SESSION['user'];
   $userID2 = $_POST['id'];
 
-  $deleteFriend1 = "   DELETE
-                      FROM       friendship
-                      WHERE      userID1 = '$userID1' AND userID2 = '$userID2' ";
-  //NEED TO DELETE FRIENDSHIP IN BOTH DIRECTIONS (BASICALLY delete request)
-  $deleteFriend2 = "   DELETE
-                      FROM       friendship
-                      WHERE      userID1 = '$userID2' AND userID2 = '$userID1' ";
+  $acceptReq = "  UPDATE friendship
+                  SET status = 1
+                  WHERE (userID1 = '$userID1' AND userID2 = '$userID2')
+                  OR (userID1 = '$userID1' AND userID2 = '$userID1')";
 
-  if (mysqli_query($GLOBALS['conn'], $deleteFriend1)) {
-        if (mysqli_query($GLOBALS['conn'], $deleteFriend2)) {
-          echo "Friend request canceled";
+  if (mysqli_query($GLOBALS['conn'], $acceptReq)) {
+
+          echo "You are now friends!";
         } else {
-            echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
+          echo "Could not accept friend request" . mysqli_error($GLOBALS['conn']);
         }
-  } else {
-      echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
-  }
 }
 
+//CANCEL FRIEND REQ #2
+function cancelReq(){
+  $userID1 = $_SESSION['user'];
+  //$userID1 = intval($userID1);
+  $userID2 = $_POST['id'];
+  //$userID2 = $thisUserID;
+  //$userID2 = intval($userID2);
+
+  $cancelReq = "  DELETE FROM friendship
+                      WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
+                                  OR userID1 = '$userID2' AND userID2 = '$userID1')";
+
+  if (mysqli_query($GLOBALS['conn'], $cancelReq)) {
+
+          echo "Friend request cancelled";
+        } else {
+          echo "Could not cancel friend request" . mysqli_error($GLOBALS['conn']);
+        }
+}
+
+#ADD FRIEND #3
+//YES ADDING FRIENDS WORKS NOW - but I forgot about accepting friend requests
+//intval cast isn't actually needed
 function addFriend(){
-    $circleID = $_SESSION['circleID'];
+//  $userIdEscaped = mysqli_real_escape_string($GLOBALS['conn'], $user);
 
-    $thisUserID = $_POST['id'];
+  $userID1 = $_SESSION['user'];
+//  $userID1 = intval($userID1);
+  $userID2 = $_POST['id'];
+//  $userID2 = intval($userID2);
 
-    $addFriendRights = "      UPDATE     circle_participants
-                                SET        userStatus = '1'
-                                WHERE      circleID = '$circleID' AND userID = '$thisUserID' ";
+//SYMMETRIC RELATION - must work both ways
+//YES THIS WORKS NOW
+    $addFriend = "INSERT INTO friendship (userID1, userID2, status, origin)
+                  VALUES ('$userID1', '$userID2', '0', '$userID1'),
+                        ('$userID2', '$userID1', '0', '$userID1');
+                    ";
 
-
-    if (mysqli_query($GLOBALS['conn'], $addFriendRights)) {
-        echo "You revoked admin rights for " . getName($thisUserID);
+/*
+                    '$userID2', 0),
+                          ('$userID2', '$userID1', 0);
+                  ";
+*/
+    if (mysqli_query($GLOBALS['conn'], $addFriend)) {
+        echo "Friend added";
     } else {
-        echo "Error revoking admin rights: " . mysqli_error($GLOBALS['conn']);
+        echo "Error adding friend" . mysqli_error($GLOBALS['conn']);
     }
 }
 
