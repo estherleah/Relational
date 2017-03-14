@@ -74,7 +74,7 @@ $pendingResult = mysqli_query($conn, $pendingSql);
 */
 //Exclude yourself (you can't be friends with yourself)??
   //this currently (mostly) works but it shows pending friends in your recs... if your friends are friends with htem
-//THIS IS THE NEW AND UPDATED FRIENDS OF FRIENDS QUERY
+//THIS IS THE NEW AND UPDATED FRIENDS OF FRIENDS QUERY FIXED 14 MAR
 $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
                             FROM user
@@ -126,7 +126,7 @@ $recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, locati
                                )
                   ";
 
-/*RECS BY LOCATION*/
+/*RECS BY LOCATION WORKING */
 
 $recommendQuery3 = " SELECT * FROM `user` as u WHERE u.userID IN
                       				(SELECT DISTINCT userID
