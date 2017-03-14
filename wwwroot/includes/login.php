@@ -40,7 +40,7 @@ function isValidUser()
 }
 
 if (isValidUser()) {
-    header("Location: ../dashboard.php");
+    header("Location: ../profile.php");
     die();
 }
 else {

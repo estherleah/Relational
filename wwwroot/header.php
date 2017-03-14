@@ -13,20 +13,14 @@ include_once 'database/database.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title></title>
-    <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <title>Header</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="js/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
 
 <!-- Navigation -->
 <nav class="navbar navbar-inverse">
@@ -37,15 +31,13 @@ include_once 'database/database.php';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">Relational</a>
+            <a class="navbar-brand" href="profile.php">Relational</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="dashboard.php">Home</a></li>
                 <li><a href="friends.php">Friends</a></li>
                 <li><a href="circles.php">Circles</a></li>
                 <li><a href="photoCollections.php">Photo Collections</a></li>
-                <li><a href="blog.php">Blog</a></li>
                 <li><a href="search.php">Search</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -55,5 +47,8 @@ include_once 'database/database.php';
         </div>
     </div>
 </nav>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>
