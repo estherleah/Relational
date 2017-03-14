@@ -15,9 +15,9 @@ function updateGender($user)
         $gender = $_POST['gender'];
         $sql = "UPDATE `user` SET `gender`= '$gender' WHERE `userID` = '$user'";
         if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+            //echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
-        echo $gender;
+        //echo $gender;
     }
 }
 
@@ -26,9 +26,9 @@ function updateLocation($user) {
         $location = $_POST['location'];
         $sql = "UPDATE `user` SET `location`= '$location' WHERE `userID` = '$user'";
         if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+            //echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
-        echo $location;
+        //echo $location;
     }
 }
 
@@ -37,9 +37,9 @@ function updateDOB($user) {
         $dob = $_POST['dob'];
         $sql = "UPDATE `user` SET `dob`= '$dob' WHERE `userID` = '$user'";
         if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+            //echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
-        echo $dob;
+        //echo $dob;
     }
 }
 
@@ -63,9 +63,9 @@ function updatePrivacy($user) {
         }
         $sql = "UPDATE `user` SET `privacyID`= $privacyID WHERE `userID` = '$user'";
         if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+            //echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
-        echo $privacyID;
+        //echo $privacyID;
     }
 }
 

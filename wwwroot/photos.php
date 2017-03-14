@@ -28,7 +28,7 @@ include 'includes/initialisePhotos.php';
     </script>
     <div class="row">
         <div class="col-xs-12">
-            <h1 class="page-header"><?php echo $name ?></h1>
+            <h1 class="page-header"><?php echo $colName ?></h1>
             <b>Date created: <?php echo $date ?></b>
             <?php if($currentUser) { ?>
             <button type="button"

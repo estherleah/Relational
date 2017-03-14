@@ -19,21 +19,29 @@ include 'includes/initialiseBlog.php';
 <?php include 'header.php'; ?>
 <!-- Content -->
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-xs-3 col-xs-offset-1">
+    <div class="row">
+        <div class="col-xs-3">
             <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>">
             </br>
             <div>
+              <?php if($currentUser) { ?>
+                <a href="friends.php"><h3>Friends</h3></a>
+              <?php } else { ?>
                 <h3>Friends</h3>
+              <?php } ?>
                 <?php showFriends(); ?>
             </div>
             </br>
             <div>
+              <?php if($currentUser) { ?>
+                <a href="circles.php"><h3>Circles</h3></a>
+              <?php } else { ?>
                 <h3>Circles</h3>
+              <?php } ?>
                 <?php showCircles(); ?>
             </div>
         </div>
-        <div class="col-xs-7 jumbotron">
+        <div class="col-xs-6 jumbotron">
             <h2><?php echo $thisUserFullName ?></h2>
             <p>
                 <?php
@@ -82,6 +90,18 @@ include 'includes/initialiseBlog.php';
               }
               ?>
               </div>
+            </div>
+            <div class="col-xs-3">
+              <div>
+                <?php if($currentUser) { ?>
+                  <a href="photoCollections.php"><h3>Photo Collections</h3></a>
+                <?php } else { ?>
+                  <a href="photoCollections.php<?php echo "?id=" . $thisUserID ?>"><h3>Photo Collections</h3></a>
+                <?php } ?>
+                <?php showPhotoCollection(); ?>
+              </div>
+            </div>
+          </div>
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
