@@ -221,3 +221,70 @@ INSERT INTO friendship (userID1, userID2, status, origin)
                         ('6', '6', '0', 7);
 
 this works - trying an 'origin' flag to see who sent the request
+
+------------------------------------
+// ok i think this works
+need to fix asymmetry of request being accepted
+
+INSERT INTO friendship (userID1, userID2, status, origin)
+	                 VALUES ('1','5','1','1')
+                   ON DUPLICATE KEY UPDATE status = 1
+
+---------------------------------------
+
+
+SELECT userID, COUNT(userID) AS matches
+                            FROM (
+                              (SELECT DISTINCT userID2 AS userID
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '1')
+                              AND status = 1
+                              AND fo.userID2 NOT IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '1')
+                              AND userID2 != '1'
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM circle_participants AS c
+                              WHERE c.circleID IN
+                                (SELECT circleID
+                                FROM circle_participants
+                                WHERE userID = '1')
+                              AND userID != '1'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '1'
+                                AND f.userID2 = c.userID)
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM user AS u2
+                              WHERE u2.location IN
+                                (SELECT location
+                                FROM user
+                                WHERE userID = '1')
+                              AND u2.userID != '1'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '1'
+                                AND f.userID2 = u2.userID)
+                              ORDER BY RAND()
+                              )
+                            ) result
+                            GROUP BY result.userID
+                            ORDER BY matches DESC
+------------------------------------------------------------
+trying to sort out matches with a new table, i might regret this later -
+
+ALTER TABLE matches ADD PRIMARY KEY(currentID, matchID);
+
+INSERT INTO matches SELECT (that horrible query)

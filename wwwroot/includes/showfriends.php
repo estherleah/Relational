@@ -190,7 +190,9 @@ $collaborativeFilter = "SELECT userID, COUNT(userID) AS matches
                               )
                             ) result
                             GROUP BY result.userID
-                            ORDER BY matches DESC;
+                            ORDER BY matches DESC
+
+
                             ";
 
 
@@ -204,7 +206,7 @@ $recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 $numberOfRecommendations = 5;
 
 //here ends old friendsinitialise file
-//FUNCTIONS FOR DELETING FRIENDS ETC - DON'T THINK THE PROBLEM IS HERE
+//FUNCTIONS FOR DELETING FRIENDS ETC
 
 if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];
@@ -237,14 +239,15 @@ function deleteFriend(){
 
 //ACCEPT FRIEND REQ #4
 function acceptReq(){
-
+  //BE CAREFUL - USERID1 receives and accepts the request, USERID2 is the sender
+  //INSERT THE ACCEPTOR ROW FIRST THEN THE SENDER
   $userID1 = $_SESSION['user'];
   $userID2 = $_POST['id'];
-
-  $acceptReq = "  UPDATE friendship
-                  SET status = 1
-                  WHERE (userID1 = '$userID1' AND userID2 = '$userID2')
-                  OR (userID1 = '$userID1' AND userID2 = '$userID1')";
+//to update one row I would have used a normal UPDATE statement, this is sort of a 'hack'
+  $acceptReq = "  INSERT INTO friendship (userID1, userID2, status, origin)
+                  VALUES ('$userID1','$userID2','1','$userID2'), ('$userID2','$userID1','1','$userID2')
+                  ON DUPLICATE KEY UPDATE status = 1
+                  ";
 
   if (mysqli_query($GLOBALS['conn'], $acceptReq)) {
 
