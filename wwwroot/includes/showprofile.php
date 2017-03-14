@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];

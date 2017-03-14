@@ -221,3 +221,11 @@ INSERT INTO friendship (userID1, userID2, status, origin)
                         ('6', '6', '0', 7);
 
 this works - trying an 'origin' flag to see who sent the request
+
+------------------------------------
+
+need to fix asymmetry of request being accepting
+
+INSERT INTO friendship (userID1, userID2, status, origin)
+	                 VALUES ('1','5','1','1')
+                   ON DUPLICATE KEY UPDATE status = 1

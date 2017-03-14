@@ -1,6 +1,9 @@
 <?php
+ini_set('display_errors',0);
 include_once '../database/database.php';
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 // Debugging
 // include '../ChromePhp.php';
@@ -142,6 +145,61 @@ $recommendQuery3 = " SELECT * FROM `user` as u WHERE u.userID IN
                                                           )
                   ";
 
+$collaborativeFilter = "SELECT userID, COUNT(userID) AS matches
+                            FROM (
+                              (SELECT DISTINCT userID2 AS userID
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '$userIDEscaped')
+                              AND status = 1
+                              AND fo.userID2 NOT IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '$userIDEscaped')
+                              AND userID2 != '$userIDEscaped'
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM circle_participants AS c
+                              WHERE c.circleID IN
+                                (SELECT circleID
+                                FROM circle_participants
+                                WHERE userID = '$userIDEscaped')
+                              AND userID != '$userIDEscaped'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '$userIDEscaped'
+                                AND f.userID2 = c.userID)
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM user AS u2
+                              WHERE u2.location IN
+                                (SELECT location
+                                FROM user
+                                WHERE userID = '$userIDEscaped')
+                              AND u2.userID != '$userIDEscaped'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '$userIDEscaped'
+                                AND f.userID2 = u2.userID)
+                              ORDER BY RAND()
+                              )
+                            ) result
+                            GROUP BY result.userID
+                            ORDER BY matches DESC
+
+
+                            ";
+
+
+$collaborativeFilterResult = mysqli_query($conn, $collaborativeFilter);
 
 
 $recommendedResult1 = mysqli_query($conn, $recommendQuery1);
@@ -184,14 +242,15 @@ function deleteFriend(){
 
 //ACCEPT FRIEND REQ #4
 function acceptReq(){
-
+  //BE CAREFUL - USERID1 receives and accepts the request, USERID2 is the sender
+  //INSERT THE ACCEPTOR ROW FIRST THEN THE SENDER
   $userID1 = $_SESSION['user'];
   $userID2 = $_POST['id'];
-
-  $acceptReq = "  UPDATE friendship
-                  SET status = 1
-                  WHERE (userID1 = '$userID1' AND userID2 = '$userID2')
-                  OR (userID1 = '$userID1' AND userID2 = '$userID1')";
+//to update one row I would have used a normal UPDATE statement, this is sort of a 'hack'
+  $acceptReq = "  INSERT INTO friendship (userID1, userID2, status, origin)
+                  VALUES ('$userID1','$userID2','1','$userID2'), ('$userID2','$userID1','1','$userID2')
+                  ON DUPLICATE KEY UPDATE status = 1
+                  ";
 
   if (mysqli_query($GLOBALS['conn'], $acceptReq)) {
 

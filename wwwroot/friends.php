@@ -1,23 +1,34 @@
 <?php
 include_once 'database/database.php';
 session_start();
+include 'header.php';
 include 'includes/showfriends.php';
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Friends</title>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Dashboard</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
-<?php include 'header.php'; ?>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src = "js/friends.js"></script>
+
+
 <!-- Content -->
 <!--CONTAINER BEGINS HERE-->
 <div class="container">
@@ -175,28 +186,57 @@ $name = $_SESSION['name'];
 
                 <!--START OF FRIEND RECOMMENDATIONS-->
                 <h3>Suggested Friends</h3>
-                <?php echo "Search for friends" ?>
+                <?php echo "Here are some friends we found for you with our patented collaborative filtering method" ?>
                 <!-- THIS IS FROM "VERYOLDFRIENDS.PHP"-->
-                <div class="row">
-                  <form>
-                  <label class="checkbox">
-                    <input type="checkbox" name="optradio">All
-                  </label>
-                  <label class="checkbox">
-                    <input type="checkbox" name="optradio">Friends of friends
-                  </label>
-                  <label class="checkbox">
-                    <input type="checkbox" name="optradio">In same circle
-                  </label>
-                  <button class="btn btn-primary btn-xs pull-right" type="button">Filter</button>
-                </form>
-                </div>
-                <p><p><p>
+
+                <?php
+                while ($row = mysqli_fetch_array($collaborativeFilterResult)) {
+                    $firstName = $row['firstName'];
+                    $lastName = $row['lastName'];
+                    $thisUserID = $row['userID'];
+
+                    $profilePhotoURL = $row["profilephotoURL"];
+                    ?>
+
+                    <div class="recommendedFriends row">
+
+                            <button type="button"
+                               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                               role="button"
+                               data-id="<?php echo $thisUserID ?>"
+                               >
+                               Add
+                           </button>
+
+                        <!-- </div> -->
+
+                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+                        <span class="circleMemberName">
+                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                        </span>
+                        <br>
+                        <span class="circleMemberStatus">
+                          <?php
+                              echo "Collaborative Filter" ?>
+                        </span>
+
+                        </br>
+                        <p>
+
+                    </div>
+                    <?php
+                }
+                ?>
+
+
                   <div class="row"></div>
-                <h3 class="text-center">Results</h3>
+
                 <p>
                   <!--I haven't figured out how to join the queries so I will just do separate sections for now-->
-                <div class ="text-center"><b>Friends of friends (both existing and pending)</b><p></div>
+                  <!--FRIENDS OF FRIENDS-->
+                  <h3>Old recommendations</h3>
+                    <?php echo "Basically just recommendQueries 1 - 3 without headers/dividers" ?>
 
                                 <?php
                                 while ($row = mysqli_fetch_array($recommendedResult1)) {
@@ -240,7 +280,7 @@ $name = $_SESSION['name'];
 
                                 <!--members of circles you are in who aren't friends with you-->
 
-                                <div class ="text-center"><b>People in the same circles as you</b><p></div>
+                                <!--SAME CIRCLES-->
 
                                                 <?php
                                                 while ($row = mysqli_fetch_array($recommendedResult2)) {
@@ -283,8 +323,6 @@ $name = $_SESSION['name'];
                                                 ?>
 
                                                 <!--PEOPLE IN THE SAME LOCATION (NOT ALREADY FRIENDS)-->
-
-                                                <div class ="text-center"><b>People near you (location)</b><p></div>
 
                                                                 <?php
                                                                 while ($row = mysqli_fetch_array($recommendedResult3)) {
@@ -381,8 +419,5 @@ $name = $_SESSION['name'];
 
 </div>
 <!--CONTAINER ENDS HERE-->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src = "js/friends.js"></script>
 </body>
 </html>

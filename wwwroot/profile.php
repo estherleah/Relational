@@ -8,7 +8,7 @@ include 'includes/initialiseBlog.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Photo</title>
+    <title>Profile</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -21,8 +21,19 @@ include 'includes/initialiseBlog.php';
 <div class="container">
     <div class="row">
         <div class="col-xs-3">
-            <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>">
-            </br>
+            <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>" style="padding-bottom:25px;">
+            <?php
+                if ($currentUser) {
+                    ?>
+                    <!-- Change profile picture -->
+                    <form action="includes/addProfilePic.php" method="post" enctype="multipart/form-data" style="padding-bottom:50px;">
+                        <input id="fileToUpload" type="file" class="pull-left" name="fileToUpload" style="padding-bottom:10px;">
+                        <input type="submit" class="btn btn-primary pull-left" value="Change profile picture" name="submit">
+                    </form>
+                    <?php
+                }
+            ?>
+            <br>
             <div>
               <?php if($currentUser) { ?>
                 <a href="friends.php"><h3>Friends</h3></a>
@@ -31,7 +42,7 @@ include 'includes/initialiseBlog.php';
               <?php } ?>
                 <?php showFriends(); ?>
             </div>
-            </br>
+            <br>
             <div>
               <?php if($currentUser) { ?>
                 <a href="circles.php"><h3>Circles</h3></a>
@@ -45,13 +56,9 @@ include 'includes/initialiseBlog.php';
             <h2><?php echo $thisUserFullName ?></h2>
             <p>
                 <?php
-                    switch ($thisUserGender){
-                        case 0: ?> Male <?php break;
-                        case 1: ?> Female <?php break;
-                        case 2: ?> Other <?php break;
-                    }
-                ?></br>
-                Birthday: <?php echo substr($thisUserDOB,8,2) . "." .  substr($thisUserDOB,5,2) . "." .  substr($thisUserDOB,0,4); ?></br>
+                    echo $thisUserGender;
+                ?><br>
+                Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?></br>
                 From: <?php echo $thisUserLocation ?></br>
             </p>
 
