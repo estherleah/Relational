@@ -62,16 +62,18 @@ include 'header.php';
             <div class="col-sm-6">
                 <div class="panel panel-primary">
                     <div class="panel-heading">Blog</div>
+                    <div class="panel-body">
                     <?php
                     $sql = "SELECT `entry` FROM `blog_entry` WHERE `userID` = '$user' ORDER BY `date` DESC LIMIT 1";
                     $result = mysqli_query($conn, $sql);
                     if ($row = mysqli_fetch_assoc($result)) {
                         $entry = $row['entry'];
+                        echo $entry;
                     } else {
                         echo "No blog posts";
                     }
                     ?>
-                    <div class="panel-body"><?php echo $entry; ?></div>
+                    </div>
                 </div>
             </div>
         </div>
