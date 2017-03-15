@@ -83,6 +83,27 @@ include 'includes/initialiseBlog.php';
     </div> <!--center div ends here-->
 </div> <!--PENDING div ends here -->
 
+  <!--DELETE BUTTON STARTS HERE-->
+  <!--PENDING BUTTON DIV STARTS HERE -->
+  <div class = "row" id = "cancelButton">
+      <div align = "center">
+      <?php
+          if (mysqli_num_rows($areFriends2) != 0) {
+              ?>
+              <p>
+    <button type="button"
+     class="btn btn-danger btnDelete"
+     role="button"
+     data-id="<?php echo $thisUserID ?>"
+     >
+     Unfriend
+    </button>
+    <?php
+    }
+    ?>
+    </div> <!--center div ends here-->
+</div> <!--DELETE div ends here -->
+
 
             <br>
             <div>
