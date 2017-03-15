@@ -55,12 +55,7 @@ include 'includes/initialiseBlog.php';
                <?php
              }
              ?>
-               <p>
-                   <div class = "row">
-               <?php echo "viewing: " . $thisUserID ?>
-               <br><?php echo "logged in as: " . $user ?>
-             </div> <!--center div ends here-->
-           </div> <!--separate row for user status ends here-->
+           </div> <!--centrediv ends here-->
          </div> <!--entire addbutton div ends here -->
 
          <!--ACCEPT BUTTON DIV STARTS HERE -->
