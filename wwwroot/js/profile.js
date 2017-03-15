@@ -1,3 +1,7 @@
+
+
+
+
 $(function() { // waits for document to be ready
 //add the like add button thing somewhere
 
@@ -26,5 +30,47 @@ $(function() { // waits for document to be ready
                 });
             }
         });
+/*
+        //function for adding a user using the add button on a profile page
+        $(".btnAdd").on("click", function(event) {
+            var button = $(event.target)
+            var id = button.data("id")
+
+            $.ajax({ url: 'includes/showprofile.php',
+                data: {
+                    action: 'add',
+                    id
+                },
+                type: 'post',
+                success: function(output) {
+                    removeMsg = output;
+                    $('#infoModal').modal()
+                }
+            });
+        });
+
+*/
+            $(".btnAdd").on("click", function(event) {
+            var button = $(event.target);
+            var id = button.data('id');
+
+            // call php code to remove blog entry from DB
+            $.ajax({
+                type: 'post',
+                url: 'includes/profileAdd.php',
+                data: {
+                    id
+                },
+
+                success: function(html) {
+                    // reload data
+                    
+                    console.log(html);
+                }
+            });
+          });
+
+
+
 
 });

@@ -125,7 +125,5 @@ function showPhotoCollection(){
 
         <?php
     }
-
-};
-
-?>
+  };
+    ?>
