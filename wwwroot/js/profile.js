@@ -54,7 +54,6 @@ $(function() { // waits for document to be ready
             var button = $(event.target);
             var id = button.data('id');
 
-            // call php code to remove blog entry from DB
             $.ajax({
                 type: 'post',
                 url: 'includes/profileAdd.php',
@@ -63,9 +62,11 @@ $(function() { // waits for document to be ready
                 },
 
                 success: function(html) {
+
                     // reload data
-                    
+
                     console.log(html);
+                     document.location.reload();
                 }
             });
           });
