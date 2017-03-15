@@ -156,13 +156,15 @@ $name = $_SESSION['name'];
                            </button>
 
                         <!-- </div> -->
+                        <a href="profile.php?id=<?php echo $thisUserID ?>">
                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
 
                         <span class="circleMemberName">
                             <?php echo $firstName;?> <?php echo $lastName; ?>
                         </span>
+                        </a>
 
-                        </br>
+                        <br>
                         <span class="circleMemberStatus">
                           <?php
                               echo "Friend" ?>

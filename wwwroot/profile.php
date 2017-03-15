@@ -150,8 +150,8 @@ include 'includes/initialiseBlog.php';
                 <?php
                     echo $thisUserGender;
                 ?><br>
-                Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?></br>
-                Location: <?php echo $thisUserLocation ?></br>
+                Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?><br>
+                Location: <?php echo $thisUserLocation ?><br>
             </p>
 
             <!-- Blog -->
