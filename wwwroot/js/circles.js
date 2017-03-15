@@ -91,7 +91,7 @@ $(function() {
         var $userID = $clicked.find('.uid').html();
         //var decoded = $("<div/>").html($userID).text();
         //$('#searchid').val(decoded);
-        var url = "http://localhost:8888/user/" + $userID;
+        var url = 'circle.php' + $userID;
         window.open(url, "_self");
     });
 
