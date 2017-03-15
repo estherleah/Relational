@@ -63,6 +63,27 @@ include 'includes/initialiseBlog.php';
            </div> <!--separate row for user status ends here-->
          </div> <!--entire addbutton div ends here -->
 
+         <!--ACCEPT BUTTON DIV STARTS HERE -->
+         <div class = "row" id = "acceptButton">
+           <div align = "center">
+           <?php
+               if (mysqli_num_rows($requestTo) != 0) {
+                   ?>
+                   <p>
+       <button type="button"
+          class="btn btn-primary btnAccept"
+          role="button"
+          data-id="<?php echo $thisUserID ?>"
+          >
+          Accept request
+      </button>
+      <?php
+    }
+    ?>
+    </div> <!--center div ends here-->
+</div> <!--ACCEPT div ends here -->
+
+
          <!--PENDING BUTTON DIV STARTS HERE -->
          <div class = "row" id = "cancelButton">
            <div align = "center">
@@ -84,7 +105,6 @@ include 'includes/initialiseBlog.php';
 </div> <!--PENDING div ends here -->
 
   <!--DELETE BUTTON STARTS HERE-->
-  <!--PENDING BUTTON DIV STARTS HERE -->
   <div class = "row" id = "cancelButton">
       <div align = "center">
       <?php

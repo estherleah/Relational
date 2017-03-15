@@ -86,6 +86,14 @@ $requestFrom = mysqli_query($conn, "SELECT *
                                             AND origin = '$user'
                                             AND status = '0')
                                     ");
+//extremely similar query, just with reversed direction (origin)
+$requestTo = mysqli_query($conn, "SELECT *
+                                    FROM friendship
+                                    WHERE (userID1 = '$user'
+                                    AND userID2 = '$thisUserID'
+                                    AND origin = '$thisUserID'
+                                    AND status = '0')
+                                                                        ");
 
 
 

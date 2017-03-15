@@ -52,6 +52,28 @@ $(function() { // waits for document to be ready
             });
           });
 
+          $(".btnAccept").on("click", function(event) {
+          var button = $(event.target);
+          var id = button.data('id');
+
+          $.ajax({
+              type: 'post',
+              url: 'includes/profileAccept.php',
+              data: {
+                  id
+              },
+
+              success: function(html) {
+
+                  // reload data
+
+                  console.log(html);
+                   document.location.reload();
+              }
+          });
+        });
+
+
           $(".btnCancel").on("click", function(event) {
           var button = $(event.target);
           var id = button.data('id');
