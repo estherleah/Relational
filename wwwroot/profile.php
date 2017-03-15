@@ -20,6 +20,7 @@ include 'includes/initialiseBlog.php';
 <!-- Content -->
 <div class="container">
     <div class="row">
+
         <div class="col-xs-3">
             <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>" style="padding-bottom:25px;">
             <?php
@@ -35,25 +36,53 @@ include 'includes/initialiseBlog.php';
                 ?>
                 <!-- logic: if you are logged in as a friend you should not see the add button on the profile-->
                 <!-- the boolean in there works now need to return the result of a query checking that n results = 0-->
-                <p>
+
+                  <!--ADD BUTTON DIV STARTS HERE -->
                   <div class = "row" id = "addButton">
+                    <div align = "center">
+
                     <?php
-                        if (mysqli_num_rows($areFriends) <= 0) {
+                        if ((mysqli_num_rows($areFriends) <= 0) and $user != $thisUserID) {
                             ?>
+                            <p>
                 <button type="button"
                    class="btn btn-primary btnAdd"
                    role="button"
                    data-id="<?php echo $thisUserID ?>"
                    >
-                   + Add friend
+                   Add friend
                </button>
                <?php
              }
              ?>
-               <br>
+               <p>
+                   <div class = "row">
                <?php echo "viewing: " . $thisUserID ?>
                <br><?php echo "logged in as: " . $user ?>
-             </div>
+             </div> <!--center div ends here-->
+           </div> <!--separate row for user status ends here-->
+         </div> <!--entire addbutton div ends here -->
+
+         <!--PENDING BUTTON DIV STARTS HERE -->
+         <div class = "row" id = "cancelButton">
+           <div align = "center">
+           <?php
+               if (mysqli_num_rows($requestFrom) != 0) {
+                   ?>
+                   <p>
+       <button type="button"
+          class="btn btn-danger btnCancel"
+          role="button"
+          data-id="<?php echo $thisUserID ?>"
+          >
+          Cancel request
+      </button>
+      <?php
+    }
+    ?>
+    </div> <!--center div ends here-->
+</div> <!--PENDING div ends here -->
+
 
             <br>
             <div>

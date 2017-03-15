@@ -30,26 +30,7 @@ $(function() { // waits for document to be ready
                 });
             }
         });
-/*
-        //function for adding a user using the add button on a profile page
-        $(".btnAdd").on("click", function(event) {
-            var button = $(event.target)
-            var id = button.data("id")
 
-            $.ajax({ url: 'includes/showprofile.php',
-                data: {
-                    action: 'add',
-                    id
-                },
-                type: 'post',
-                success: function(output) {
-                    removeMsg = output;
-                    $('#infoModal').modal()
-                }
-            });
-        });
-
-*/
             $(".btnAdd").on("click", function(event) {
             var button = $(event.target);
             var id = button.data('id');
@@ -71,7 +52,26 @@ $(function() { // waits for document to be ready
             });
           });
 
+          $(".btnCancel").on("click", function(event) {
+          var button = $(event.target);
+          var id = button.data('id');
 
+          $.ajax({
+              type: 'post',
+              url: 'includes/profileCancel.php',
+              data: {
+                  id
+              },
+
+              success: function(html) {
+
+                  // reload data
+
+                  console.log(html);
+                   document.location.reload();
+              }
+          });
+        });
 
 
 });

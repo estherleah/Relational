@@ -190,7 +190,8 @@ img {
 	}
 
 	.btnProfileAdd {
-		margin: auto;
-  
+
+		margin: 20px;
+		align: center;
 
 	}
