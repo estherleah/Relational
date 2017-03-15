@@ -33,9 +33,13 @@ include 'includes/initialiseBlog.php';
                     <?php
                 }
                 ?>
-
+                <!-- logic: if you are logged in as a friend you should not see the add button on the profile-->
+                <!-- the boolean in there works now need to return the result of a query checking that n results = 0-->
                 <p>
                   <div class = "row" id = "addButton">
+                    <?php
+                        if (mysqli_num_rows($areFriends) <= 0) {
+                            ?>
                 <button type="button"
                    class="btn btn-primary btnAdd"
                    role="button"
@@ -43,6 +47,9 @@ include 'includes/initialiseBlog.php';
                    >
                    + Add friend
                </button>
+               <?php
+             }
+             ?>
                <br>
                <?php echo "viewing: " . $thisUserID ?>
                <br><?php echo "logged in as: " . $user ?>
