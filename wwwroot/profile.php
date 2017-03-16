@@ -142,12 +142,11 @@ include 'includes/initialiseBlog.php';
         <div class="col-xs-6 jumbotron">
             <h2><?php echo $thisUserFullName ?></h2>
             <p>
-                <?php
-                    echo $thisUserGender;
-                ?><br>
-                Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?><br>
-                Location: <?php echo $thisUserLocation ?><br>
+                Gender: <?php echo $thisUserGender ?><br>
+                Date of Birth: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?><br>
+                Country: <span class="bfh-countries" data-country="<?php echo $thisUserLocation ?>"></span><br>
             </p>
+
 
             <!-- Blog -->
             <?php if($currentUser) { ?>
@@ -199,7 +198,8 @@ include 'includes/initialiseBlog.php';
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-formhelpers.min.js"></script>
 <script src="js/blog.js"></script>
-<script src ="js/profile.js"></script>
+<script src="js/profile.js"></script>
 </body>
 </html>
