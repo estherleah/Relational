@@ -21,7 +21,7 @@ $userAndThisUser = new Relationship($user, $thisUserID);
 // Check if current user or visitor
 $currentUser = $userAndThisUser->areSame();
 
-if($userAndThisUser->shareContent()) {
+if($userAndThisUser->shareContent(0)) {
     $thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
 
     $blogSql = "SELECT entryID, entry, date

@@ -52,26 +52,7 @@ include 'includes/initialisePhotoCollections.php';
     <?php } ?>
     <div class="row" id="existingCollections">
     <?php
-    if (mysqli_num_rows($collectionResult) > 0) {
-        while ($row = mysqli_fetch_assoc($collectionResult)) {
-            ?>
-                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                  <div class="thumbnail">
-                    <b><?php echo $row["name"]?></b>
-                    <a  href="photos.php?collectionID=<?php echo $row["collectionID"]?>">
-                      <div class="jumbotron">
-                        <h1><?php echo $row["count"]?></h1>
-                        <p>photo(s)</p>
-                      </div>
-                    </a>
-                    <div class="text-muted">
-                        <small><?php echo $row["date"] ?></small>
-                    </div>
-                  </div>
-                </div>
-            <?php
-        }
-    }
+        showCollections();
     ?>
     </div>
   </div>
