@@ -23,7 +23,7 @@ $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
     if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
+        //echo "File is an image - " . $check["mime"] . ".";
         $uploadOk = 1;
     } else {
         echo "File is not an image.";
@@ -58,11 +58,11 @@ if ($uploadOk == 0) {
         $photoUrlEscaped = mysqli_real_escape_string($conn, $dir_file);
         $updateProfileSQL = "UPDATE `user` SET `profilephotoURL` = '$photoUrlEscaped' WHERE `user`.`userID` = '$user'";
         if (mysqli_query($conn, $updateProfileSQL)) {
-            echo "Profile picture changed successfully";
+            //echo "Profile picture changed successfully";
         } else {
             echo "Error: " . $updateProfileSQL . "<br>" . mysqli_error($conn);
         }
-        echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+        //echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
         header("Location: ../profile.php");
     } else {
         echo "Sorry, there was an error uploading your file.";

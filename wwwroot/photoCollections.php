@@ -64,7 +64,6 @@ include 'includes/initialisePhotoCollections.php';
                         <p>photo(s)</p>
                       </div>
                     </a>
-                    <b><?php echo $row["firstName"] . " " . $row["lastName"] ?></b>
                     <div class="text-muted">
                         <small><?php echo $row["date"] ?></small>
                     </div>

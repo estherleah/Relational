@@ -48,6 +48,7 @@ img {
 	margin-bottom: 15px;
 }
 
+
 /******************
    Search Bar
 *******************/
@@ -186,4 +187,11 @@ img {
 		margin-right: 20px;
 		float: left;
 		border-radius: 50%;
+	}
+
+	.btnProfileAdd {
+
+		margin: 20px;
+		align: center;
+
 	}

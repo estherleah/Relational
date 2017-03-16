@@ -223,15 +223,39 @@ INSERT INTO friendship (userID1, userID2, status, origin)
 this works - trying an 'origin' flag to see who sent the request
 
 ------------------------------------
-// ok i think this works
+
 need to fix asymmetry of request being accepted
 
 INSERT INTO friendship (userID1, userID2, status, origin)
 	                 VALUES ('1','5','1','1')
                    ON DUPLICATE KEY UPDATE status = 1
+-------------------------------------
 
----------------------------------------
+if $profileID != $user AND
 
+-------------------------------------
+modify the friend query
+
+SELECT firstName, lastName, profilephotoURL, gender,
+                            location, userID
+                            FROM user
+                            WHERE userID IN
+                              (SELECT DISTINCT userID2
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                  FROM friendship
+                                  WHERE userID1 = '3'
+                                )
+                                AND status = 1
+                                AND fo.userID2 NOT IN
+                             	(SELECT userID2
+                                 FROM friendship
+                                 WHERE userID1 = '3')
+                               	AND userID2 = '3'
+                            )
+---------------------------------------------------
+collab filtering draft
 
 SELECT userID, COUNT(userID) AS matches
                             FROM (
@@ -240,13 +264,13 @@ SELECT userID, COUNT(userID) AS matches
                               WHERE userID1 IN
                                 (SELECT userID2
                                 FROM friendship
-                                WHERE userID1 = '1')
+                                WHERE userID1 = '3')
                               AND status = 1
                               AND fo.userID2 NOT IN
                                 (SELECT userID2
                                 FROM friendship
-                                WHERE userID1 = '1')
-                              AND userID2 != '1'
+                                WHERE userID1 = '3')
+                              AND userID2 != '3'
                               ORDER BY RAND()
                               )
                             UNION ALL
@@ -255,12 +279,12 @@ SELECT userID, COUNT(userID) AS matches
                               WHERE c.circleID IN
                                 (SELECT circleID
                                 FROM circle_participants
-                                WHERE userID = '1')
-                              AND userID != '1'
+                                WHERE userID = '3')
+                              AND userID != '3'
                               AND NOT EXISTS
                                 (SELECT *
                                 FROM friendship AS f
-                                WHERE f.userID1 = '1'
+                                WHERE f.userID1 = '3'
                                 AND f.userID2 = c.userID)
                               ORDER BY RAND()
                               )
@@ -270,21 +294,15 @@ SELECT userID, COUNT(userID) AS matches
                               WHERE u2.location IN
                                 (SELECT location
                                 FROM user
-                                WHERE userID = '1')
-                              AND u2.userID != '1'
+                                WHERE userID = '3')
+                              AND u2.userID != '3'
                               AND NOT EXISTS
                                 (SELECT *
                                 FROM friendship AS f
-                                WHERE f.userID1 = '1'
+                                WHERE f.userID1 = '3'
                                 AND f.userID2 = u2.userID)
                               ORDER BY RAND()
                               )
                             ) result
                             GROUP BY result.userID
                             ORDER BY matches DESC
-------------------------------------------------------------
-trying to sort out matches with a new table, i might regret this later -
-
-ALTER TABLE matches ADD PRIMARY KEY(currentID, matchID);
-
-INSERT INTO matches SELECT (that horrible query)

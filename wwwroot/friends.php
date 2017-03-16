@@ -156,13 +156,15 @@ $name = $_SESSION['name'];
                            </button>
 
                         <!-- </div> -->
+                        <a href="profile.php?id=<?php echo $thisUserID ?>">
                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
 
                         <span class="circleMemberName">
                             <?php echo $firstName;?> <?php echo $lastName; ?>
                         </span>
+                        </a>
 
-                        </br>
+                        <br>
                         <span class="circleMemberStatus">
                           <?php
                               echo "Friend" ?>
@@ -174,12 +176,6 @@ $name = $_SESSION['name'];
                 }
                 ?>
                 <!--END OF existing attempt 2-->
-
-
-
-
-
-
               </div>
 
               <div class="col-xs-5 col-xs-offset-1 jumbotron">

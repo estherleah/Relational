@@ -1,6 +1,9 @@
 <?php
+ini_set('display_errors',0);
 include_once '../database/database.php';
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 // Debugging
 // include '../ChromePhp.php';
@@ -71,7 +74,7 @@ $pendingResult = mysqli_query($conn, $pendingSql);
 */
 //Exclude yourself (you can't be friends with yourself)??
   //this currently (mostly) works but it shows pending friends in your recs... if your friends are friends with htem
-
+//THIS IS THE NEW AND UPDATED FRIENDS OF FRIENDS QUERY FIXED 14 MAR
 $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
                             FROM user
@@ -88,9 +91,10 @@ $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                              	(SELECT userID2
                                  FROM friendship
                                  WHERE userID1 = '$userIDEscaped')
-                               	AND userID2 != '$userIDEscaped'
+                               	AND userID2 = '$userIDEscaped'
 
                             )
+                            AND userID != '$userIDEscaped'
 
                           ";
 /*
@@ -122,7 +126,7 @@ $recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, locati
                                )
                   ";
 
-/*RECS BY LOCATION*/
+/*RECS BY LOCATION WORKING */
 
 $recommendQuery3 = " SELECT * FROM `user` as u WHERE u.userID IN
                       				(SELECT DISTINCT userID
@@ -206,7 +210,7 @@ $recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 $numberOfRecommendations = 5;
 
 //here ends old friendsinitialise file
-//FUNCTIONS FOR DELETING FRIENDS ETC
+//FUNCTIONS FOR DELETING FRIENDS ETC - DON'T THINK THE PROBLEM IS HERE
 
 if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];

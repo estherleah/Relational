@@ -14,7 +14,7 @@ $collectionResult = mysqli_query($conn, $collectionSql);
 
 if (mysqli_num_rows($collectionResult) === 1) {
     $row = mysqli_fetch_assoc($collectionResult);
-    $name = $row["name"];
+    $colName = $row["name"];
     $date = $row["date"];
     $collectionUserID = $row["userID"];
 } else {
