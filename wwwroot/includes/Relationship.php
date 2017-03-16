@@ -25,11 +25,12 @@ class Relationship {
         else { return False; }
     }
 
-    function shareContent() {
-        if($this->user == $this->secondUser) {
+    function shareContent($privacyID) {
+        if($privacyID == 0) { $privacyID = $this->privacyID; }
+        if($this->areSame()) {
             return True;
         } else {
-            switch($this->privacyID) {
+            switch($privacyID) {
                 case 1 : return True; break;
                 case 2 : return $this->areFriendsOfFriends(); break;
                 case 3 : return $this->shareACircle(); break;

@@ -2,7 +2,6 @@
 include_once 'database/database.php';
 session_start();
 include 'includes/showprofile.php';
-include 'includes/initialiseBlog.php';
 ?>
 
 <!DOCTYPE html>

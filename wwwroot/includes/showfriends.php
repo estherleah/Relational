@@ -199,9 +199,7 @@ $collaborativeFilter = "SELECT userID, COUNT(userID) AS matches
 
                             ";
 
-
 $collaborativeFilterResult = mysqli_query($conn, $collaborativeFilter);
-
 
 $recommendedResult1 = mysqli_query($conn, $recommendQuery1);
 $recommendedResult2 = mysqli_query($conn, $recommendQuery2);
@@ -209,8 +207,24 @@ $recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 
 $numberOfRecommendations = 5;
 
+//GET VIEWS HERE
+$viewString = "matches" . $user;
+$getView = "SELECT * FROM $viewString";
+$getViewResult = mysqli_query($conn, $getView);
+
+//NOW I JUST NEED TO DO THE JOIN WITH FRIEND PHOTOS AND STUFF
+
 //here ends old friendsinitialise file
 //FUNCTIONS FOR DELETING FRIENDS ETC - DON'T THINK THE PROBLEM IS HERE
+
+$photoView = "SELECT profilephotoURL, firstName, lastName, u.userID, matches
+              FROM $viewString AS view
+              INNER JOIN user AS u ON view.userID = u.userID
+              ORDER BY view.matches DESC
+              ";
+
+$photoViewResult = mysqli_query($conn, $photoView);
+
 
 if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];
@@ -219,6 +233,7 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
       case 'acceptReq' : acceptReq(); break;
       case 'cancelReq' : cancelReq(); break;
       case 'addFriend' : addFriend(); break;
+      case 'generateView': generateView(); break;
   }
 }
 //currently getting this error PHP Notice:  Undefined index: userID in /var/www/html/friends.php on line 215, referer: http://localhost/friends.php
@@ -264,10 +279,8 @@ function acceptReq(){
 //CANCEL FRIEND REQ #2
 function cancelReq(){
   $userID1 = $_SESSION['user'];
-  //$userID1 = intval($userID1);
   $userID2 = $_POST['id'];
-  //$userID2 = $thisUserID;
-  //$userID2 = intval($userID2);
+
 
   $cancelReq = "  DELETE FROM friendship
                       WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
@@ -299,16 +312,90 @@ function addFriend(){
                         ('$userID2', '$userID1', '0', '$userID1');
                     ";
 
-/*
-                    '$userID2', 0),
-                          ('$userID2', '$userID1', 0);
-                  ";
-*/
     if (mysqli_query($GLOBALS['conn'], $addFriend)) {
         echo "Friend added";
     } else {
         echo "Error adding friend" . mysqli_error($GLOBALS['conn']);
     }
 }
+
+function generateView(){
+
+  $thisUserID = $_SESSION['user'];
+
+  //this is the statement to generate views - I need to think about this
+  //is it better to just create all the views beforehand?
+  //if we run out of time i guess we can just say in the video that the views already exist
+  //and get updated each time something happens
+
+  //this concatenates matches with '$thisUserID' to name the view of matches
+  $viewString = $_POST['id'];
+
+  //oh god this actually works now
+  //actually generating the view is working but the matches.concatenation isn't
+  $generateView = "CREATE OR REPLACE VIEW $viewString AS
+                            (SELECT userID, COUNT(userID) AS matches
+                            FROM (
+                              (SELECT DISTINCT userID2 AS userID
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '$thisUserID')
+                              AND status = 1
+                              AND fo.userID2 NOT IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '$thisUserID')
+                              AND userID2 != '$thisUserID'
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM circle_participants AS c
+                              WHERE c.circleID IN
+                                (SELECT circleID
+                                FROM circle_participants
+                                WHERE userID = '$thisUserID')
+                              AND userID != '$thisUserID'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '$thisUserID'
+                                AND f.userID2 = c.userID)
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM user AS u2
+                              WHERE u2.location IN
+                                (SELECT location
+                                FROM user
+                                WHERE userID = '$thisUserID')
+                              AND u2.userID != '$thisUserID'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '$thisUserID'
+                                AND f.userID2 = u2.userID)
+                              ORDER BY RAND()
+                              )
+                            ) result
+                            GROUP BY result.userID
+                            ORDER BY matches DESC
+
+                              )
+                            ";
+
+    if (mysqli_query($GLOBALS['conn'], $generateView)) {
+        echo "View created/replaced";
+    } else {
+        echo "Error generating view " . mysqli_error($GLOBALS['conn']);
+    }
+}
+
+
+
+
 
 ?>
