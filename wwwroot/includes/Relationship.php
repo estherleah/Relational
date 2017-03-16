@@ -102,7 +102,7 @@ class Relationship {
                 ) t2
                 ON t1.circleID = t2.circleID ";
 
-        $commonCircles = mysqli_fetch_array(mysqli_query($GLOBALS['conn'], $q2, 0))['commonCircles'];
+        $commonCircles = mysqli_fetch_array(mysqli_query($GLOBALS['conn'], $q3, 0))['commonCircles'];
 
         if($commonCircles >= 1){ return True; }
         else { return False; }
