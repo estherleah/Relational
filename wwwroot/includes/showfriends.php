@@ -383,7 +383,6 @@ function generateView(){
                             ) result
                             GROUP BY result.userID
                             ORDER BY matches DESC
-
                               )
                             ";
 
