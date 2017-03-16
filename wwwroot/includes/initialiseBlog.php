@@ -6,14 +6,10 @@ $user = $_SESSION['user'];
 // TEMP HACK! This will become either the current user ID or the ID of the profile being viewed
 // $thisUserID = $user;
 
-// check if viewing the current user
-if ($thisUserID == $user) {
-  $currentUser = True;
-} else {
-  $currentUser = False;
-}
-
 $userAndThisUser = new Relationship($user, $thisUserID);
+
+// check if viewing the current user
+$currentUser = $userAndThisUser->areSame();
 
 if($userAndThisUser->shareContent()) {
     $thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
