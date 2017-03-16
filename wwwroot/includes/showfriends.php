@@ -209,7 +209,8 @@ $numberOfRecommendations = 5;
 
 //TESTING VIEWS Here
 $viewString = "matches" . $user;
-$getView = "SELECT * FROM '$viewString'";
+
+$getView = "SELECT * FROM $viewString";
 $getViewResult = mysqli_query($conn, $getView);
 
 //here ends old friendsinitialise file
@@ -268,10 +269,8 @@ function acceptReq(){
 //CANCEL FRIEND REQ #2
 function cancelReq(){
   $userID1 = $_SESSION['user'];
-  //$userID1 = intval($userID1);
   $userID2 = $_POST['id'];
-  //$userID2 = $thisUserID;
-  //$userID2 = intval($userID2);
+
 
   $cancelReq = "  DELETE FROM friendship
                       WHERE      (userID1 = '$userID1' AND userID2 = '$userID2'
@@ -303,11 +302,6 @@ function addFriend(){
                         ('$userID2', '$userID1', '0', '$userID1');
                     ";
 
-/*
-                    '$userID2', 0),
-                          ('$userID2', '$userID1', 0);
-                  ";
-*/
     if (mysqli_query($GLOBALS['conn'], $addFriend)) {
         echo "Friend added";
     } else {
@@ -327,8 +321,9 @@ function generateView(){
   //this concatenates matches with '$thisUserID' to name the view of matches
   $viewString = $_POST['id'];
 
+  //oh god this actually works now
   //actually generating the view is working but the matches.concatenation isn't
-  $generateView = "CREATE OR REPLACE VIEW '$viewString' AS
+  $generateView = "CREATE OR REPLACE VIEW $viewString AS
                             (SELECT userID, COUNT(userID) AS matches
                             FROM (
                               (SELECT DISTINCT userID2 AS userID

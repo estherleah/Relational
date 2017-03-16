@@ -5,6 +5,7 @@ include 'header.php';
 include 'includes/showfriends.php';
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
+$viewString = 'matches' . $user;
 
 ?>
 
@@ -184,8 +185,7 @@ $name = $_SESSION['name'];
                 <h3>Suggested Friends</h3>
                 <?php echo "Here are some friends we found for you with our patented
                 collaborative filtering method." ?> <br>
-                <?php echo "If you don't have any suggested friends, click this button to
-                generate some" ?>
+
                 <p>
 
                   <button type="button"
@@ -196,7 +196,7 @@ $name = $_SESSION['name'];
                      Generate recommendations
                  </button>
 
-                 <?php echo "matches".$user ?>
+                 <?php echo $viewString ?>
 
                 <!-- THIS IS FROM "VERYOLDFRIENDS.PHP"-->
                 <!-- ATTEMPTING TO TEST VIEWS HERE-->
@@ -211,7 +211,7 @@ $name = $_SESSION['name'];
                             <button type="button"
                                class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
                                role="button"
-                               data-id="<?php echo "matches" . $theirUserID ?>"
+                               data-id="<?php echo $theirUserID ?>"
                                >
                                Add
                            </button>
@@ -234,10 +234,6 @@ $name = $_SESSION['name'];
                     <?php
                 }
                 ?>
-
-
-
-                  <div class="row"></div>
 
                 <p>
                   <!--I haven't figured out how to join the queries so I will just do separate sections for now-->
@@ -286,7 +282,6 @@ $name = $_SESSION['name'];
                                 ?>
 
                                 <!--members of circles you are in who aren't friends with you-->
-
                                 <!--SAME CIRCLES-->
 
                                                 <?php

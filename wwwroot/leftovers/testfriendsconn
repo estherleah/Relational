@@ -351,3 +351,6 @@ while ($row = mysqli_fetch_array($collaborativeFilterResult)) {
 }
 ?>
 <!--END OF COLLABORATIVE FILTER(NON-VIEW ATTEMPT) HERE-->
+
+-------------------------------------------------------------
+EXTREMELY OLD FRIENDS QUERIES - LITERALLY ONE QUERY EACH FOR MUTUAL FRIENDS, LOCATION, CIRCLES
