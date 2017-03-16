@@ -10,6 +10,8 @@ session_start();
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
+$userIDEscaped = mysqli_real_escape_string($conn, $user);
+
 $target_dir = "../uploads/userId-$user/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
@@ -32,10 +34,10 @@ if(isset($_POST["submit"])) {
 }
 
 // Check if file already exists
-if (file_exists($target_file)) {
+/*if (file_exists($target_file)) {
     echo "Sorry, file already exists.";
     $uploadOk = 0;
-}
+}*/
 
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
@@ -52,11 +54,24 @@ if ($uploadOk == 0) {
 
     if (!$dirExists) {
         $dirExists = mkdir($target_dir, 0777, true);
+    } else {
+      $existingUrlSQL = "SELECT profilephotoURL
+                          FROM user
+                          WHERE userID = '$userIDEscaped';
+      ";
+      $existingUrlResult = mysqli_query($conn, $existingUrlSQL);
+      $row = mysqli_fetch_assoc($existingUrlResult);
+      $existingUrl = $row["profilephotoURL"];
+      if ($existingUrl != 'assets/profile_default.jpg') {
+        $system_path_full = "../" . $existingUrl;
+        unlink($system_path_full);
+      }
     }
+
     if ($dirExists && move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         // Add entry to DB
         $photoUrlEscaped = mysqli_real_escape_string($conn, $dir_file);
-        $updateProfileSQL = "UPDATE `user` SET `profilephotoURL` = '$photoUrlEscaped' WHERE `user`.`userID` = '$user'";
+        $updateProfileSQL = "UPDATE `user` SET `profilephotoURL` = '$photoUrlEscaped' WHERE `user`.`userID` = '$userIDEscaped'";
         if (mysqli_query($conn, $updateProfileSQL)) {
             //echo "Profile picture changed successfully";
         } else {
