@@ -89,6 +89,27 @@ $(function() {
         });
     });
 
+    $(".btnGenerate").on("click", function(event) {
+        var button = $(event.target)
+        var id = button.data("id")
+
+        $.ajax({ url: 'includes/showfriends.php',
+            data: {
+                action: 'generateView',
+                id
+            },
+            type: 'post',
+
+            success: function(html) {
+                console.log(html);
+                 document.location.reload();
+            }
+        });
+    });
+
+
+
+
     function getConfirm(confirmMessage,callback){
     confirmMessage = confirmMessage || '';
 

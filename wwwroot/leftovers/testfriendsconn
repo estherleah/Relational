@@ -253,5 +253,240 @@ SELECT firstName, lastName, profilephotoURL, gender,
                                  FROM friendship
                                  WHERE userID1 = '3')
                                	AND userID2 = '3'
-
                             )
+---------------------------------------------------
+collab filtering draft
+
+SELECT userID, COUNT(userID) AS matches
+                            FROM (
+                              (SELECT DISTINCT userID2 AS userID
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '3')
+                              AND status = 1
+                              AND fo.userID2 NOT IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '3')
+                              AND userID2 != '3'
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM circle_participants AS c
+                              WHERE c.circleID IN
+                                (SELECT circleID
+                                FROM circle_participants
+                                WHERE userID = '3')
+                              AND userID != '3'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '3'
+                                AND f.userID2 = c.userID)
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM user AS u2
+                              WHERE u2.location IN
+                                (SELECT location
+                                FROM user
+                                WHERE userID = '3')
+                              AND u2.userID != '3'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '3'
+                                AND f.userID2 = u2.userID)
+                              ORDER BY RAND()
+                              )
+                            ) result
+                            GROUP BY result.userID
+                            ORDER BY matches DESC
+
+--------------------------------------------------------------
+OLD COLLABORATIVE FILTERING CODE
+
+<!--OLD COLLABORATIVE FILTERING STARTS HERE (NON-VIEW METHOD)-->
+<?php
+while ($row = mysqli_fetch_array($collaborativeFilterResult)) {
+    $firstName = $row['firstName'];
+    $lastName = $row['lastName'];
+    $thisUserID = $row['userID'];
+
+    $profilePhotoURL = $row["profilephotoURL"];
+    ?>
+
+    <div class="recommendedFriends row">
+
+            <button type="button"
+               class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+               role="button"
+               data-id="<?php echo $thisUserID ?>"
+               >
+               Add
+           </button>
+
+        <!-- </div> -->
+
+        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+        <span class="circleMemberName">
+            <?php echo $firstName;?> <?php echo $lastName; ?>
+        </span>
+        <br>
+        <span class="circleMemberStatus">
+          <?php
+              echo "Collaborative Filter" ?>
+        </span>
+
+        </br>
+        <p>
+
+    </div>
+    <?php
+}
+?>
+<!--END OF COLLABORATIVE FILTER(NON-VIEW ATTEMPT) HERE-->
+
+-------------------------------------------------------------
+EXTREMELY OLD FRIENDS QUERIES - LITERALLY ONE QUERY EACH FOR MUTUAL FRIENDS, LOCATION, CIRCLES
+
+<!--I haven't figured out how to join the queries so I will just do separate sections for now-->
+<!--FRIENDS OF FRIENDS-->
+<h3>Old recommendations</h3>
+  <?php echo "Basically just recommendQueries 1 - 3 without headers/dividers" ?>
+
+              <?php
+              while ($row = mysqli_fetch_array($recommendedResult1)) {
+                  $firstName = $row['firstName'];
+                  $lastName = $row['lastName'];
+                  $thisUserID = $row['userID'];
+
+                  $profilePhotoURL = $row["profilephotoURL"];
+                  ?>
+
+                  <div class="recommendedFriends row">
+
+                          <button type="button"
+                             class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                             role="button"
+                             data-id="<?php echo $thisUserID ?>"
+                             >
+                             Add
+                         </button>
+
+                      <!-- </div> -->
+
+                      <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+                      <span class="circleMemberName">
+                          <?php echo $firstName;?> <?php echo $lastName; ?>
+                      </span>
+                      <br>
+                      <span class="circleMemberStatus">
+                        <?php
+                            echo "Friend of a friend" ?>
+                      </span>
+
+                      </br>
+                      <p>
+
+                  </div>
+                  <?php
+              }
+              ?>
+
+              <!--members of circles you are in who aren't friends with you-->
+              <!--SAME CIRCLES-->
+
+                              <?php
+                              while ($row = mysqli_fetch_array($recommendedResult2)) {
+                                  $firstName = $row['firstName'];
+                                  $lastName = $row['lastName'];
+                                  $thisUserID = $row['userID'];
+
+                                  $profilePhotoURL = $row["profilephotoURL"];
+                                  ?>
+
+                                  <div class="recommendedFriends row">
+
+                                    <button type="button"
+                                       class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                                       role="button"
+                                       data-id="<?php echo $thisUserID ?>"
+                                       >
+                                       Add
+                                   </button>
+
+                                      <!-- </div> -->
+
+                                      <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+                                      <span class="circleMemberName">
+                                          <?php echo $firstName;?> <?php echo $lastName; ?>
+                                      </span>
+                                      <br>
+                                      <span class="circleMemberStatus">
+                                        <?php
+                                            echo "Fellow circle member" ?>
+                                      </span>
+
+                                      </br>
+                                      <p>
+
+                                  </div>
+                                  <?php
+                              }
+                              ?>
+
+                              <!--PEOPLE IN THE SAME LOCATION (NOT ALREADY FRIENDS)-->
+
+                                              <?php
+                                              while ($row = mysqli_fetch_array($recommendedResult3)) {
+                                                  $firstName = $row['firstName'];
+                                                  $lastName = $row['lastName'];
+                                                  $thisUserID = $row['userID'];
+
+                                                  $profilePhotoURL = $row["profilephotoURL"];
+                                                  ?>
+
+                                                  <div class="recommendedFriends row">
+
+                                                          <button type="button"
+                                                             class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                                                             role="button"
+                                                             data-id="<?php echo $thisUserID ?>"
+                                                             >
+                                                             Add
+                                                         </button>
+
+                                                      <!-- </div> -->
+
+                                                      <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+                                                      <span class="circleMemberName">
+                                                          <?php echo $firstName;?> <?php echo $lastName; ?>
+                                                      </span>
+                                                      <br>
+                                                      <span class="circleMemberStatus">
+                                                          <?php
+                                                              echo "Same location" ?>
+
+
+                                                      </span>
+
+                                                      </br>
+                                                      <p>
+
+                                                  </div>
+                                                  <?php
+                                              }
+                                              ?>
+
+
+
+              <!--END OF OLD RECS-->
