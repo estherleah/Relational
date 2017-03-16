@@ -20,6 +20,11 @@ class Relationship {
         $this->privacyID = mysqli_fetch_array(mysqli_query($GLOBALS['conn'], $q0, 0))['privacyID'];
     }
 
+    function areSame() {
+        if ($this->secondUser == $this->user) { return True; }
+        else { return False; }
+    }
+
     function shareContent() {
         if($this->user == $this->secondUser) {
             return True;

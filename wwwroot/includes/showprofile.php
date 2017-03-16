@@ -1,5 +1,6 @@
 <?php
-if (!isset($_SESSION)) {
+include 'includes/Relationship.php';
+if(!isset($_SESSION)){
     session_start();
 }
 
@@ -7,25 +8,34 @@ $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
 // DB Connection
-//global $thisUserData; I don't think this does anything in this context!
+global $thisUserData;
 
-// Check if current user or visitor
 if(isset($_GET['id'])){
-    // Get userID
-    // $_SESSION['thisUserID'] = $_GET['id'];
-    // $thisUserID = $_SESSION['thisUserID'];
     $thisUserID = $_GET['id'];
 } else {
     $thisUserID = $user;
 }
 
-$thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
+$userAndThisUser = new Relationship($user, $thisUserID);
+
+// Check if current user or visitor
+$currentUser = $userAndThisUser->areSame();
+
+if($userAndThisUser->shareContent()) {
+    $thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
+
+    $blogSql = "SELECT entryID, entry, date
+                  FROM blog_entry AS b
+                  WHERE b.userID = '$thisUserIDEscaped'
+                  ORDER BY date DESC;
+                  ";
+    $blogResult = mysqli_query($conn, $blogSql);
+}
 
 // Get user's data
 $thisUserData = mysqli_fetch_array(mysqli_query($conn," SELECT   firstName, lastName, dob, gender, location, profilephotoURL
                                                         FROM     user
                                                         WHERE    userID = '$thisUserIDEscaped' ", 0));
-
 // Get user's circles
 $thisUserCircles = mysqli_query($conn," SELECT   circleID, name
                                         FROM     circle
@@ -36,7 +46,6 @@ $thisUserCircles = mysqli_query($conn," SELECT   circleID, name
                                             WHERE    userID = '$thisUserIDEscaped'
                                         )
                                         LIMIT 5 ");
-
 // Get user's friends
 $thisUserFriends = mysqli_query($conn," SELECT  userID, profilephotoURL, CONCAT(firstName, ' ', lastName) AS fullName
                                         FROM    user
@@ -48,7 +57,6 @@ $thisUserFriends = mysqli_query($conn," SELECT  userID, profilephotoURL, CONCAT(
                                                 )
                                         ORDER BY RAND()
                                         LIMIT 5 ");
-
 // Get user's photo collections
 $thisUserPhotoCollections = mysqli_query($conn," SELECT pcol.collectionID, pcol.name, pcol.date, u.profilephotoURL, u.firstName, u.lastName, COUNT(p.photoID) AS count
                                                     FROM photo_collection AS pcol
@@ -59,12 +67,10 @@ $thisUserPhotoCollections = mysqli_query($conn," SELECT pcol.collectionID, pcol.
                                                     ORDER BY date DESC
                                                     LIMIT 5 ;");
 //$thisUserID is the user whose profile is being viewed, $user is logged in user
-
 //strictly speaking this query really doesn't do much - it just sees if there is a relation between the
 //current logged in user and the user who owns the profile they are currently viewing
 //basically if the number of results returned is 0 (meaning they have no relation), only then do you see the add button
 //it is ok to search for only one half of it
-
 $areFriends = mysqli_query($conn, "SELECT *
                                     FROM friendship
                                     WHERE (userID1 = '$user'
@@ -78,39 +84,33 @@ $areFriends2 = mysqli_query($conn, "SELECT *
                                     AND status = '1')
                                     ");
 
-
 $requestFrom = mysqli_query($conn, "SELECT *
                                     FROM friendship
                                     WHERE (userID1 = '$user'
                                             AND userID2 = '$thisUserID'
-                                            AND origin = '$user'
+                                            AND originUserID = '$user'
                                             AND status = '0')
                                     ");
-//extremely similar query, just with reversed direction (origin)
+
+//extremely similar query, just with reversed direction (originUserID)
 $requestTo = mysqli_query($conn, "SELECT *
                                     FROM friendship
                                     WHERE (userID1 = '$user'
                                     AND userID2 = '$thisUserID'
-                                    AND origin = '$thisUserID'
+                                    AND originUserID = '$thisUserID'
                                     AND status = '0')
                                                                         ");
-
-
-
 // Set local variables
 $thisUserFullName = $thisUserData['firstName'] . " " . $thisUserData['lastName'];
 $thisUserDOB = $thisUserData['dob'];
 $thisUserGender = $thisUserData['gender'];
 $thisUserLocation = $thisUserData['location'];
 $thisUserProfilePic = $thisUserData['profilephotoURL'];
-
 // if ($row = mysqli_fetch_assoc($thisUserData)) { $thisUserProfilePic = $thisUserData['profilephotoURL']; }
 // else { echo "Unable to find profile picture"; }
-
 // Iterate through circles and display them
 function showCircles(){
     global $thisUserCircles;
-
     while ($row = mysqli_fetch_array($thisUserCircles)) {
         $circleID   = $row['circleID'];
         $circleName = $row['name'];
@@ -119,10 +119,8 @@ function showCircles(){
         <?php
     }
 };
-
 function showFriends(){
     global $thisUserFriends;
-
     while ($row = mysqli_fetch_array($thisUserFriends)) {
         $friendID = $row['userID'];
         $friendFullName = $row['fullName'];
@@ -136,14 +134,10 @@ function showFriends(){
             </div>
         <?php
     }
-
 };
-
 function showPhotoCollection(){
     global $thisUserPhotoCollections;
-
     while ($row = mysqli_fetch_array($thisUserPhotoCollections)) {
-
         ?>
 
               <div class="col-xs-12 ">

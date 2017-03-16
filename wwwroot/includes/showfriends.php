@@ -48,22 +48,22 @@ $friendSql = "SELECT profilephotoURL, firstName, lastName, userID, status
 $friendResult = mysqli_query($conn, $friendSql);
 
 //PENDING (ADDED BUT YET TO ACCEPT (on either end))
-$requestedSql = "SELECT profilephotoURL, firstName, lastName, userID, status, origin
+$requestedSql = "SELECT profilephotoURL, firstName, lastName, userID, status, originUserID
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               AND status = 0
-              AND origin != '$userIDEscaped'
+              AND originUserID != '$userIDEscaped'
               ORDER BY lastName DESC
               ";
 $requestedResult = mysqli_query($conn, $requestedSql);
 
 
 //PENDING (ADDED BUT THE OTHER PARTY HAS YET TO ACCEPT
-$pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status, origin
+$pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status, originUserID
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
               AND status = 0
-              AND origin = '$userIDEscaped'
+              AND originUserID = '$userIDEscaped'
               ORDER BY lastName DESC
               ";
 $pendingResult = mysqli_query($conn, $pendingSql);
@@ -252,7 +252,7 @@ function acceptReq(){
   $userID1 = $_SESSION['user'];
   $userID2 = $_POST['id'];
 //to update one row I would have used a normal UPDATE statement, this is sort of a 'hack'
-  $acceptReq = "  INSERT INTO friendship (userID1, userID2, status, origin)
+  $acceptReq = "  INSERT INTO friendship (userID1, userID2, status, originUserID)
                   VALUES ('$userID1','$userID2','1','$userID2'), ('$userID2','$userID1','1','$userID2')
                   ON DUPLICATE KEY UPDATE status = 1
                   ";
@@ -298,7 +298,7 @@ function addFriend(){
 
 //SYMMETRIC RELATION - must work both ways
 //YES THIS WORKS NOW
-    $addFriend = "INSERT INTO friendship (userID1, userID2, status, origin)
+    $addFriend = "INSERT INTO friendship (userID1, userID2, status, originUserID)
                   VALUES ('$userID1', '$userID2', '0', '$userID1'),
                         ('$userID2', '$userID1', '0', '$userID1');
                     ";
