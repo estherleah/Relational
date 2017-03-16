@@ -182,16 +182,28 @@ $name = $_SESSION['name'];
 
                 <!--START OF FRIEND RECOMMENDATIONS-->
                 <h3>Suggested Friends</h3>
-                <?php echo "Here are some friends we found for you with our patented collaborative filtering method" ?>
+                <?php echo "Here are some friends we found for you with our patented
+                collaborative filtering method." ?> <br>
+                <?php echo "If you don't have any suggested friends, click this button to
+                generate some" ?>
+                <p>
+
+                  <button type="button"
+                     class="btn btn-primary btnGenerate"
+                     role="button"
+                     data-id="<?php echo "matches".$user ?>"
+                     >
+                     Generate recommendations
+                 </button>
+
+                 <?php echo "matches".$user ?>
+
                 <!-- THIS IS FROM "VERYOLDFRIENDS.PHP"-->
-
+                <!-- ATTEMPTING TO TEST VIEWS HERE-->
                 <?php
-                while ($row = mysqli_fetch_array($collaborativeFilterResult)) {
-                    $firstName = $row['firstName'];
-                    $lastName = $row['lastName'];
-                    $thisUserID = $row['userID'];
-
-                    $profilePhotoURL = $row["profilephotoURL"];
+                while ($row = mysqli_fetch_array($getViewResult)) {
+                    $theirUserID = $row['userID'];
+                    $matches = $row['matches'];
                     ?>
 
                     <div class="recommendedFriends row">
@@ -199,17 +211,15 @@ $name = $_SESSION['name'];
                             <button type="button"
                                class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
                                role="button"
-                               data-id="<?php echo $thisUserID ?>"
+                               data-id="<?php echo "matches" . $theirUserID ?>"
                                >
                                Add
                            </button>
 
                         <!-- </div> -->
 
-                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
-
                         <span class="circleMemberName">
-                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                            <?php echo "Their UserID: " . $theirUserID;?> <?php echo "Matches: " . $matches; ?>
                         </span>
                         <br>
                         <span class="circleMemberStatus">
@@ -224,6 +234,7 @@ $name = $_SESSION['name'];
                     <?php
                 }
                 ?>
+
 
 
                   <div class="row"></div>

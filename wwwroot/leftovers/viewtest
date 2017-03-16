@@ -1,0 +1,66 @@
+collaborative filter view draft
+
+EXAMPLE CREATE VIEW statement
+CREATE VIEW noofgrade(grade,gradecount)
+AS SELECT grade,COUNT(*)
+FROM customer
+GROUP BY grade;
+
+create string - "matches" . '$userIDEscaped' - e.g for user1, matches1, user2 - matches2, etc
+
+SELECT * FROM matches1 (Will return that view.)
+//column names are userID, matches
+
+CREATE OR REPLACE VIEW matches1 AS
+                            (SELECT userID, COUNT(userID) AS matches
+                            FROM (
+                              (SELECT DISTINCT userID2 AS userID
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '3')
+                              AND status = 1
+                              AND fo.userID2 NOT IN
+                                (SELECT userID2
+                                FROM friendship
+                                WHERE userID1 = '3')
+                              AND userID2 != '3'
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM circle_participants AS c
+                              WHERE c.circleID IN
+                                (SELECT circleID
+                                FROM circle_participants
+                                WHERE userID = '3')
+                              AND userID != '3'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '3'
+                                AND f.userID2 = c.userID)
+                              ORDER BY RAND()
+                              )
+                            UNION ALL
+                              (SELECT DISTINCT userID
+                              FROM user AS u2
+                              WHERE u2.location IN
+                                (SELECT location
+                                FROM user
+                                WHERE userID = '3')
+                              AND u2.userID != '3'
+                              AND NOT EXISTS
+                                (SELECT *
+                                FROM friendship AS f
+                                WHERE f.userID1 = '3'
+                                AND f.userID2 = u2.userID)
+                              ORDER BY RAND()
+                              )
+                            ) result
+                            GROUP BY result.userID
+                            ORDER BY matches DESC
+
+                              )
+                            ";
