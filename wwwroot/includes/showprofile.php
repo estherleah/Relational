@@ -88,16 +88,16 @@ $requestFrom = mysqli_query($conn, "SELECT *
                                     FROM friendship
                                     WHERE (userID1 = '$user'
                                             AND userID2 = '$thisUserID'
-                                            AND origin = '$user'
+                                            AND originUserID = '$user'
                                             AND status = '0')
                                     ");
 
-//extremely similar query, just with reversed direction (origin)
+//extremely similar query, just with reversed direction (originUserID)
 $requestTo = mysqli_query($conn, "SELECT *
                                     FROM friendship
                                     WHERE (userID1 = '$user'
                                     AND userID2 = '$thisUserID'
-                                    AND origin = '$thisUserID'
+                                    AND originUserID = '$thisUserID'
                                     AND status = '0')
                                                                         ");
 // Set local variables
