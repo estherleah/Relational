@@ -14,7 +14,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="friends.php">Friends</a></li>
                 <li><a href="circles.php">Circles</a></li>
-                <li><a href="photoCollections.php">Photos</a></li>
+                <li><a href="photoCollections.php">Photo Collections</a></li>
                 <li><a href="search.php">Search</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

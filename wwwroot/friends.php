@@ -43,7 +43,7 @@ $viewString = 'matches' . $user;
               <div class="col-xs-2">
                 <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="80%"/>
               </div>
-              <div class="col-xs-7">
+              <div class="col-xs-10 text-left">
                   <h1 class="page-header"><?php echo $fullName ?>'s Friends</h1>
                   <h4><?php echo "Friendship is magic" ?></h4>
               </div>
@@ -87,7 +87,7 @@ $viewString = 'matches' . $user;
                         </span>
                         </a>
 
-                        </br>
+                        <br>
                         <span class="circleMemberStatus">
                           <?php
                               echo "Add this person?" ?>
@@ -130,7 +130,7 @@ $viewString = 'matches' . $user;
                            </span>
                            </a>
 
-                        </br>
+                        <br>
                         <span class="circleMemberStatus">
                           <?php
                               echo "Request sent" ?>
@@ -233,7 +233,7 @@ $viewString = 'matches' . $user;
                                             echo "Similarity Score: " . $matches*10 ?>
                                       </span>
 
-                                      </br>
+                                      <br>
                                       <p>
 
                                   </div>

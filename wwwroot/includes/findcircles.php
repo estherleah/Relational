@@ -15,6 +15,20 @@ $name = $_SESSION['name'];
 // !! Inefficient to use join in this case, another solution would be preferrable
 // Search for circle memberships of user
 $userIDEscaped = mysqli_real_escape_string($conn, $user);
+
+$userSql = "SELECT firstName, lastName, profilephotoURL
+              FROM user
+              WHERE userID = '$userIDEscaped';
+              ";
+$userResult = mysqli_query($conn, $userSql);
+
+if (mysqli_num_rows($userResult) === 1) {
+    $row = mysqli_fetch_assoc($userResult);
+    $fullName = $row["firstName"] . " " . $row["lastName"];
+    $profilephotoURL = $row["profilephotoURL"];
+}
+
+
 $circleResult = mysqli_query($conn,"  SELECT     circle.circleID, userID, name, description
                                             FROM       circle_participants
                                             INNER JOIN circle
