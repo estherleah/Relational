@@ -29,8 +29,7 @@ include 'includes/findcircles.php';
   </div>
     <div class="row">
         <div class="text-center">
-            <div class="col-sm-8 col-sm-offset-2">
-                <h2>Circles</h2>
+            <div class="col-xs-8 col-sm-offset-2">
                 <!-- Search Form -->
                 <div class="form-group" style="margin-left: 10%">
                     <input type="text" class="form-control search" id="searchid" placeholder="Search"/>
