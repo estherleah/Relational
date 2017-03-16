@@ -23,8 +23,8 @@ include 'includes/findcircles.php';
             <div class="col-sm-8 col-sm-offset-2">
                 <h2>Circles</h2>
                 <!-- Search Form -->
-                <div class="form-group">
-                    <input type="text" class="form-control search center-block" id="searchid" placeholder="Search"/>
+                <div class="form-group" style="margin-left: 10%">
+                    <input type="text" class="form-control search" id="searchid" placeholder="Search"/>
                     <div id="result"></div>
                 </div>
                 <a href="createcircle.php" class="btn btn-primary btnCreateCircle" type="button">Create Circle</a>

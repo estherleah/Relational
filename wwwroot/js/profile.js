@@ -1,3 +1,7 @@
+
+
+
+
 $(function() { // waits for document to be ready
 //add the like add button thing somewhere
 
@@ -26,5 +30,91 @@ $(function() { // waits for document to be ready
                 });
             }
         });
+
+            $(".btnAdd").on("click", function(event) {
+            var button = $(event.target);
+            var id = button.data('id');
+
+            $.ajax({
+                type: 'post',
+                url: 'includes/profileAdd.php',
+                data: {
+                    id
+                },
+
+                success: function(html) {
+
+                    // reload data
+
+                    console.log(html);
+                     document.location.reload();
+                }
+            });
+          });
+
+          $(".btnAccept").on("click", function(event) {
+          var button = $(event.target);
+          var id = button.data('id');
+
+          $.ajax({
+              type: 'post',
+              url: 'includes/profileAccept.php',
+              data: {
+                  id
+              },
+
+              success: function(html) {
+
+                  // reload data
+
+                  console.log(html);
+                   document.location.reload();
+              }
+          });
+        });
+
+
+          $(".btnCancel").on("click", function(event) {
+          var button = $(event.target);
+          var id = button.data('id');
+
+          $.ajax({
+              type: 'post',
+              url: 'includes/profileCancel.php',
+              data: {
+                  id
+              },
+
+              success: function(html) {
+
+                  // reload data
+
+                  console.log(html);
+                   document.location.reload();
+              }
+          });
+        });
+
+        $(".btnDelete").on("click", function(event) {
+        var button = $(event.target);
+        var id = button.data('id');
+
+        $.ajax({
+            type: 'post',
+            url: 'includes/profileDelete.php',
+            data: {
+                id
+            },
+
+            success: function(html) {
+
+                // reload data
+
+                console.log(html);
+                 document.location.reload();
+            }
+        });
+      });
+
 
 });

@@ -25,7 +25,7 @@ $(function() {
         var $userID = $clicked.find('.uid').html();
         //var decoded = $("<div/>").html($userID).text();
         //$('#searchid').val(decoded);
-        var url = "http://localhost:8888/profile.php?id=" + $userID;
+        var url = "profile.php?id=" + $userID;
         window.open(url, "_self");
     });
 
