@@ -207,14 +207,24 @@ $recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 
 $numberOfRecommendations = 5;
 
-//TESTING VIEWS Here
+//GET VIEWS HERE
 $viewString = "matches" . $user;
-
 $getView = "SELECT * FROM $viewString";
 $getViewResult = mysqli_query($conn, $getView);
 
+//NOW I JUST NEED TO DO THE JOIN WITH FRIEND PHOTOS AND STUFF
+
 //here ends old friendsinitialise file
 //FUNCTIONS FOR DELETING FRIENDS ETC - DON'T THINK THE PROBLEM IS HERE
+
+$photoView = "SELECT profilephotoURL, firstName, lastName, u.userID, matches
+              FROM $viewString AS view
+              INNER JOIN user AS u ON view.userID = u.userID
+              ORDER BY view.matches DESC
+              ";
+
+$photoViewResult = mysqli_query($conn, $photoView);
+
 
 if(isset($_POST['action']) && !empty($_POST['action'])) {
   $action = $_POST['action'];

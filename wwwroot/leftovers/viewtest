@@ -64,3 +64,53 @@ CREATE OR REPLACE VIEW matches1 AS
 
                               )
                             ";
+
+------------------------------------------------------------------------
+THIS SHOULD CORRECTLY JOIN THE PROFILE PHOTOS, NAMES ETC OF ALL THE PEOPLE IN THE RECOMMENDED FRIENDS VIEWS
+AND ORDERS THEM BY MATCHES (DESC)
+
+SELECT u.profilephotoURL, u.firstName, u.lastName, u.userID, view.matches
+              FROM matches2 AS view INNER JOIN user AS u
+              ON view.userID = u.userID
+              ORDER BY matches DESC
+
+------------------------------------------------------------------------
+OLD VIEWS COLLABORATIVE FILTERING - ONLY SHOWS THEIR USERID AND NO OF MATCHES
+
+<!--THIS IS BASICALLY THE STRIPPED DOWN COLLABORATIVE FILTERING THING WITHOUT PHOTOS-->
+<!-- THIS IS FROM "VERYOLDFRIENDS.PHP"-->
+<!-- ATTEMPTING TO TEST VIEWS HERE-->
+<?php
+while ($row = mysqli_fetch_array($getViewResult)) {
+   $theirUserID = $row['userID'];
+   $matches = $row['matches'];
+   ?>
+
+   <div class="recommendedFriends row">
+
+           <button type="button"
+              class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+              role="button"
+              data-id="<?php echo $theirUserID ?>"
+              >
+              Add
+          </button>
+
+       <!-- </div> -->
+
+       <span class="circleMemberName">
+           <?php echo "Their UserID: " . $theirUserID;?> <?php echo "Matches: " . $matches; ?>
+       </span>
+       <br>
+       <span class="circleMemberStatus">
+         <?php
+             echo "Collaborative Filter" ?>
+       </span>
+
+       </br>
+       <p>
+
+   </div>
+   <?php
+}
+?>
