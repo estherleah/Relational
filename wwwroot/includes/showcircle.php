@@ -219,7 +219,7 @@ function addUser(){
 
 
     if (mysqli_query($conn, $addMember)) {
-        echo "You added " . getName($thisUserID) . ". ";
+        echo "You added " . getName($newUserID) . ". ";
     } else {
         echo "Error adding new user: " . mysqli_error($conn);
     }

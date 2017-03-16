@@ -1,7 +1,6 @@
 <?php
 include_once 'database/database.php';
 session_start();
-include_once 'includes/initialiseSettings.php'
 ?>
 
 <!DOCTYPE html>
@@ -23,62 +22,63 @@ include_once 'includes/initialiseSettings.php'
             <div class="col-sm-4 col-sm-offset-4">
                 <h2>Settings</h2>
                 <form method="post" action="includes/changesettings.php" name="settingsForm">
-                  <div class="form-group">
-                      <label for="firstName">First Name:</label>
-                      <input class="form-control" type="text" name="firstName" id="firstName" value="<?php echo $firstName ?>">
-                  </div>
-                  <div class="form-group">
-                      <label for="lastName">Last Name:</label>
-                      <input class="form-control" type="text" name="lastName" id="lastName" value="<?php echo $lastName ?>">
-                  </div>
-                  <div class="form-group">
-                      <label for="email">Email:</label>
-                      <input class="form-control" type="email" name="email" id="email" value="<?php echo $email ?>">
-                  </div>
-                  <div class="form-group">
-                      <label for="password">New Password:</label>
-                      <input class="form-control" type="password" name="password" id="password" placeholder="New password">
-                  </div>
-                  <div class="form-group">
-                      <label for="confirmPassword">Confirm new password:</label>
-                      <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm new password">
-                  </div>
+                    <!--<div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input class="form-control" type="text" name="firstName" id="firstName" placeholder="First name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input class="form-control" type="text" name="lastName" id="lastName" placeholder="Last name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="form-control" type="email" name="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm password:</label>
+                        <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" required>
+                    </div>-->
                     <div class="form-group">
                         <label for="privacy">Privacy:</label>
                         <select class="form-control" name="privacy" id="privacy">
-                          <?php
-                          if (mysqli_num_rows($privacyResult) > 0) {
-                              while ($row = mysqli_fetch_assoc($privacyResult)) { ?>
-                                <option value="<?php echo $row["privacyID"]?>" <?php if ($privacyID === $row["privacyID"]) { echo "selected"; } ?>><?php echo $row["option"]?></option>
-                          <?php }} ?>
+                            <option value="public">Public</option>
+                            <option value="friends of friends">Friends of friends</option>
+                            <option value="circles">Circles</option>
+                            <option value="friends">Friends</option>
+                            <option value="private">Private</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="location">Location:</label>
-                        <select class="form-control input-medium bfh-countries" name="location" id="location" data-country="<?php echo $location ?>"></select>
+                        <select class="form-control input-medium bfh-countries" name="location" id="location" <!--data-country="$location"-->></select>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of birth:</label>
                         <div id="dob">
-                            <input class="form-control" type="date" id="dob" name="dob" value="<?php echo $dob ?>">
+                            <input class="form-control" type="date" id="dob" name="dob">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="gender">Gender:</label>
                         <div id="gender">
                             <label class="radio-inline">
-                                <input type="radio" name="gender" value="male" <?php if ($gender === "Male") { echo "checked"; } ?>>Male
+                                <input type="radio" name="gender" value="male">Male
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" value="female" <?php if ($gender === "Female") { echo "checked"; } ?>>Female
+                                <input type="radio" name="gender" value="female">Female
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" value="other" <?php if ($gender === "Other") { echo "checked"; } ?>>Other
+                                <input type="radio" name="gender" value="other">Other
                             </label>
                         </div>
                     </div>
-                    <p><input class="btn btn-primary" type="submit" value="Save"></a></p>
+                    <p><input class="btn btn-default" type="submit" value="Change"></a></p>
                 </form>
+                <a href="profile.php"><input class="btn btn-default" type="submit" value="Profile picture"></a>
             </div>
         </div>
     </div>
@@ -86,5 +86,6 @@ include_once 'includes/initialiseSettings.php'
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-formhelpers.min.js"></script>
+<script src="js/bootstrap-formhelpers-countries.js"></script>
 </body>
 </html>

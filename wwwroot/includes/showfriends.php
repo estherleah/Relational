@@ -14,7 +14,7 @@ if (!isset($_SESSION)) {
 //CURRENT user check that they aren't in friendship.userID2
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
-$userIDEscaped = mysqli_real_escape_string($conn, $user);
+$userIDEscaped = $user;
 
 $userSql = "SELECT firstName, lastName, profilephotoURL
               FROM user

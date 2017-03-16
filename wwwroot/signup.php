@@ -75,5 +75,6 @@ include_once 'database/database.php';
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-formhelpers.min.js"></script>
+<script src="js/bootstrap-formhelpers-countries.js"></script>
 </body>
 </html>

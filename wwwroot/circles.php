@@ -18,16 +18,7 @@ include 'includes/findcircles.php';
 <?php include 'header.php'; ?>
 <!-- Content -->
 <div class="container">
-  <div class="row">
-    <div class="col-xs-2">
-      <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="80%"/>
-    </div>
-    <div class="col-xs-10 text-left">
-        <h1 class="page-header"><?php echo $fullName ?>'s Circles</h1>
-        <h4><?php echo "Enrich your life, with a circle" ?></h4>
-    </div>
-  </div>
-    <div class="row">
+    <div class="col-*-*">
         <div class="text-center">
             <div class="col-sm-8 col-sm-offset-2">
                 <h2>Circles</h2>
