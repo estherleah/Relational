@@ -6,13 +6,17 @@ if (!isset($_SESSION)) {
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
+// DB Connection
+//global $thisUserData; I don't think this does anything in this context!
+
 // Check if current user or visitor
 if(isset($_GET['id'])){
+    // Get userID
+    // $_SESSION['thisUserID'] = $_GET['id'];
+    // $thisUserID = $_SESSION['thisUserID'];
     $thisUserID = $_GET['id'];
-    $currentUser = False;
 } else {
     $thisUserID = $user;
-    $currentUser = True;
 }
 
 $thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
@@ -54,6 +58,44 @@ $thisUserPhotoCollections = mysqli_query($conn," SELECT pcol.collectionID, pcol.
                                                     GROUP BY pcol.collectionID
                                                     ORDER BY date DESC
                                                     LIMIT 5 ;");
+//$thisUserID is the user whose profile is being viewed, $user is logged in user
+
+//strictly speaking this query really doesn't do much - it just sees if there is a relation between the
+//current logged in user and the user who owns the profile they are currently viewing
+//basically if the number of results returned is 0 (meaning they have no relation), only then do you see the add button
+//it is ok to search for only one half of it
+
+$areFriends = mysqli_query($conn, "SELECT *
+                                    FROM friendship
+                                    WHERE (userID1 = '$user'
+                                            AND userID2 = '$thisUserID')
+                                    ");
+
+$areFriends2 = mysqli_query($conn, "SELECT *
+                                    FROM friendship
+                                    WHERE (userID1 = '$user'
+                                    AND userID2 = '$thisUserID'
+                                    AND status = '1')
+                                    ");
+
+
+$requestFrom = mysqli_query($conn, "SELECT *
+                                    FROM friendship
+                                    WHERE (userID1 = '$user'
+                                            AND userID2 = '$thisUserID'
+                                            AND origin = '$user'
+                                            AND status = '0')
+                                    ");
+//extremely similar query, just with reversed direction (origin)
+$requestTo = mysqli_query($conn, "SELECT *
+                                    FROM friendship
+                                    WHERE (userID1 = '$user'
+                                    AND userID2 = '$thisUserID'
+                                    AND origin = '$thisUserID'
+                                    AND status = '0')
+                                                                        ");
+
+
 
 // Set local variables
 $thisUserFullName = $thisUserData['firstName'] . " " . $thisUserData['lastName'];
@@ -121,7 +163,5 @@ function showPhotoCollection(){
 
         <?php
     }
-
-};
-
-?>
+  };
+    ?>

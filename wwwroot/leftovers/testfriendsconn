@@ -224,8 +224,34 @@ this works - trying an 'origin' flag to see who sent the request
 
 ------------------------------------
 
-need to fix asymmetry of request being accepting
+need to fix asymmetry of request being accepted
 
 INSERT INTO friendship (userID1, userID2, status, origin)
 	                 VALUES ('1','5','1','1')
                    ON DUPLICATE KEY UPDATE status = 1
+-------------------------------------
+
+if $profileID != $user AND
+
+-------------------------------------
+modify the friend query
+
+SELECT firstName, lastName, profilephotoURL, gender,
+                            location, userID
+                            FROM user
+                            WHERE userID IN
+                              (SELECT DISTINCT userID2
+                              FROM friendship AS fo
+                              WHERE userID1 IN
+                                (SELECT userID2
+                                  FROM friendship
+                                  WHERE userID1 = '3'
+                                )
+                                AND status = 1
+                                AND fo.userID2 NOT IN
+                             	(SELECT userID2
+                                 FROM friendship
+                                 WHERE userID1 = '3')
+                               	AND userID2 = '3'
+
+                            )

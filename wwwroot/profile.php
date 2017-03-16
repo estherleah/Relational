@@ -20,10 +20,11 @@ include 'includes/initialiseBlog.php';
 <!-- Content -->
 <div class="container">
     <div class="row">
+
         <div class="col-xs-3">
             <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>" style="padding-bottom:25px;">
             <?php
-                if ($currentUser) {
+                if ( $currentUser) {
                     ?>
                     <!-- Change profile picture -->
                     <form action="includes/addProfilePic.php" method="post" enctype="multipart/form-data" style="padding-bottom:50px;">
@@ -32,7 +33,93 @@ include 'includes/initialiseBlog.php';
                     </form>
                     <?php
                 }
-            ?>
+                ?>
+                <!-- logic: if you are logged in as a friend you should not see the add button on the profile-->
+                <!-- the boolean in there works now need to return the result of a query checking that n results = 0-->
+
+                  <!--ADD BUTTON DIV STARTS HERE -->
+                  <div class = "row" id = "addButton">
+                    <div align = "center">
+
+                    <?php
+                        if ((mysqli_num_rows($areFriends) <= 0) and $user != $thisUserID) {
+                            ?>
+                            <p>
+                <button type="button"
+                   class="btn btn-primary btnAdd"
+                   role="button"
+                   data-id="<?php echo $thisUserID ?>"
+                   >
+                   Add friend
+               </button>
+               <?php
+             }
+             ?>
+           </div> <!--centrediv ends here-->
+         </div> <!--entire addbutton div ends here -->
+
+         <!--ACCEPT BUTTON DIV STARTS HERE -->
+         <div class = "row" id = "acceptButton">
+           <div align = "center">
+           <?php
+               if (mysqli_num_rows($requestTo) != 0) {
+                   ?>
+                   <p>
+       <button type="button"
+          class="btn btn-primary btnAccept"
+          role="button"
+          data-id="<?php echo $thisUserID ?>"
+          >
+          Accept request
+      </button>
+      <?php
+    }
+    ?>
+    </div> <!--center div ends here-->
+</div> <!--ACCEPT div ends here -->
+
+
+         <!--PENDING BUTTON DIV STARTS HERE -->
+         <div class = "row" id = "cancelButton">
+           <div align = "center">
+           <?php
+               if (mysqli_num_rows($requestFrom) != 0) {
+                   ?>
+                   <p>
+       <button type="button"
+          class="btn btn-danger btnCancel"
+          role="button"
+          data-id="<?php echo $thisUserID ?>"
+          >
+          Cancel request
+      </button>
+      <?php
+    }
+    ?>
+    </div> <!--center div ends here-->
+</div> <!--PENDING div ends here -->
+
+  <!--DELETE BUTTON STARTS HERE-->
+  <div class = "row" id = "cancelButton">
+      <div align = "center">
+      <?php
+          if (mysqli_num_rows($areFriends2) != 0) {
+              ?>
+              <p>
+    <button type="button"
+     class="btn btn-danger btnDelete"
+     role="button"
+     data-id="<?php echo $thisUserID ?>"
+     >
+     Unfriend
+    </button>
+    <?php
+    }
+    ?>
+    </div> <!--center div ends here-->
+</div> <!--DELETE div ends here -->
+
+
             <br>
             <div>
               <?php if($currentUser) { ?>
@@ -58,8 +145,8 @@ include 'includes/initialiseBlog.php';
                 <?php
                     echo $thisUserGender;
                 ?><br>
-                Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?></br>
-                Location: <?php echo $thisUserLocation ?></br>
+                Birthday: <?php echo substr($thisUserDOB, 8, 2) . "." .  substr($thisUserDOB, 5, 2) . "." .  substr($thisUserDOB, 0, 4); ?><br>
+                Location: <?php echo $thisUserLocation ?><br>
             </p>
 
             <!-- Blog -->
@@ -113,5 +200,6 @@ include 'includes/initialiseBlog.php';
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/blog.js"></script>
+<script src ="js/profile.js"></script>
 </body>
 </html>
