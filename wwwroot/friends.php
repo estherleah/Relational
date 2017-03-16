@@ -78,10 +78,15 @@ $viewString = 'matches' . $user;
                            </button>
 
                         <!-- </div> -->
+                        <!-- </div> -->
+                        <a href="profile.php?id=<?php echo $thisUserID ?>">
                         <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
                         <span class="circleMemberName">
                             <?php echo $firstName;?> <?php echo $lastName; ?>
                         </span>
+                        </a>
+
                         </br>
                         <span class="circleMemberStatus">
                           <?php
@@ -116,11 +121,15 @@ $viewString = 'matches' . $user;
                                Cancel
                            </button>
 
-                        <!-- </div> -->
-                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
-                        <span class="circleMemberName">
-                            <?php echo $firstName;?> <?php echo $lastName; ?>
-                        </span>
+                           <!-- </div> -->
+                           <a href="profile.php?id=<?php echo $thisUserID ?>">
+                           <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+
+                           <span class="circleMemberName">
+                               <?php echo $firstName;?> <?php echo $lastName; ?>
+                           </span>
+                           </a>
+
                         </br>
                         <span class="circleMemberStatus">
                           <?php
@@ -209,11 +218,15 @@ $viewString = 'matches' . $user;
 
                                       <!-- </div> -->
 
+                                      <!-- </div> -->
+                                      <a href="profile.php?id=<?php echo $thisUserID ?>">
                                       <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
 
                                       <span class="circleMemberName">
                                           <?php echo $firstName;?> <?php echo $lastName; ?>
                                       </span>
+                                      </a>
+
                                       <br>
                                       <span class="circleMemberStatus">
                                         <?php
