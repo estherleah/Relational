@@ -1,7 +1,7 @@
 <?php
 include_once 'database/database.php';
 session_start();
-include_once 'includes/initialiseSettings.php'
+include_once 'includes/initialiseSettings.php';
 ?>
 
 <!DOCTYPE html>
@@ -23,34 +23,41 @@ include_once 'includes/initialiseSettings.php'
             <div class="col-sm-4 col-sm-offset-4">
                 <h2>Settings</h2>
                 <form method="post" action="includes/changesettings.php" name="settingsForm">
-                  <div class="form-group">
-                      <label for="firstName">First Name:</label>
-                      <input class="form-control" type="text" name="firstName" id="firstName" value="<?php echo $firstName ?>">
-                  </div>
-                  <div class="form-group">
-                      <label for="lastName">Last Name:</label>
-                      <input class="form-control" type="text" name="lastName" id="lastName" value="<?php echo $lastName ?>">
-                  </div>
-                  <div class="form-group">
-                      <label for="email">Email:</label>
-                      <input class="form-control" type="email" name="email" id="email" value="<?php echo $email ?>">
-                  </div>
-                  <div class="form-group">
-                      <label for="password">New Password:</label>
-                      <input class="form-control" type="password" name="password" id="password" placeholder="New password">
-                  </div>
-                  <div class="form-group">
-                      <label for="confirmPassword">Confirm new password:</label>
-                      <input class="form-control" type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm new password">
-                  </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input class="form-control" type="text" name="firstName" id="firstName"
+                               value="<?php echo $firstName ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input class="form-control" type="text" name="lastName" id="lastName"
+                               value="<?php echo $lastName ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="form-control" type="email" name="email" id="email" value="<?php echo $email ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">New password:</label>
+                        <input class="form-control" type="password" name="password" id="password"
+                               placeholder="New password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm new password:</label>
+                        <input class="form-control" type="password" name="confirmPassword" id="confirmPassword"
+                               placeholder="Confirm new password" required>
+                    </div>
                     <div class="form-group">
                         <label for="privacy">Privacy:</label>
                         <select class="form-control" name="privacy" id="privacy">
-                          <?php
-                          if (mysqli_num_rows($privacyResult) > 0) {
-                              while ($row = mysqli_fetch_assoc($privacyResult)) { ?>
-                                <option value="<?php echo $row["privacyID"]?>" <?php if ($privacyID === $row["privacyID"]) { echo "selected"; } ?>><?php echo $row["option"]?></option>
-                          <?php }} ?>
+                            <?php
+                            if (mysqli_num_rows($privacyResult) > 0) {
+                                while ($row = mysqli_fetch_assoc($privacyResult)) { ?>
+                                    <option value="<?php echo $row["privacyID"] ?>" <?php if ($privacyID === $row["privacyID"]) {
+                                        echo "selected";
+                                    } ?>><?php echo $row["option"] ?></option>
+                                <?php }
+                            } ?>
                         </select>
                     </div>
                     <div class="form-group">

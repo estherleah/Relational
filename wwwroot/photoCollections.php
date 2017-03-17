@@ -20,10 +20,9 @@ include 'includes/initialisePhotoCollections.php';
   <?php include 'header.php'; ?>
   <!-- Content -->
   <div class="container">
-
     <div class="row">
       <div class="col-xs-2">
-        <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="80%%"/>
+        <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="80%"/>
       </div>
       <div class="col-xs-10 text-left">
           <h1 class="page-header"><?php echo $fullName ?>'s Photo Collections</h1>

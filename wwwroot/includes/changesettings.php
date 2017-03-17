@@ -6,46 +6,46 @@ $userIDEscaped = mysqli_real_escape_string($conn, $user);
 
 function updateFirstName($user)
 {
-   if (isset($_POST['firstName'])) {
-       $firstNameEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['firstName']);
-       $sql = "UPDATE `user` SET `firstName`= '$firstNameEscaped' WHERE `userID` = '$user'";
-       if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-           echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
-       }
-   }
+    if (isset($_POST['firstName'])) {
+        $firstNameEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['firstName']);
+        $sql = "UPDATE `user` SET `firstName`= '$firstNameEscaped' WHERE `userID` = '$user'";
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+        }
+    }
 }
 
 function updateLastName($user)
 {
-   if (isset($_POST['lastName'])) {
-       $lastNameEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['lastName']);
-       $sql = "UPDATE `user` SET `lastName`= '$lastNameEscaped' WHERE `userID` = '$user'";
-       if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-           echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
-       }
-   }
+    if (isset($_POST['lastName'])) {
+        $lastNameEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['lastName']);
+        $sql = "UPDATE `user` SET `lastName`= '$lastNameEscaped' WHERE `userID` = '$user'";
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+        }
+    }
 }
 
 function updateEmail($user)
 {
-   if (isset($_POST['email'])) {
-       $emailEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['email']);
-       $sql = "UPDATE `user` SET `email`= '$emailEscaped' WHERE `userID` = '$user'";
-       if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-           echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
-       }
-   }
+    if (isset($_POST['email'])) {
+        $emailEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['email']);
+        $sql = "UPDATE `user` SET `email`= '$emailEscaped' WHERE `userID` = '$user'";
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+        }
+    }
 }
 
 function updatePassword($user)
 {
-   if (isset($_POST['password'])) {
-       $passwordHash = base64_encode(sha1($_POST['password'], true));
-       $sql = "UPDATE `user` SET `password`= '$passwordHash' WHERE `userID` = '$user'";
-       if (!(mysqli_query($GLOBALS['conn'], $sql))) {
-           echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
-       }
-   }
+    if (isset($_POST['password'])) {
+        $passwordHash = base64_encode(sha1($_POST['password'], true));
+        $sql = "UPDATE `user` SET `password`= '$passwordHash' WHERE `userID` = '$user'";
+        if (!(mysqli_query($GLOBALS['conn'], $sql))) {
+            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
+        }
+    }
 }
 
 function updateGender($user)
@@ -56,30 +56,36 @@ function updateGender($user)
         if (!(mysqli_query($GLOBALS['conn'], $sql))) {
             echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
+        //echo $gender;
     }
 }
 
-function updateLocation($user) {
+function updateLocation($user)
+{
     if (isset($_POST['location'])) {
         $locationEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['location']);
         $sql = "UPDATE `user` SET `location`= '$locationEscaped' WHERE `userID` = '$user'";
         if (!(mysqli_query($GLOBALS['conn'], $sql))) {
             echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
+        //echo $location;
     }
 }
 
-function updateDOB($user) {
+function updateDOB($user)
+{
     if (isset($_POST['dob'])) {
         $dobEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['dob']);
         $sql = "UPDATE `user` SET `dob`= '$dobEscaped' WHERE `userID` = '$user'";
         if (!(mysqli_query($GLOBALS['conn'], $sql))) {
             echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['conn']);
         }
+        //echo $dob;
     }
 }
 
-function updatePrivacy($user) {
+function updatePrivacy($user)
+{
     if (isset($_POST['privacy'])) {
         $privacyIDEscaped = mysqli_real_escape_string($GLOBALS['conn'], $_POST['privacy']);
         $sql = "UPDATE `user` SET `privacyID`=$privacyIDEscaped WHERE `userID` = '$user'";

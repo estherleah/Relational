@@ -47,6 +47,7 @@ $viewString = 'matches' . $user;
                   <h1 class="page-header"><?php echo $fullName ?>'s Friends</h1>
                   <h4><?php echo "Friendship is magic" ?></h4>
               </div>
+
             </div>
 
             <!--ROW BEGINS HERE -->
@@ -86,7 +87,7 @@ $viewString = 'matches' . $user;
                         </span>
                         </a>
 
-                        </br>
+                        <br>
                         <span class="circleMemberStatus">
                           <?php
                               echo "Add this person?" ?>
@@ -129,7 +130,7 @@ $viewString = 'matches' . $user;
                            </span>
                            </a>
 
-                        </br>
+                        <br>
                         <span class="circleMemberStatus">
                           <?php
                               echo "Request sent" ?>
@@ -232,7 +233,7 @@ $viewString = 'matches' . $user;
                                             echo "Similarity Score: " . $matches*10 ?>
                                       </span>
 
-                                      </br>
+                                      <br>
                                       <p>
 
                                   </div>

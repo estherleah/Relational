@@ -28,6 +28,7 @@ if (mysqli_num_rows($userResult) === 1) {
     $profilephotoURL = $row["profilephotoURL"];
 }
 
+
 $circleResult = mysqli_query($conn,"  SELECT     circle.circleID, userID, name, description
                                             FROM       circle_participants
                                             INNER JOIN circle
