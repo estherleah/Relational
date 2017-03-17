@@ -23,12 +23,11 @@ if (mysqli_num_rows($userResult) === 1) {
     $profilephotoURL = $row["profilephotoURL"];
 }
 
-
 $circleResult = mysqli_query($conn,"  SELECT     circle.circleID, userID, name, description
-                                      WHERE      userID = '$userIDEscaped'
                                       FROM       circle_participants
                                       INNER JOIN circle
                                       ON         circle_participants.circleID = circle.circleID
+                                      WHERE      userID = '$userIDEscaped'
                                       ORDER BY   circleID ");
 
 //---------------------------------------------------------------------------------------------------
@@ -36,7 +35,6 @@ $circleResult = mysqli_query($conn,"  SELECT     circle.circleID, userID, name, 
 // Search for circles
 if($_POST) {
 
-    // !! Order by circleID probably not the best solution. How can we get the most relevant entries?
     $q = mysqli_real_escape_string($conn,$_POST['search']);
     $strSQL_Result = mysqli_query($conn," SELECT    circleID, name, description
                                           FROM      circle
