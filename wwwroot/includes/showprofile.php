@@ -142,6 +142,7 @@ function showFriends()
 function showPhotoCollection()
 {
     global $thisUserPhotoCollections;
+    global $userAndThisUser;
     while ($row = mysqli_fetch_array($thisUserPhotoCollections)) {
         if($userAndThisUser->shareContent($row['privacyID'])){
             ?>
