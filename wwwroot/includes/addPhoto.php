@@ -6,22 +6,8 @@ session_start();
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
-//echo var_dump($_POST);
-//echo var_dump($_FILES);
 $collectionId = $_POST["id"];
 
-//echo "collectionId: " . $collectionId;
-/*
-$docRoot = $_SERVER['DOCUMENT_ROOT'] . "/";
-
-$sub_path = "uploads/userId-$user/collectionId-$collectionId/";
-$system_path = $docRoot . $sub_path;
-
-$web_path_full = $sub_path . basename($_FILES["fileToUpload"]["name"]);
-$system_path_full = $system_path . basename($_FILES["fileToUpload"]["name"]);
-*/
-
-// Added by ELM
 $target_dir = "../uploads/userId-$user/collectionId-$collectionId/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 

@@ -41,6 +41,12 @@ $collectionSql = "SELECT pcol.collectionID, pcol.name, pcol.date, pcol.privacyID
               ";
 $collectionResult = mysqli_query($conn, $collectionSql);
 
+$privacySQL = "SELECT *
+                FROM privacy_settings;
+                ";
+
+$privacyResult = mysqli_query($conn, $privacySQL);
+
 function showCollections(){
     global $userAndThisUser;
     global $collectionResult;

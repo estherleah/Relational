@@ -36,10 +36,21 @@ include 'includes/initialisePhotoCollections.php';
           </div>
     </div>
     <div class="row">
-          <div class="col-xs-12">
+          <div class="col-xs-6">
             <div class="form-group">
               <label for="name">Name:</label>
-              <input type="text" class="form-control" id="name">
+              <input type="text" class="form-control" id="photoCollectionName">
+            </div>
+            <div class="form-group">
+              <label for="name">Sharing:</label>
+              <select class="form-control" name="privacy" id="privacy">
+                  <?php
+                  if (mysqli_num_rows($privacyResult) > 0) {
+                      while ($row = mysqli_fetch_assoc($privacyResult)) { ?>
+                          <option value="<?php echo $row["privacyID"] ?>" <?php if($row["privacyID"] == 4) echo "selected"; ?>><?php echo $row["option"] ?></option>
+                      <?php }
+                  } ?>
+              </select>
             </div>
             <button class="btn btn-primary pull-right" id="postSubmit" type="button">Add</button>
           </div>
