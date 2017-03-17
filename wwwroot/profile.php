@@ -23,7 +23,7 @@ include 'includes/showprofile.php';
         <div class="col-xs-3">
             <img class="img-responsive img-rounded center-block" src="<?php echo $thisUserProfilePic ?>" style="padding-bottom:25px;">
             <?php
-                if ( $currentUser) {
+                if ($currentUser) {
                     ?>
                     <!-- Change profile picture -->
                     <form action="includes/addProfilePic.php" method="post" enctype="multipart/form-data" style="padding-bottom:50px;">
@@ -31,6 +31,7 @@ include 'includes/showprofile.php';
                         <input type="submit" class="btn btn-primary pull-left" value="Change profile picture" name="submit">
                     </form>
                     <?php
+
                 }
                 ?>
                 <!-- logic: if you are logged in as a friend you should not see the add button on the profile-->
@@ -52,7 +53,8 @@ include 'includes/showprofile.php';
                    Add friend
                </button>
                <?php
-             }
+
+                        }
              ?>
            </div> <!--centrediv ends here-->
          </div> <!--entire addbutton div ends here -->
@@ -72,7 +74,8 @@ include 'includes/showprofile.php';
           Accept request
       </button>
       <?php
-    }
+
+               }
     ?>
     </div> <!--center div ends here-->
 </div> <!--ACCEPT div ends here -->
@@ -93,7 +96,8 @@ include 'includes/showprofile.php';
           Cancel request
       </button>
       <?php
-    }
+
+               }
     ?>
     </div> <!--center div ends here-->
 </div> <!--PENDING div ends here -->
@@ -113,7 +117,8 @@ include 'includes/showprofile.php';
      Unfriend
     </button>
     <?php
-    }
+
+          }
     ?>
     </div> <!--center div ends here-->
 </div> <!--DELETE div ends here -->
@@ -121,20 +126,28 @@ include 'includes/showprofile.php';
 
             <br>
             <div>
-              <?php if($currentUser) { ?>
+              <?php if ($currentUser) {
+        ?>
                 <a href="friends.php"><h3>Friends</h3></a>
-              <?php } else { ?>
+              <?php
+    } else {
+        ?>
                 <h3>Friends</h3>
-              <?php } ?>
+              <?php
+    } ?>
                 <?php showFriends(); ?>
             </div>
             <br>
             <div>
-              <?php if($currentUser) { ?>
+              <?php if ($currentUser) {
+        ?>
                 <a href="circles.php"><h3>Circles</h3></a>
-              <?php } else { ?>
+              <?php
+    } else {
+        ?>
                 <h3>Circles</h3>
-              <?php } ?>
+              <?php
+    } ?>
                 <?php showCircles(); ?>
             </div>
         </div>
@@ -147,8 +160,9 @@ include 'includes/showprofile.php';
             </p>
 
 
-            <!-- Blog -->
-            <?php if($currentUser) { ?>
+            <!-- BLOG -->
+            <!-- Display new entry form if current user's profile -->
+            <?php if ($currentUser) { ?>
               <div class="row" id="entry">
                   <div class="col-xs-12">
                     <textarea class="form-control" rows='3' id="postText"></textarea>
@@ -157,7 +171,17 @@ include 'includes/showprofile.php';
               </div>
             <?php } ?>
 
-              <div class="row" id="previousposts">
+            <!-- Search Form -->
+            <div class="form-group" style="margin-left: 10%; margin-right: 10%;">
+                <input type="text"
+                       class="form-control blogSearch" id="blogSearchid"
+                       placeholder="Search Blog Entries"
+                       data-thisuserid="<?php echo $thisUserID ?>"
+                       />
+            </div>
+
+            <!-- Display Blog Entries -->
+            <div class="row" id="previousposts">
               <?php
               if (mysqli_num_rows($blogResult) > 0) {
                   while ($row = mysqli_fetch_assoc($blogResult)) {
@@ -165,7 +189,7 @@ include 'includes/showprofile.php';
                       <div class="row">
                           <div class="col-xs-12">
                               <b><?php echo $row["date"] ?></b>
-                              <?php if($currentUser) { ?>
+                              <?php if ($currentUser) { ?>
                               <button type="button"
                                  class="btn btn-danger btn-xs pull-right btnRemove"
                                  role="button"
@@ -178,6 +202,7 @@ include 'includes/showprofile.php';
                           </div>
                       </div>
                       <?php
+
                   }
               }
               ?>
@@ -185,11 +210,15 @@ include 'includes/showprofile.php';
             </div>
             <div class="col-xs-3">
               <div>
-                <?php if($currentUser) { ?>
+                <?php if ($currentUser) {
+                  ?>
                   <a href="photoCollections.php"><h3>Photo Collections</h3></a>
-                <?php } else { ?>
+                <?php
+              } else {
+                  ?>
                   <a href="photoCollections.php<?php echo "?id=" . $thisUserID ?>"><h3>Photo Collections</h3></a>
-                <?php } ?>
+                <?php
+              } ?>
                 <?php showPhotoCollection(); ?>
               </div>
             </div>
