@@ -74,11 +74,6 @@ $thisUserPhotoCollections = mysqli_query($conn, " SELECT pcol.collectionID, pcol
                                                     ORDER BY date DESC
                                                     LIMIT 5 ");
 
-//$thisUserID is the user whose profile is being viewed, $user is logged in user
-//strictly speaking this query really doesn't do much - it just sees if there is a relation between the
-//current logged in user and the user who owns the profile they are currently viewing
-//basically if the number of results returned is 0 (meaning they have no relation), only then do you see the add button
-//it is ok to search for only one half of it
 $areFriends = mysqli_query($conn, "SELECT *
                                     FROM friendship
                                     WHERE (userID1 = '$user'
@@ -100,7 +95,6 @@ $requestFrom = mysqli_query($conn, "SELECT *
                                             AND status = '0')
                                     ");
 
-//extremely similar query, just with reversed direction (originUserID)
 $requestTo = mysqli_query($conn, "SELECT *
                                     FROM friendship
                                     WHERE (userID1 = '$user'
@@ -109,9 +103,6 @@ $requestTo = mysqli_query($conn, "SELECT *
                                     AND status = '0')
                                                                         ");
 
-// if ($row = mysqli_fetch_assoc($thisUserData)) { $thisUserProfilePic = $thisUserData['profilephotoURL']; }
-// else { echo "Unable to find profile picture"; }
-// Iterate through circles and display them
 function showCircles()
 {
     global $thisUserCircles;

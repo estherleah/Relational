@@ -136,13 +136,6 @@ $(function() {
         });
     });
 
-    // jQuery(document).on("click", function(e) {
-    //     var $clicked = $(e.target);
-    //     if (!$clicked.hasClass("search")) {
-    //         jQuery("#inviteResult").fadeOut();
-    //     }
-    // });
-
     $('#inviteSearch').click(function() {
         jQuery("#inviteResult").fadeIn();
     });

@@ -31,14 +31,9 @@ $viewString = 'matches' . $user;
 
 
 <!-- Content -->
-<!--CONTAINER BEGINS HERE-->
 <div class="container">
-    <!--trying to split the page in half OK i did it-->
-
     <!--div class="col-*-*"-->
     <div class="text-center">
-
-
         <div class="row">
             <div class="col-xs-2">
                 <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="80%"/>
@@ -47,15 +42,10 @@ $viewString = 'matches' . $user;
                 <h1 class="page-header"><?php echo $fullName ?>'s Friends</h1>
                 <h4><?php echo "Friendship is magic" ?></h4>
             </div>
-
         </div>
-
-        <!--ROW BEGINS HERE -->
         <div class="row">
             <div class="col-xs-5 jumbotron">
 
-
-                <!--PEOPLE WHO HAVE SENT YOU REQUESTS-->
                 <h3>Received requests</h3>
                 <?php echo "These people want to be friends" ?>
                 <?php
@@ -77,8 +67,6 @@ $viewString = 'matches' . $user;
                             Accept
                         </button>
 
-                        <!-- </div> -->
-                        <!-- </div> -->
                         <a href="profile.php?id=<?php echo $thisUserID ?>">
                             <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>"/>
 
@@ -141,7 +129,6 @@ $viewString = 'matches' . $user;
                 }
                 ?>
                 <!--END OF PENDING REQUEST-->
-                <!--EXISTING FRIENDS THIS BASICALLY WORKS-->
 
                 <h3>Existing friends</h3>
                 <?php echo "Here are your friends" ?>
@@ -164,7 +151,6 @@ $viewString = 'matches' . $user;
                             Unfriend
                         </button>
 
-                        <!-- </div> -->
                         <a href="profile.php?id=<?php echo $thisUserID ?>">
                             <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>"/>
 
@@ -184,7 +170,6 @@ $viewString = 'matches' . $user;
                     <?php
                 }
                 ?>
-                <!--END OF existing attempt 2-->
             </div>
 
             <div class="col-xs-5 col-xs-offset-1 jumbotron">
@@ -257,10 +242,6 @@ $viewString = 'matches' . $user;
             <p>
 
 
-                <!-- Include Modals -->
-                <!-- <script> $(function(){ $("#includeModals").load("includes/modals.html"); }); </script>
-                <div id="includeModals"></div> -->
-
                 <!-- Info Dialog -->
             <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -305,7 +286,7 @@ $viewString = 'matches' . $user;
             </div><!-- /.modal -->
 
         </div>
-    </div> <!--the div for the row I put both columns in ends here-->
+    </div>
 </div>
 
 <!--CONTAINER ENDS HERE-->

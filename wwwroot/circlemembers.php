@@ -82,9 +82,6 @@ include 'includes/showcircle.php';
                     <?php
                 }
                 ?>
-                <!-- Include Modals -->
-                <!-- <script> $(function(){ $("#includeModals").load("includes/modals.html"); }); </script>
-                <div id="includeModals"></div> -->
 
                 <!-- Info Dialog -->
                 <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">

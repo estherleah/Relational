@@ -3,25 +3,6 @@
 include_once '../database/database.php';
 session_start();
 
-/*function isDataValid()
-{
-  echo "calling isDataValid";
-    $errorMessage = null;
-    if (!isset($_POST['email']) or trim($_POST['email']) == '')
-        $errorMessage = 'You must enter your email address.';
-    else if (!isset($_POST['password']) or trim($_POST['password']) == '')
-        $errorMessage = 'You must enter your password';
-    if ($errorMessage !== null)
-    {
-        echo <<<EOM
-<p>Error: $errorMessage</p>
-EOM;
-        echo "<p><a href='../index.php'>Return to login</a></p>";
-        return False;
-    }
-    return True;
-}*/
-
 function isValidUser()
 {
     $email = $_POST["email"];
@@ -46,10 +27,6 @@ if (isValidUser()) {
 else {
     echo "<p>Login details incorrect.</p>";
     echo "<p><a href='../index.php'>Return to login</a></p>";
-
-    // Doesn't work on MAMP
-    //header("Location: ../index.php");
-    //die();
 }
 
 ?>

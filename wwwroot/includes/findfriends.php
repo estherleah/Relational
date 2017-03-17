@@ -23,7 +23,6 @@ $friendSql = "SELECT profilephotoURL, firstName, lastName, status
               ";
 $friendResult = mysqli_query($conn, $friendSql);
 
-// if limit results is on...
 $limitOn = true;
 if ($limitOn) {
   $friendsOfFriendsLimit = 5;
@@ -86,8 +85,6 @@ $sqlQuery .= " SELECT firstName, lastName, profilephotoURL, gender, location
                   ";
 
 $recommendedResult = mysqli_multi_query($conn, $sqlQuery);
-
-//$recommendedResult = mysqli_query($conn, $sqlQuery);
 
 $numberOfRecommendations = 2;
 

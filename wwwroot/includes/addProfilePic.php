@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm. Adapted from https://www.w3schools.com/php/php_file_upload.asp.
- * User: Esther Leah
- * Date: 06/03/2017
- * Time: 11:45
- */
 include_once '../database/database.php';
 session_start();
 $user = $_SESSION['user'];
@@ -33,12 +27,6 @@ if(isset($_POST["submit"])) {
         $uploadOk = 0;
     }
 }
-
-// Check if file already exists
-/*if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
-    $uploadOk = 0;
-}*/
 
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
@@ -74,11 +62,9 @@ if ($uploadOk == 0) {
         $photoUrlEscaped = mysqli_real_escape_string($conn, $dir_file);
         $updateProfileSQL = "UPDATE `user` SET `profilephotoURL` = '$photoUrlEscaped' WHERE `user`.`userID` = '$userIDEscaped'";
         if (mysqli_query($conn, $updateProfileSQL)) {
-            //echo "Profile picture changed successfully";
         } else {
             echo "Error: " . $updateProfileSQL . "<br>" . mysqli_error($conn);
         }
-        //echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
         header("Location: ../profile.php");
     } else {
         echo "Sorry, there was an error uploading your file.";

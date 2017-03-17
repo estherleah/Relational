@@ -5,13 +5,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// Debugging
-// include '../ChromePhp.php';
-// ChromePhp::log("Hello");
-
-//THIS PART IS FROM OLD initialiseFriends findcircles
-// Parts adapted from http://php.net/manual/en/mysqli.multi-query.php
-//CURRENT user check that they aren't in friendship.userID2
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 $userIDEscaped = mysqli_real_escape_string($conn, $user);
@@ -27,8 +20,6 @@ if (mysqli_num_rows($userResult) === 1) {
     $fullName = $row["firstName"] . " " . $row["lastName"];
     $profilephotoURL = $row["profilephotoURL"];
 }
-//FRIEND (STATUS = 1 i.e friend accepted)
-//this test query now works for mutual friendships
 
 $testConnSql = "SELECT profilephotoURL, firstName, lastName, userID1, userID2, status
                 FROM friendship AS f INNER JOIN user AS u
@@ -47,7 +38,6 @@ $friendSql = "SELECT profilephotoURL, firstName, lastName, userID, status
               ";
 $friendResult = mysqli_query($conn, $friendSql);
 
-//PENDING (ADDED BUT YET TO ACCEPT (on either end))
 $requestedSql = "SELECT profilephotoURL, firstName, lastName, userID, status, originUserID
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
@@ -57,8 +47,6 @@ $requestedSql = "SELECT profilephotoURL, firstName, lastName, userID, status, or
               ";
 $requestedResult = mysqli_query($conn, $requestedSql);
 
-
-//PENDING (ADDED BUT THE OTHER PARTY HAS YET TO ACCEPT
 $pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status, originUserID
               FROM friendship AS f JOIN user AS u
               ON f.userID1 = '$userIDEscaped' AND f.userID2 = u.userID
@@ -68,13 +56,6 @@ $pendingSql = "SELECT profilephotoURL, firstName, lastName, userID, status, orig
               ";
 $pendingResult = mysqli_query($conn, $pendingSql);
 
-/*FRIENDS OF FRIENDS
-* make sure they're not already a current friend
-* Randomise and limit the output (if specified)
-*/
-//Exclude yourself (you can't be friends with yourself)??
-  //this currently (mostly) works but it shows pending friends in your recs... if your friends are friends with htem
-//THIS IS THE NEW AND UPDATED FRIENDS OF FRIENDS QUERY FIXED 14 MAR
 $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                             location, userID
                             FROM user
@@ -97,11 +78,6 @@ $recommendQuery1 = " SELECT firstName, lastName, profilephotoURL, gender,
                             AND userID != '$userIDEscaped'
 
                           ";
-/*
-CIRCLERECS-----SHOULD BE FIXED NOW 12 MAR
- find circle participants that user is not friends with of circles user is in
-* make sure they're not already a current friend
-* Randomise and limit the output (if specified) */
 
 
 $recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, location, userID
@@ -126,7 +102,6 @@ $recommendQuery2 = " SELECT firstName, lastName, profilephotoURL, gender, locati
                                )
                   ";
 
-/*RECS BY LOCATION WORKING */
 
 $recommendQuery3 = " SELECT * FROM `user` as u WHERE u.userID IN
                       				(SELECT DISTINCT userID
@@ -207,15 +182,10 @@ $recommendedResult3 = mysqli_query($conn, $recommendQuery3);
 
 $numberOfRecommendations = 5;
 
-//GET VIEWS HERE
 $viewString = "matches" . $user;
 $getView = "SELECT * FROM '$viewString'";
 $getViewResult = mysqli_query($conn, $getView);
 
-//NOW I JUST NEED TO DO THE JOIN WITH FRIEND PHOTOS AND STUFF
-
-//here ends old friendsinitialise file
-//FUNCTIONS FOR DELETING FRIENDS ETC - DON'T THINK THE PROBLEM IS HERE
 
 $photoView = "SELECT profilephotoURL, firstName, lastName, u.userID, matches
               FROM $viewString AS view
@@ -236,9 +206,7 @@ if(isset($_POST['action']) && !empty($_POST['action'])) {
       case 'generateView': generateView(); break;
   }
 }
-//currently getting this error PHP Notice:  Undefined index: userID in /var/www/html/friends.php on line 215, referer: http://localhost/friends.php
-//HEY THIS WORKS TOO
-//DELETE A FRIEND #1
+
 function deleteFriend(){
   $userID1 = $_SESSION['user'];
   $userID2= $_POST['id'];
@@ -254,15 +222,11 @@ function deleteFriend(){
           }
 }
 
-//THIS NOW WORKS
-
-//ACCEPT FRIEND REQ #4
 function acceptReq(){
-  //BE CAREFUL - USERID1 receives and accepts the request, USERID2 is the sender
-  //INSERT THE ACCEPTOR ROW FIRST THEN THE SENDER
+
   $userID1 = $_SESSION['user'];
   $userID2 = $_POST['id'];
-//to update one row I would have used a normal UPDATE statement, this is sort of a 'hack'
+
   $acceptReq = "  INSERT INTO friendship (userID1, userID2, status, originUserID)
                   VALUES ('$userID1','$userID2','1','$userID2'), ('$userID2','$userID1','1','$userID2')
                   ON DUPLICATE KEY UPDATE status = 1
@@ -276,7 +240,6 @@ function acceptReq(){
         }
 }
 
-//CANCEL FRIEND REQ #2
 function cancelReq(){
   $userID1 = $_SESSION['user'];
   $userID2 = $_POST['id'];
@@ -294,19 +257,11 @@ function cancelReq(){
         }
 }
 
-#ADD FRIEND #3
-//YES ADDING FRIENDS WORKS NOW - but I forgot about accepting friend requests
-//intval cast isn't actually needed
 function addFriend(){
-//  $userIdEscaped = mysqli_real_escape_string($GLOBALS['conn'], $user);
 
   $userID1 = $_SESSION['user'];
-//  $userID1 = intval($userID1);
   $userID2 = $_POST['id'];
-//  $userID2 = intval($userID2);
 
-//SYMMETRIC RELATION - must work both ways
-//YES THIS WORKS NOW
     $addFriend = "INSERT INTO friendship (userID1, userID2, status, originUserID)
                   VALUES ('$userID1', '$userID2', '0', '$userID1'),
                         ('$userID2', '$userID1', '0', '$userID1');
@@ -322,17 +277,8 @@ function addFriend(){
 function generateView(){
 
   $thisUserID = $_SESSION['user'];
-
-  //this is the statement to generate views - I need to think about this
-  //is it better to just create all the views beforehand?
-  //if we run out of time i guess we can just say in the video that the views already exist
-  //and get updated each time something happens
-
-  //this concatenates matches with '$thisUserID' to name the view of matches
   $viewString = $_POST['id'];
 
-  //oh god this actually works now
-  //actually generating the view is working but the matches.concatenation isn't
   $generateView = "CREATE OR REPLACE VIEW $viewString AS
                             (SELECT userID, COUNT(userID) AS matches
                             FROM (

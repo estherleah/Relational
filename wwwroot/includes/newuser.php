@@ -1,13 +1,5 @@
 <?php
 include '../database/database.php';
-/**
- * Created by PhpStorm.
- * User: Esther Leah
- * Date: 02/02/2017
- * Time: 20:52
- */
-
-// TODO: Check if the email address is already in the database before submitting the query.
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,7 +127,6 @@ EOM;
                 if (isDataValid())
                 {
                     $newUser = getUser();
-                    //printUser($newUser);
                     addUserToDatabase($newUser);
                 }
                 ?>

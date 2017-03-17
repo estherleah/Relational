@@ -2,10 +2,6 @@
 include_once '../database/database.php';
 session_start();
 
-// Debugging
-// include '../ChromePhp.php';
-// ChromePhp::log("Hello");
-
 // Search for circle data
 $circleID = $_GET['id'];
 

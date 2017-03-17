@@ -34,8 +34,6 @@ include 'includes/showprofile.php';
 
                 }
                 ?>
-                <!-- logic: if you are logged in as a friend you should not see the add button on the profile-->
-                <!-- the boolean in there works now need to return the result of a query checking that n results = 0-->
 
                   <!--ADD BUTTON DIV STARTS HERE -->
                   <div class = "row" id = "addButton">

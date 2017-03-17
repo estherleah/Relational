@@ -23,8 +23,6 @@ $(function() {
     jQuery("#result").on("click", function(e) {
         var $clicked = $(e.target);
         var $userID = $clicked.find('.uid').html();
-        //var decoded = $("<div/>").html($userID).text();
-        //$('#searchid').val(decoded);
         if($userID != null){
             var url = "profile.php?id=" + $userID;
             window.open(url, "_self");

@@ -2,9 +2,6 @@
 include_once '../database/database.php';
 session_start();
 
-// Debugging
-//include 'ChromePhp.php';
-
 if($_POST) {
     // If keyword has been entered, search for friends of person searched for
     if(substr($_POST['search'],0,13)=="Friends with "){
@@ -17,17 +14,11 @@ if($_POST) {
                                                      FROM     user
                                                      WHERE    CONCAT_WS(' ', firstName, lastName) LIKE '%$q1%' OR email = '$q1' ", 0);
 
-        //ChromePhp::log($strSQL_Result1);
-        //ChromePhp::log(mysqli_fetch_array($strSQL_Result1)['userID']);
-
         // Look up friendships of userID
         $q2 = mysqli_real_escape_string($conn, mysqli_fetch_array($strSQL_Result1)['userID']);
         $strSQL_Result2 = mysqli_query($conn," SELECT    userID2
                                                      FROM      friendship
                                                      WHERE     userID1 = '$q2' ");
-
-        //ChromePhp::log($strSQL_Result2);
-        //while ($row = mysqli_fetch_array($strSQL_Result2)) ChromePhp::log($row['userID2']);
 
         // Iterate thorugh friend IDs
         while ($row = mysqli_fetch_array($strSQL_Result2)) {
@@ -40,9 +31,6 @@ if($_POST) {
                                                                   CONCAT_WS(' ', firstName, lastName) AS fullName
                                                          FROM     user
                                                          WHERE    userID = '$q3' ");
-
-            //ChromePhp::log($strSQL_Result3);
-            //ChromePhp::log(mysqli_fetch_array($strSQL_Result3));
 
             // Display friend
             while($friend = mysqli_fetch_array($strSQL_Result3)) {

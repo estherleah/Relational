@@ -8,10 +8,6 @@ if (!isset($_SESSION)) {
 $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 
-// Debugging
-// include '../ChromePhp.php';
-// ChromePhp::log("Hello");
-
 // Search for circle data
 if(isset($_GET['id'])){
     $_SESSION['circleID'] = $_GET['id'];
@@ -24,14 +20,6 @@ $userStatusResult = mysqli_query($conn,"  SELECT     userStatus
                                           WHERE      userID = '$user' AND circleID = '$circleID' ", 0);
 
 $userStatus = mysqli_fetch_array($userStatusResult)['userStatus'];
-
-// function isAdmin() {
-//     global $userStatus;
-//
-//     $isAdmin = false;
-//     if($userStatus == 2) { $isAdmin = true; }
-//     return $isAdmin;
-// }
 
 // Retrieve circle data
 $circleDataResult = mysqli_query($conn,"  SELECT     name, description
@@ -132,8 +120,6 @@ function revokeAdmin(){
     }
 }
 
-// Potential update anomaly: Only one of the queries gets executed
-// and either no one or two people will be circle owner thereafter.
 function makeOwner(){
     global $conn;
     $circleID = $_SESSION['circleID'];

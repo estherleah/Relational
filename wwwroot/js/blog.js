@@ -1,4 +1,4 @@
-$(function() { // waits for document to be ready
+$(function() {
   $(document).on('click','#postSubmit',function(){
     var post = $('#postText').val();
     var dataString = 'post=' + post;

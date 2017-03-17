@@ -1,8 +1,5 @@
-<!--MODIFIED VERSION OF CHAT TO BE INCLUDED IN THE CIRCLE PAGE-->
-
 <?php
 include_once 'database/database.php';
-//session_start();
 include 'includes/initialiseCircleChat.php';
 ?>
 

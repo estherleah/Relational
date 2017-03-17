@@ -64,10 +64,6 @@ include 'includes/showcircle.php';
                 <button class="btn btn-primary btnAddMember" type="button"> + </button>
             </div>
 
-            <!-- Include Modals -->
-            <!-- <script> $(function(){ $("#includeModals").load("includes/modals.html"); }); </script>
-            <div id="includeModals"></div> -->
-
             <!-- Info Dialog -->
             <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
               <div class="modal-dialog" role="document">

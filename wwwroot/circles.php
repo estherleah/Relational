@@ -64,10 +64,6 @@ include 'includes/findcircles.php';
                     }
                     ?>
 
-                    <!-- Include Modals -->
-                    <!-- <script> $(function(){ $("#includeModals").load("includes/modals.html"); }); </script>
-                    <div id="includeModals"></div> -->
-
                     <!-- Confirmation Dialog -->
                     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
