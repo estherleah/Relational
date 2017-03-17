@@ -53,16 +53,23 @@ img {
    Search Bar
 *******************/
 
-	#searchid, #circleSearchid {
-    width:500px;
+	#searchid {
+    width:150%;;
     border:solid 1px #000;
     padding:10px;
     font-size:14px;
     }
 
-	#result, #circleResult {
+	#circleSearchid {
+	width:100%;;
+	border:solid 1px #000;
+	padding:10px;
+	font-size:14px;
+}
+
+	#result {
     position:absolute;
-    width:500px;
+    width:130%;
     /*padding:10px;*/
     display:none;
     margin-top:-1px;
@@ -72,7 +79,20 @@ img {
     background-color: white;
     }
 
-  .show {
+	#circleResult {
+	position:absolute;
+	width:77%;
+	/*padding:10px;*/
+	display:none;
+	margin-top:-1px;
+	border-top:0px;
+	overflow:hidden;
+	border:1px #CCC solid;
+	background-color: white;
+}
+
+
+.show {
     padding:10px;
     font-size:15px;
     height:70px;
