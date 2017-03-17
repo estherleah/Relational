@@ -24,7 +24,7 @@ include 'includes/findcircles.php';
         </div>
         <div class="col-xs-10 text-left">
             <h1 class="page-header"><?php echo $fullName ?>'s Circles</h1>
-            <h4><?php echo "Enrich your life, with a circle" ?></h4>
+            <h4>The circles of life</h4>
         </div>
     </div>
     <div class="row">
