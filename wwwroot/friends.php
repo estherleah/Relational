@@ -27,31 +27,31 @@ $viewString = 'matches' . $user;
 <script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
-<script src = "js/friends.js"></script>
+<script src="js/friends.js"></script>
 
 
 <!-- Content -->
 <!--CONTAINER BEGINS HERE-->
 <div class="container">
-  <!--trying to split the page in half OK i did it-->
+    <!--trying to split the page in half OK i did it-->
 
     <!--div class="col-*-*"-->
-        <div class="text-center">
+    <div class="text-center">
 
 
-            <div class="row">
-              <div class="col-xs-2">
+        <div class="row">
+            <div class="col-xs-2">
                 <img src="<?php echo $profilephotoURL ?>" class="img-circle center-block" width="80%"/>
-              </div>
-              <div class="col-xs-10 text-left">
-                  <h1 class="page-header"><?php echo $fullName ?>'s Friends</h1>
-                  <h4><?php echo "Friendship is magic" ?></h4>
-              </div>
-
+            </div>
+            <div class="col-xs-10 text-left">
+                <h1 class="page-header"><?php echo $fullName ?>'s Friends</h1>
+                <h4><?php echo "Friendship is magic" ?></h4>
             </div>
 
-            <!--ROW BEGINS HERE -->
-            <div class = "row">
+        </div>
+
+        <!--ROW BEGINS HERE -->
+        <div class="row">
             <div class="col-xs-5 jumbotron">
 
 
@@ -69,28 +69,28 @@ $viewString = 'matches' . $user;
 
                     <div class="requestedFriends row">
 
-                            <button type="button"
-                               class="btn btn-primary btnChangeCircleMemberStatus btnAcceptReq"
-                               role="button"
-                               data-id="<?php echo $thisUserID ?>"
-                               >
-                               Accept
-                           </button>
+                        <button type="button"
+                                class="btn btn-primary btnChangeCircleMemberStatus btnAcceptReq"
+                                role="button"
+                                data-id="<?php echo $thisUserID ?>"
+                        >
+                            Accept
+                        </button>
 
                         <!-- </div> -->
                         <!-- </div> -->
                         <a href="profile.php?id=<?php echo $thisUserID ?>">
-                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                            <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>"/>
 
-                        <span class="circleMemberName">
-                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                            <span class="circleMemberName">
+                            <?php echo $firstName . " "; ?><?php echo $lastName; ?>
                         </span>
                         </a>
 
                         <br>
                         <span class="circleMemberStatus">
                           <?php
-                              echo "Add this person?" ?>
+                          echo "Add this person?" ?>
                         </span>
                         <p>
                     </div>
@@ -113,27 +113,27 @@ $viewString = 'matches' . $user;
 
                     <div class="pendingFriends row">
 
-                            <button type="button"
-                               class="btn btn-danger btnChangeCircleMemberStatus btnCancelReq"
-                               role="button"
-                               data-id="<?php echo $thisUserID ?>"
-                               >
-                               Cancel
-                           </button>
+                        <button type="button"
+                                class="btn btn-danger btnChangeCircleMemberStatus btnCancelReq"
+                                role="button"
+                                data-id="<?php echo $thisUserID ?>"
+                        >
+                            Cancel
+                        </button>
 
-                           <!-- </div> -->
-                           <a href="profile.php?id=<?php echo $thisUserID ?>">
-                           <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                        <!-- </div> -->
+                        <a href="profile.php?id=<?php echo $thisUserID ?>">
+                            <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>"/>
 
-                           <span class="circleMemberName">
-                               <?php echo $firstName;?> <?php echo $lastName; ?>
+                            <span class="circleMemberName">
+                               <?php echo $firstName . " "; ?><?php echo $lastName; ?>
                            </span>
-                           </a>
+                        </a>
 
                         <br>
                         <span class="circleMemberStatus">
                           <?php
-                              echo "Request sent" ?>
+                          echo "Request sent" ?>
                         </span>
                         <p>
                     </div>
@@ -156,27 +156,27 @@ $viewString = 'matches' . $user;
 
                     <div class="existingFriends row">
 
-                            <button type="button"
-                               class="btn btn-danger btnChangeCircleMemberStatus btnDelete"
-                               role="button"
-                               data-id="<?php echo $thisUserID ?>"
-                               >
-                               Unfriend
-                           </button>
+                        <button type="button"
+                                class="btn btn-danger btnChangeCircleMemberStatus btnDelete"
+                                role="button"
+                                data-id="<?php echo $thisUserID ?>"
+                        >
+                            Unfriend
+                        </button>
 
                         <!-- </div> -->
                         <a href="profile.php?id=<?php echo $thisUserID ?>">
-                        <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                            <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>"/>
 
-                        <span class="circleMemberName">
-                            <?php echo $firstName;?> <?php echo $lastName; ?>
+                            <span class="circleMemberName">
+                            <?php echo $firstName . " "; ?><?php echo $lastName; ?>
                         </span>
                         </a>
 
                         <br>
                         <span class="circleMemberStatus">
                           <?php
-                              echo "Friend" ?>
+                          echo "Friend" ?>
                         </span>
                         <p>
                         <p>
@@ -185,9 +185,9 @@ $viewString = 'matches' . $user;
                 }
                 ?>
                 <!--END OF existing attempt 2-->
-              </div>
+            </div>
 
-              <div class="col-xs-5 col-xs-offset-1 jumbotron">
+            <div class="col-xs-5 col-xs-offset-1 jumbotron">
 
                 <!--START OF FRIEND RECOMMENDATIONS-->
                 <h3>Suggested Friends</h3>
@@ -197,64 +197,64 @@ $viewString = 'matches' . $user;
 
                 <p>
 
-                              <?php
-                              while ($row = mysqli_fetch_array($photoViewResult)) {
-                                  $firstName = $row['firstName'];
-                                  $lastName = $row['lastName'];
-                                  $thisUserID = $row['userID'];
-                                  $matches = $row['matches'];
-                                  $profilePhotoURL = $row["profilephotoURL"];
-                                  ?>
+                    <?php
+                    while ($row = mysqli_fetch_array($photoViewResult)) {
+                    $firstName = $row['firstName'];
+                    $lastName = $row['lastName'];
+                    $thisUserID = $row['userID'];
+                    $matches = $row['matches'];
+                    $profilePhotoURL = $row["profilephotoURL"];
+                    ?>
 
-                                  <div class="recommendedFriends row">
+                    <div class="recommendedFriends row">
 
-                                          <button type="button"
-                                             class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
-                                             role="button"
-                                             data-id="<?php echo $thisUserID ?>"
-                                             >
-                                             Add
-                                         </button>
+                        <button type="button"
+                                class="btn btn-primary btnChangeCircleMemberStatus btnAdd"
+                                role="button"
+                                data-id="<?php echo $thisUserID ?>"
+                        >
+                            Add
+                        </button>
 
-                                      <!-- </div> -->
+                        <!-- </div> -->
 
-                                      <!-- </div> -->
-                                      <a href="profile.php?id=<?php echo $thisUserID ?>">
-                                      <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>" />
+                        <!-- </div> -->
+                        <a href="profile.php?id=<?php echo $thisUserID ?>">
+                            <img class="circleMemberPhoto" src="<?php echo $profilePhotoURL ?>"/>
 
-                                      <span class="circleMemberName">
-                                          <?php echo $firstName;?> <?php echo $lastName; ?>
+                            <span class="circleMemberName">
+                                          <?php echo $firstName . " "; ?><?php echo $lastName; ?>
                                       </span>
-                                      </a>
+                        </a>
 
-                                      <br>
-                                      <span class="circleMemberStatus">
+                        <br>
+                        <span class="circleMemberStatus">
                                         <?php
-                                            echo "Similarity Score: " . $matches*10 ?>
+                                        echo "Similarity Score: " . $matches * 10 ?>
                                       </span>
 
-                                      <br>
-                                      <p>
-
-                                  </div>
-                                  <?php
-                              }
-                              ?>
-
-                              <?php echo "No recommendations? Click here:" ?> <br>
-
-                              <p>
-
-                                <button type="button"
-                                   class="btn btn-primary btnGenerate"
-                                   role="button"
-                                   data-id="<?php echo "matches".$user ?>"
-                                   >
-                                   Generate recommendations
-                               </button>
-
-
+                        <br>
                 <p>
+
+            </div>
+            <?php
+            }
+            ?>
+
+            <?php echo "No recommendations? Click here:" ?> <br>
+
+            <p>
+
+                <button type="button"
+                        class="btn btn-primary btnGenerate"
+                        role="button"
+                        data-id="<?php echo "matches" . $user ?>"
+                >
+                    Generate recommendations
+                </button>
+
+
+            <p>
 
 
                 <!-- Include Modals -->
@@ -262,48 +262,52 @@ $viewString = 'matches' . $user;
                 <div id="includeModals"></div> -->
 
                 <!-- Info Dialog -->
-                <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
+            <div class="modal fade" id="infoModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Success</h4>
-                      </div>
-                      <div class="modal-body">
-                        <span class="message"></span>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.reload(true);">Close</button>
-                      </div>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Success</h4>
+                        </div>
+                        <div class="modal-body">
+                            <span class="message"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    onclick="window.location.reload(true);">Close
+                            </button>
+                        </div>
                     </div><!-- /.modal-content -->
-                  </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
 
-                <!-- Confirmation Dialog -->
-                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
+            <!-- Confirmation Dialog -->
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Are you sure?</h4>
-                      </div>
-                      <div class="modal-body">
-                        <span class="message"></span>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default btnCancel" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary btnConfirm" data-dismiss="modal" onclick="window.location.reload(true);">Confirm</button>
-                      </div>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Are you sure?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <span class="message"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btnCancel" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary btnConfirm" data-dismiss="modal"
+                                    onclick="window.location.reload(true);">Confirm
+                            </button>
+                        </div>
                     </div><!-- /.modal-content -->
-                  </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
 
-            </div>
-          </div> <!--the div for the row I put both columns in ends here-->
         </div>
-    </div>
-
+    </div> <!--the div for the row I put both columns in ends here-->
 </div>
+
 <!--CONTAINER ENDS HERE-->
 </body>
 </html>

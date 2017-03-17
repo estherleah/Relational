@@ -32,7 +32,7 @@ if (mysqli_num_rows($userResult) === 1) {
 
 $testConnSql = "SELECT profilephotoURL, firstName, lastName, userID1, userID2, status
                 FROM friendship AS f INNER JOIN user AS u
-                ON f.userID2 = u.userID AND f.userID1 = $user
+                ON f.userID2 = u.userID AND f.userID1 = '$user'
                 WHERE (f.userID1 = 1) AND (f.status = 1)
                 ORDER BY firstName DESC;
                 ";
@@ -209,7 +209,7 @@ $numberOfRecommendations = 5;
 
 //GET VIEWS HERE
 $viewString = "matches" . $user;
-$getView = "SELECT * FROM $viewString";
+$getView = "SELECT * FROM '$viewString'";
 $getViewResult = mysqli_query($conn, $getView);
 
 //NOW I JUST NEED TO DO THE JOIN WITH FRIEND PHOTOS AND STUFF
