@@ -24,9 +24,9 @@ if($_POST) {
         // Iterate through results and display them
         while ($row = mysqli_fetch_array($strSQL_Result)) {
             $entryID = $row['entryID'];
-            $userID = $row['userID'];
-            $entry  = $row['entry'];
-            $date   = $row['date'];
+            $userID  = $row['userID'];
+            $entry   = $row['entry'];
+            $date    = $row['date'];
             ?>
             <div class="row">
                 <div class="col-xs-12">

@@ -8,18 +8,13 @@ $user = $_SESSION['user'];
 $name = $_SESSION['name'];
 //include_once '../database/database.php';
 
-// Debugging
-// include '../ChromePhp.php';
-// ChromePhp::log("Hello");
-
-// !! Inefficient to use join in this case, another solution would be preferrable
 // Search for circle memberships of user
 $userIDEscaped = mysqli_real_escape_string($conn, $user);
 
-$userSql = "SELECT firstName, lastName, profilephotoURL
+$userSql = "  SELECT firstName, lastName, profilephotoURL
               FROM user
-              WHERE userID = '$userIDEscaped';
-              ";
+              WHERE userID = '$userIDEscaped' ";
+
 $userResult = mysqli_query($conn, $userSql);
 
 if (mysqli_num_rows($userResult) === 1) {
@@ -30,11 +25,11 @@ if (mysqli_num_rows($userResult) === 1) {
 
 
 $circleResult = mysqli_query($conn,"  SELECT     circle.circleID, userID, name, description
-                                            FROM       circle_participants
-                                            INNER JOIN circle
-                                            ON         circle_participants.circleID = circle.circleID
-                                            WHERE      userID = '$userIDEscaped'
-                                            ORDER BY   circleID ");
+                                      WHERE      userID = '$userIDEscaped'
+                                      FROM       circle_participants
+                                      INNER JOIN circle
+                                      ON         circle_participants.circleID = circle.circleID
+                                      ORDER BY   circleID ");
 
 //---------------------------------------------------------------------------------------------------
 

@@ -174,7 +174,8 @@ include 'includes/showprofile.php';
             <!-- Search Form -->
             <div class="form-group" style="margin-left: 10%; margin-right: 10%;">
                 <input type="text"
-                       class="form-control blogSearch" id="blogSearchid"
+                       class="form-control blogSearch"
+                       id="blogSearchid"
                        placeholder="Search Blog Entries"
                        data-thisuserid="<?php echo $thisUserID ?>"
                        />
@@ -183,7 +184,7 @@ include 'includes/showprofile.php';
             <!-- Display Blog Entries -->
             <div class="row" id="previousposts">
               <?php
-              if (mysqli_num_rows($blogResult) > 0) {
+              if(mysqli_num_rows($blogResult) > 0){
                   while ($row = mysqli_fetch_assoc($blogResult)) {
                       ?>
                       <div class="row">

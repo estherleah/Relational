@@ -23,18 +23,26 @@ $currentUser = $userAndThisUser->areSame();
 if ($userAndThisUser->shareContent(0)) {
     $thisUserIDEscaped = mysqli_real_escape_string($conn, $thisUserID);
 
-    $blogSql = "SELECT entryID, entry, date
+    $blogSql = "  SELECT entryID, entry, date
                   FROM blog_entry AS b
                   WHERE b.userID = '$thisUserIDEscaped'
-                  ORDER BY date DESC;
-                  ";
+                  ORDER BY date DESC ";
+
     $blogResult = mysqli_query($conn, $blogSql);
 }
 
 // Get user's data
 $thisUserData = mysqli_fetch_array(mysqli_query($conn, " SELECT   firstName, lastName, dob, gender, location, profilephotoURL
-                                                        FROM     user
-                                                        WHERE    userID = '$thisUserIDEscaped' ", 0));
+                                                         FROM     user
+                                                         WHERE    userID = '$thisUserIDEscaped' ", 0));
+
+// Set local variables
+$thisUserFullName = $thisUserData['firstName'] . " " . $thisUserData['lastName'];
+$thisUserDOB = $thisUserData['dob'];
+$thisUserGender = $thisUserData['gender'];
+$thisUserLocation = $thisUserData['location'];
+$thisUserProfilePic = $thisUserData['profilephotoURL'];
+
 // Get user's circles
 $thisUserCircles = mysqli_query($conn, " SELECT   circleID, name
                                         FROM     circle
@@ -64,7 +72,7 @@ $thisUserPhotoCollections = mysqli_query($conn, " SELECT pcol.collectionID, pcol
                                                     WHERE pcol.userID = '$thisUserIDEscaped'
                                                     GROUP BY pcol.collectionID
                                                     ORDER BY date DESC
-                                                    LIMIT 5 ;");
+                                                    LIMIT 5 ");
 
 //$thisUserID is the user whose profile is being viewed, $user is logged in user
 //strictly speaking this query really doesn't do much - it just sees if there is a relation between the
@@ -100,12 +108,7 @@ $requestTo = mysqli_query($conn, "SELECT *
                                     AND originUserID = '$thisUserID'
                                     AND status = '0')
                                                                         ");
-// Set local variables
-$thisUserFullName = $thisUserData['firstName'] . " " . $thisUserData['lastName'];
-$thisUserDOB = $thisUserData['dob'];
-$thisUserGender = $thisUserData['gender'];
-$thisUserLocation = $thisUserData['location'];
-$thisUserProfilePic = $thisUserData['profilephotoURL'];
+
 // if ($row = mysqli_fetch_assoc($thisUserData)) { $thisUserProfilePic = $thisUserData['profilephotoURL']; }
 // else { echo "Unable to find profile picture"; }
 // Iterate through circles and display them

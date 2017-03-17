@@ -101,7 +101,6 @@ $(function() { // waits for document to be ready
             success: function(html) {
 
                 // reload data
-
                 console.log(html);
                 document.location.reload();
             }
