@@ -42,21 +42,22 @@ if($_POST) {
 
     // !! Order by circleID probably not the best solution. How can we get the most relevant entries?
     $q = mysqli_real_escape_string($conn,$_POST['search']);
-    $strSQL_Result = mysqli_query($conn," SELECT    name,
-                                                          description
-                                                FROM      circle
-                                                WHERE     name LIKE '%$q%' OR description LIKE '%$q%'
-                                                ORDER BY  circleID
-                                                LIMIT     5 ");
+    $strSQL_Result = mysqli_query($conn," SELECT    circleID, name, description
+                                          FROM      circle
+                                          WHERE     name LIKE '%$q%' OR description LIKE '%$q%'
+                                          ORDER BY  circleID
+                                          LIMIT     5 ");
 
     // Iterate through results and display them
     while ($row = mysqli_fetch_array($strSQL_Result)) {
+        $circleID = $row['circleID'];
         $name = $row['name'];
         $des = $row['description'];
         ?>
         <div class="show" align="left";>
-            <img src="<?php echo $photo ?>" style="width:50px; height:50px; float:left; margin-right:10px;" />
+            <!-- <img src="<?php echo $photo ?>" style="width:50px; height:50px; float:left; margin-right:10px;" /> -->
             <span class="name" style="line-height:50px;"><?php echo $name; ?></span>
+            <span class="cid" style="visibility:hidden;"><?php echo $circleID; ?></span>
         </div>
         <?php
     }

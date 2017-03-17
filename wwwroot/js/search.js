@@ -25,8 +25,10 @@ $(function() {
         var $userID = $clicked.find('.uid').html();
         //var decoded = $("<div/>").html($userID).text();
         //$('#searchid').val(decoded);
-        var url = "profile.php?id=" + $userID;
-        window.open(url, "_self");
+        if($userID != null){
+            var url = "profile.php?id=" + $userID;
+            window.open(url, "_self");
+        }
     });
 
     jQuery(document).on("click", function(e) {

@@ -47,31 +47,17 @@ $(function() {
 
     $(".btnAddMember").on("click", function(event) {
         $('#inviteModal').modal()
-
-        // $.ajax({ url: 'includes/showcircle.php',
-        //     data: {
-        //         action: 'deleteCircle'
-        //     },
-        //     type: 'post',
-        //     success: function(output) {
-        //         removeMsg = output;
-        //         $("#infoModal").find(".btnClose").off('click').on("click", function(event) {
-        //             window.location.href = "circles.php";
-        //         })
-        //         $('#infoModal').modal()
-        //     }
-        // });
     });
 
 
     // Circle Search --------------------------------------------
 
-    $(".search").keyup(function() {
+    $(".circleSearch").keyup(function() {
         var searchid = $(this).val();
         var dataString = 'search=' + searchid;
 
         if (searchid == '') {
-            jQuery("#result").fadeOut();
+            jQuery("#circleResult").fadeOut();
         } else {
             $.ajax({
                 type: "POST",
@@ -79,31 +65,31 @@ $(function() {
                 data: dataString,
                 cache: false,
                 success: function(html) {
-                    $("#result").html(html).show();
+                    $("#circleResult").html(html).show();
                 }
             });
         }
         return false;
     });
 
-    jQuery("#result").on("click", function(e) {
-        var $clicked = $(e.target);
-        var $userID = $clicked.find('.uid').html();
-        //var decoded = $("<div/>").html($userID).text();
-        //$('#searchid').val(decoded);
-        var url = 'circle.php' + $userID;
-        window.open(url, "_self");
+    jQuery("#circleResult").on("click", function(e) {
+        var clicked = $(e.target);
+        var circleID = clicked.find('.cid').html();
+        if(circleID != null){
+            var url = 'circle.php?id=' + circleID;
+            window.open(url, "_self");
+        }
     });
 
     jQuery(document).on("click", function(e) {
         var $clicked = $(e.target);
-        if (!$clicked.hasClass("search")) {
-            jQuery("#result").fadeOut();
+        if (!$clicked.hasClass("circleSearch")) {
+            jQuery("#circleResult").fadeOut();
         }
     });
 
-    $('#searchid').click(function() {
-        jQuery("#result").fadeIn();
+    $('#circleSearchid').click(function() {
+        jQuery("#circleResult").fadeIn();
     });
 
     // Friend Search --------------------------------------------

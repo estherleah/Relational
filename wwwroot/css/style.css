@@ -53,14 +53,14 @@ img {
    Search Bar
 *******************/
 
-	#searchid {
+	#searchid, #circleSearchid {
     width:500px;
     border:solid 1px #000;
     padding:10px;
     font-size:14px;
     }
 
-	#result {
+	#result, #circleResult {
     position:absolute;
     width:500px;
     /*padding:10px;*/
