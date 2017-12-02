@@ -1,3 +1,0 @@
-//run this to add another column to the friendships table (originUserID - the user who sent the friendship request)
-
-ALTER TABLE `friendship` ADD `originUserID` INT NOT NULL AFTER `status`
