@@ -1,5 +1,5 @@
 # Relational
-PHP/MySQL social media system, made for a module in Database and Information Management Systems.
+A social media system created in PHP and MySQL using the \*AMP stack, for a module in Database and Information Management Systems.
 
 Users can:
 - Add and delete friends
