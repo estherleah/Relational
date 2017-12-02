@@ -1,7 +1,6 @@
 # Relational
 A social media system created in PHP and MySQL using the \*AMP stack, built for a module in Database and Information Management Systems.
 
-## Features
 Users can:
 - Register with the system and through their account create and maintain their personal profiles and manage settings (e.g. privacy).
 - Search for known, registered users to friend, and search for friends of friends.
