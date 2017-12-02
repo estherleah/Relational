@@ -1,5 +1,6 @@
-# GC06Group29
+# Relational
 PHP/MySQL social media system, made for a module in Database and Information Management Systems.
+
 Users can:
 - Add and delete friends
 - Create circles (groups) and send messages to them
