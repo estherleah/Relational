@@ -6,6 +6,6 @@ Users can:
 - Search for known, registered users to friend, and search for friends of friends.
 - Find other users to friend via a collaborative filtering recommendation method.
 - Friend other users through an invite-and-accept method.
-- Create circles for groups of friends. Send messages to friend circles.
+- Create circles for groups of friends and send messages to friend circles.
 - Create and manage photo collections and assign access rights to friends, circles or to friends of friends. Friends can leave comments and other annotations on photos, browseable by other friends.
 - Maintain a blog and read and search the blogs of friends.
