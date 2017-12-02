@@ -1,4 +1,3 @@
-# T29
 # MySQL code snippets
 
 ####################
